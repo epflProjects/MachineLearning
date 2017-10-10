@@ -99,3 +99,10 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# Data too big 
+Data/test.csv
+
+# DS_store 
+.DS_Store
+Data/.DS_Store

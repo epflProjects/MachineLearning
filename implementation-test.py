@@ -7,9 +7,11 @@
 import numpy as np
 from implementations import *
 import numpy.matlib
+import datetime
 
 def construct_perfect_linear_data(a,b):
-	x = np.arange(10000)
+	x = np.arange(1e5)
+	x, mean_x, std_x = standardize(x)
 	y = a+b*x
 	tx = build_poly(x,1)
 
@@ -29,16 +31,54 @@ def build_poly(x, degree):
     
     return(np.power(x_array,degree_array)) 
 
-def test_least_square():
+def test_linear_regression():
 	a = 10
 	b = 20
 
 	(tx,y) = construct_perfect_linear_data(a,b)
+
+	initial_w = np.array([9.0,20.0])
+	max_iters = 50
+	gamma = 0.8
+
+	# Test 1 : Linear Regression using Gradient Descent 
+	print("\n")
+	print(" ------------ Test 1 : Linear Regression using Gradient Descent ------------ ")  
+	
+	start_time = datetime.datetime.now()
+	(w, loss) = least_squares_GD(y, tx, initial_w, max_iters, gamma)
+	end_time = datetime.datetime.now()
+	exection_time = (end_time - start_time).total_seconds()
+	print("Weights :", w, "Loss : ", loss)
+
+	assert (loss < 1e-5), "Differents weights !"
+	print("Linear Regression using Gradient Descent is working. Execution time={t:.3f} seconds".format(t=exection_time)) 
+	print("\n")
+
+	# Test 2 : Linear Regression using Gradient Descent 
+	print(" ------------ Test 2 : Linear Regression using Stochastic Gradient Descent ------------ ")  
+	
+	start_time = datetime.datetime.now()
+	(w, loss) = least_squares_SGD(y, tx, initial_w, max_iters, gamma)
+	end_time = datetime.datetime.now()
+	exection_time = (end_time - start_time).total_seconds()
+	print("Weights :", w, "Loss : ", loss)
+
+	assert (loss < 1e-2), "Differents weights !"
+	print("Linear Regression using Stochastic Gradient Descent is working. Execution time={t:.3f} seconds".format(t=exection_time)) 
+	print("\n") 
+	
+	# Test 3 : Least Squares 
+	print(" ------------ Test 3 : Least Squares regression ------------ ")  
+
+	start_time = datetime.datetime.now()
 	(w, loss) = least_squares(y,tx)
+	end_time = datetime.datetime.now()
+	exection_time = (end_time - start_time).total_seconds()
+	print("Weights :", w, "Loss : ", loss)
 
-	print((w, loss))
+	assert (loss < 1e-5), "Differents weights !"
+	print("Least Squares regression is working. Execution time={t:.3f} seconds".format(t=exection_time)) 
+	print("\n") 
 
-	assert (loss < 1e-10), "Differents weights !"
-	print("Least Squares regression is working") 
-
-test_least_square()
+test_linear_regression()
