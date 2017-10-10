@@ -40,6 +40,7 @@ def test_linear_regression():
 	initial_w = np.array([9.0,20.0])
 	max_iters = 50
 	gamma = 0.8
+	lambda_ = 0
 
 	# Test 1 : Linear Regression using Gradient Descent 
 	print("\n")
@@ -79,6 +80,19 @@ def test_linear_regression():
 
 	assert (loss < 1e-5), "Differents weights !"
 	print("Least Squares regression is working. Execution time={t:.3f} seconds".format(t=exection_time)) 
+	print("\n") 
+
+	# Test 4 : Ridge regression 
+	print(" ------------ Test 4 : Ridge regression ------------ ")  
+
+	start_time = datetime.datetime.now()
+	(w, loss) = ridge_regression(y, tx, lambda_)
+	end_time = datetime.datetime.now()
+	exection_time = (end_time - start_time).total_seconds()
+	print("Weights :", w, "Loss : ", loss)
+
+	assert (loss < 1e-5), "Differents weights !"
+	print("Ridge regression is working. Execution time={t:.3f} seconds".format(t=exection_time)) 
 	print("\n") 
 
 test_linear_regression()

@@ -49,17 +49,31 @@ def least_squares(y, tx):
     # least squares: Give an estimation of the weights of the regression using normal equations.
     # returns mse, and optimal weights
     # ***************************************************
-    #Calcul of the optimal weights
+    #Computation of the optimal weights
     w = np.linalg.inv(tx.T.dot(tx)).dot(tx.T).dot(y)
     
-    #Calcul of the error by MSE
+    #Computation of the error by MSE
     loss = compute_mse(y, tx, w)
 
     return (w, loss)
 
 def ridge_regression(y, tx, lambda_):
     """Ridge regression using normal equations"""
-    raise NotImplementedError
+    # ***************************************************
+    # Ridge : Give an estimation of the weights of the regression using normal equations.
+    # returns mse, and optimal weights
+    # ***************************************************
+        
+    #Computation of the optimal weights
+    N = len(y)
+    lenX = len(tx.T)
+    
+    w = np.linalg.inv(tx.T.dot(tx)+2*N*lambda_*np.eye(lenX)).dot(tx.T).dot(y);
+    
+    #Computation of the error by MSE
+    loss = compute_mse(y, tx, w)
+    
+    return (w, loss)
 
 def logistic_regression(y, tx, initial_w, max_iters, gamma):
     """Logistic regression using gradient descent or SGD"""
@@ -69,7 +83,7 @@ def reg_logistic_regression(y, tx, lambda_, initial_w, max_iters, gamma):
     """Regularized logistic regression using gradient descent or SGD"""
     raise NotImplementedError
 
-## Useful functions.
+## Useful functions.################################################################################################################################################
 def compute_mse(y, tx, w):
     # ***************************************************
     # compute loss by MSE
