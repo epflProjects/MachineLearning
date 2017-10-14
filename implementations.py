@@ -44,18 +44,16 @@ def least_squares_SGD(y, tx, initial_w, max_iters, gamma):
     return (w, loss)
 
 def least_squares(y, tx):
-    """Least squares regression using normal equations"""
-    # ***************************************************
-    # least squares: Give an estimation of the weights of the regression using normal equations.
-    # returns mse, and optimal weights
-    # ***************************************************
-    #Computation of the optimal weights
-    w = np.linalg.inv(tx.T.dot(tx)).dot(tx.T).dot(y)
-    
-    #Computation of the error by MSE
-    loss = compute_mse(y, tx, w)
-
-    return (w, loss)
+    """calculate mse and the least squares solution."""
+    # w_star using least squares
+    to_invert = tx.T.dot(tx)
+    mul_y = tx.T.dot(y)
+    w_star = np.linalg.solve(to_invert, mul_y)
+    # MSE
+    const_part = 1/(2*y.size)
+    e = (y - (tx.dot(w_star)))
+    e_squared = e.T.dot(e)
+    return const_part * e_squared, w_star
 
 def ridge_regression(y, tx, lambda_):
     """Ridge regression using normal equations"""
