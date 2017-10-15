@@ -16,14 +16,14 @@ def least_squares_GD(y, tx, initial_w, max_iters, gamma):
 
     for n_iter in range(max_iters):
         grad = compute_gradient(y,tx,w)
-    
+
         # update w by gradient descent formula
         w = w-gamma*grad
 
-    #Computation of the error    
-    loss = compute_mse(y,tx,w)    
+    #Computation of the error
+    loss = compute_mse(y,tx,w)
     return (w, loss)
-    
+
 
 def least_squares_SGD(y, tx, initial_w, max_iters, gamma):
     """Linear regression using stochastic gradient descent"""
@@ -38,9 +38,9 @@ def least_squares_SGD(y, tx, initial_w, max_iters, gamma):
         for y_batch, tx_batch in batch_iter(y, tx, batch_size):
             gradient = compute_gradient(y_batch, tx_batch, w)
             w = w - gamma * gradient
-    
-    #Computation of the error    
-    loss = compute_mse(y,tx,w)    
+
+    #Computation of the error
+    loss = compute_mse(y,tx,w)
     return (w, loss)
 
 def least_squares(y, tx):
@@ -56,27 +56,15 @@ def least_squares(y, tx):
     return const_part * e_squared, w_star
 
 def ridge_regression(y, tx, lambda_):
-    """Ridge regression using normal equations"""
-    # ***************************************************
-    # Ridge : Give an estimation of the weights of the regression using normal equations.
-    # returns mse, and optimal weights
-    # ***************************************************
-        
-    #Computation of the optimal weights
-    N = len(y)
-    lenX = len(tx.T)
-    
-    w = np.linalg.inv(tx.T.dot(tx)+2*N*lambda_*np.eye(lenX)).dot(tx.T).dot(y);
-    
-    #Computation of the error by MSE
-    loss = compute_mse(y, tx, w)
-    
-    return (w, loss)
+    """implement ridge regression."""
+    first_part = tx.T.dot(tx) + (2 * tx.shape[0] * lambda_) * np.identity(tx.shape[1])
+    sec_part = tx.T.dot(y)
+    return np.linalg.solve(first_part, sec_part)
 
 def logistic_regression(y, tx, initial_w, max_iters, gamma):
     """Logistic regression using gradient descent or SGD"""
     raise NotImplementedError
-    
+
 def reg_logistic_regression(y, tx, lambda_, initial_w, max_iters, gamma):
     """Regularized logistic regression using gradient descent or SGD"""
     raise NotImplementedError
@@ -132,7 +120,7 @@ def batch_iter(y, tx, batch_size, num_batches=1, shuffle=True):
         end_index = min((batch_num + 1) * batch_size, data_size)
         if start_index != end_index:
             yield shuffled_y[start_index:end_index], shuffled_tx[start_index:end_index]
-            
+
 def build_k_indices(y, k_fold, seed):
     """build k indices for k-fold."""
     num_row = y.shape[0]
@@ -144,7 +132,7 @@ def build_k_indices(y, k_fold, seed):
     return np.array(k_indices)
 
 
-## A modifier encore pour les tests 
+## A modifier encore pour les tests
 def cross_validation(y, x, k_indices, k, lambda_, degree):
     """ Cross Validation on our train sample """
     # ***************************************************
@@ -153,12 +141,12 @@ def cross_validation(y, x, k_indices, k, lambda_, degree):
     # ***************************************************
     y_range = np.arange(len(y))
     train_ind = np.delete(y_range, k_indices[k])
-    
+
     # ***************************************************
     # INSERT YOUR CODE HERE
     # form data with polynomial degree: TODO
     # ***************************************************
-    
+
     train_tx = build_poly(x[train_ind], degree)
     test_tx = build_poly(x[k_indices[k]], degree)
     # ***************************************************
@@ -172,9 +160,3 @@ def cross_validation(y, x, k_indices, k, lambda_, degree):
     # ***************************************************
     loss_te=compute_mse(y[k_indices[k]], test_tx, w)
     return loss_tr, loss_te
-
-
-
-
-
-     
