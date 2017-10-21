@@ -27,11 +27,10 @@ def cross_validation_run(tx, y):
         rmse_train.append(loss_tr)
         rmse_test.append(loss_te)
         w.append(w_)
-        print(k, " loss train:", loss_tr, " loss test", loss_te, " weights:", w_)
         rmse_tr.append(rmse_train)
         rmse_te.append(rmse_test)
-    print("Final: loss train: ", np.mean(rmse_tr), " loss test: ", np.mean(rmse_te), " weights: ", np.mean(w, axis=0), " ", w.shape)
-    return
+    print("Final: loss train: ", np.mean(rmse_tr), " loss test: ", np.mean(rmse_te), " weights: ", np.mean(w, axis=0), " ", np.mean(w, axis = 0).shape)
+    return np.mean(w, axis=0)
 
 def build_k_indices(y, k_fold, seed):
     """build k indices for k-fold."""
