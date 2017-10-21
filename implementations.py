@@ -6,7 +6,7 @@
 """Basic function of Machine Learning Project 1."""
 import numpy as np
 from costs import *
-from linear-regression import *
+from linear_regression import *
 from helper import *
 from cross_validation import *
 
