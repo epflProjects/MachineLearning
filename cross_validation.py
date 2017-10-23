@@ -22,15 +22,17 @@ def cross_validation_run(tx, y):
     rmse_train = []
     rmse_test = []
     w = []
+    goodPer = []
     for k in range(0, k_fold):
-        loss_tr, loss_te, w_ = cross_validation(y, tx, k_indices, k)
+        loss_tr, loss_te, w_, goodPerI = cross_validation(y, tx, k_indices, k)
         rmse_train.append(loss_tr)
         rmse_test.append(loss_te)
         w.append(w_)
         rmse_tr.append(rmse_train)
         rmse_te.append(rmse_test)
-    print("Final: loss train: ", np.mean(rmse_tr), " loss test: ", np.mean(rmse_te), " weights: ", np.mean(w, axis=0), " ", np.mean(w, axis = 0).shape)
-    return np.mean(w, axis=0)
+        goodPer.append(goodPerI)
+    #print("Final: loss train: ", np.mean(rmse_tr), " loss test: ", np.mean(rmse_te), " weights: ", np.mean(w, axis=0), " ", np.mean(w, axis = 0).shape)
+    return np.mean(w, axis=0), np.mean(rmse_tr), np.mean(rmse_te), np.mean(goodPer)
 
 def build_k_indices(y, k_fold, seed):
     """build k indices for k-fold."""
@@ -68,4 +70,5 @@ def cross_validation(y, x, k_indices, k):
     # calculate the loss for train and test data:
     # ***************************************************
     loss_te = compute_mse(y[k_indices[k]], x[k_indices[k]], w)
-    return loss_tr, loss_te, w
+    goodPer = percentageGood(y[k_indices[k]], x[k_indices[k]], w)
+    return loss_tr, loss_te, w, goodPer
