@@ -7,14 +7,18 @@ import numpy as np
 
 def sigmoid(t):
     """apply sigmoid function on t."""
-    return (1/(1 + np.exp(-t)))
+    return np.exp(t)/(1 + np.exp(t))
 
 def calculate_neg_log_like_loss(y, tx, w):
     """compute the cost by negative log likelihood."""
+    #s = sigmoid(tx.dot(w))
+    #loss = y.T.dot(np.log(s)) + (1 - y).T.dot(np.log(1 - s))
+    #loss = -loss[0][0]
     s = sigmoid(tx.dot(w))
     loss = y.T.dot(np.log(s)) + (1 - y).T.dot(np.log(1 - s))
-    loss = -loss[0][0]
-    return loss
+    #print(loss)
+    #loss = -loss[0][0] TODO WHY?!
+    return -loss
 
 def calculate_gradient_sig(y, tx, w):
     """compute the gradient of loss."""

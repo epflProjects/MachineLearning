@@ -9,7 +9,7 @@ def cross_validation_run(tx, y):
     seed = 1
     #degree = 7
     k_fold = 4
-    #lambdas = np.logspace(-4, 0, 30)
+    lambdas = np.logspace(-4, 0, 30)
     # split data in k fold
     k_indices = build_k_indices(y, k_fold, seed)
     # define lists to store the loss of training data and test data
@@ -23,7 +23,7 @@ def cross_validation_run(tx, y):
     rmse_test = []
     w = []
     for k in range(0, k_fold):
-        loss_tr, loss_te, w_ = cross_validation(y, tx, k_indices, k)
+        loss_tr, loss_te, w_ = cross_validation(y, tx, k_indices, k, 0.09)
         rmse_train.append(loss_tr)
         rmse_test.append(loss_te)
         w.append(w_)
@@ -44,8 +44,9 @@ def build_k_indices(y, k_fold, seed):
 
 
 ## A modifier encore pour les tests
-def cross_validation(y, x, k_indices, k):
+def cross_validation(y, x, k_indices, k, lambda_):
     """ Cross Validation on our train sample """
+    max_iters = 10000
     # ***************************************************
     # get k'th subgroup in test, others in train:
     # ***************************************************
@@ -62,7 +63,8 @@ def cross_validation(y, x, k_indices, k):
     # ridge regression:
     # ***************************************************
     #(loss_tr, w) = ridge_regression(y[train_ind], train_tx, lambda_)
-    loss_tr, w = imp.least_squares(y[train_ind], x[train_ind])
+    loss_tr, initial_w = imp.least_squares(y[train_ind], x[train_ind])
+    loss_tr, w = imp.reg_logistic_regression(y[train_ind], x[train_ind], lambda_, initial_w, max_iters, lambda_)
 
     # ***************************************************
     # calculate the loss for train and test data:
