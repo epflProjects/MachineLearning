@@ -12,8 +12,7 @@ def compute_gradient(y, tx, w):
 def standardizeMatrix(tx):
     for col in range(len(tx[0])):
         if col != 22:
-            #tx[:,col], mean, std = standardize(tx[:,col])
-            tx[:,col] = scaleToUnit(tx[:,col])
+            tx[:,col], mean, std = standardize(tx[:,col])
     return tx
      
 def standardize(x):

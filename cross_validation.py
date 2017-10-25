@@ -68,23 +68,23 @@ def cross_validation(y, x, k_indices, k):
 
     lambda_ = 1e-4;
 
-    w = imp.ridge_regression(y[train_ind], x[train_ind], lambda_)
-    #loss_tr, w = imp.least_squares(y[train_ind], x[train_ind])
-    perBefore = percentageGood(y[train_ind], x[train_ind],w)
-    print("Size of w before : ", np.max(w), " - - - - - - - - - - - - - - - - - - - Per ridge regression : ", perBefore )
+    #w = imp.ridge_regression(y[train_ind], x[train_ind], lambda_)
+    loss_tr, w = imp.least_squares(y[train_ind], x[train_ind])
+    #perBefore = percentageGood(y[train_ind], x[train_ind],w)
+    #print("Size of w before : ", np.max(w), " - - - - - - - - - - - - - - - - - - - Per ridge regression : ", perBefore )
      
-    gamma = 1e-5 
-    lambda_ = 0.1;
-    loss_tr, w = imp.reg_logistic_regression(y[train_ind], x[train_ind], lambda_, w, max_iters, gamma)
+    #gamma = 1e-5 
+    #lambda_ = 0.1;
+    #loss_tr, w = imp.reg_logistic_regression(y[train_ind], x[train_ind], lambda_, w, max_iters, gamma)
 
-    perAfter = percentageGood(y[train_ind], x[train_ind],w)
+    #perAfter = percentageGood(y[train_ind], x[train_ind],w)
 
-    print("Size of  w after : ", np.max(w))
+    #print("Size of  w after : ", np.max(w))
 
-    if perAfter > perBefore:
-        print("Improvement : % = ",perAfter, "  diff : ", perAfter-perBefore)
-    else:
-        print("Penalty : % = ",perAfter, "  diff : ", perAfter-perBefore)
+    #if perAfter > perBefore:
+    #    print("Improvement : % = ",perAfter, "  diff : ", perAfter-perBefore)
+    #else:
+     #   print("Penalty : % = ",perAfter, "  diff : ", perAfter-perBefore)
 
     # ***************************************************
     # calculate the loss for train and test data:
