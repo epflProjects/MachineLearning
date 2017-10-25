@@ -4,6 +4,7 @@
 import numpy as np
 from costs import *
 import implementations as imp
+from poisson_regression import *
 
 def cross_validation_run(tx, y):
     seed = 1
@@ -24,15 +25,15 @@ def cross_validation_run(tx, y):
     w = []
     goodPer = []
     for k in range(0, k_fold):
-        loss_tr, loss_te, w_, goodPerI = cross_validation(y, tx, k_indices, k)
-        rmse_train.append(loss_tr)
+        loss_te, w_, goodPerI = cross_validation(y, tx, k_indices, k)
+        
         rmse_test.append(loss_te)
         w.append(w_)
-        rmse_tr.append(rmse_train)
+
         rmse_te.append(rmse_test)
         goodPer.append(goodPerI)
     #print("Final: loss train: ", np.mean(rmse_tr), " loss test: ", np.mean(rmse_te), " weights: ", np.mean(w, axis=0), " ", np.mean(w, axis = 0).shape)
-    return np.mean(w, axis=0), np.mean(rmse_tr), np.mean(rmse_te), np.mean(goodPer)
+    return np.mean(w, axis=0), np.mean(rmse_te), np.mean(goodPer)
 
 def build_k_indices(y, k_fold, seed):
     """build k indices for k-fold."""
@@ -63,12 +64,31 @@ def cross_validation(y, x, k_indices, k):
     # ***************************************************
     # ridge regression:
     # ***************************************************
-    #(loss_tr, w) = ridge_regression(y[train_ind], train_tx, lambda_)
-    loss_tr, w = imp.least_squares(y[train_ind], x[train_ind])
+    max_iters = 500;
+
+    lambda_ = 1e-4;
+
+    w = imp.ridge_regression(y[train_ind], x[train_ind], lambda_)
+    #loss_tr, w = imp.least_squares(y[train_ind], x[train_ind])
+    perBefore = percentageGood(y[train_ind], x[train_ind],w)
+    print("Size of w before : ", np.max(w), " - - - - - - - - - - - - - - - - - - - Per ridge regression : ", perBefore )
+     
+    gamma = 1e-5 
+    lambda_ = 0.1;
+    loss_tr, w = imp.reg_logistic_regression(y[train_ind], x[train_ind], lambda_, w, max_iters, gamma)
+
+    perAfter = percentageGood(y[train_ind], x[train_ind],w)
+
+    print("Size of  w after : ", np.max(w))
+
+    if perAfter > perBefore:
+        print("Improvement : % = ",perAfter, "  diff : ", perAfter-perBefore)
+    else:
+        print("Penalty : % = ",perAfter, "  diff : ", perAfter-perBefore)
 
     # ***************************************************
     # calculate the loss for train and test data:
     # ***************************************************
     loss_te = compute_mse(y[k_indices[k]], x[k_indices[k]], w)
     goodPer = percentageGood(y[k_indices[k]], x[k_indices[k]], w)
-    return loss_tr, loss_te, w, goodPer
+    return loss_te, w, goodPer

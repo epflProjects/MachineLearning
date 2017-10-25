@@ -68,11 +68,39 @@ def ridge_regression(y, tx, lambda_):
 def logistic_regression(y, tx, initial_w, max_iters, gamma):
     """Logistic regression using gradient descent or SGD"""
     w = initial_w
-    loss = calculate_neg_log_like_loss(y, tx, w)
-    gradient = calculate_gradient_sig(y, tx, w)
-    w = w - (gamma * gradient)
-    return loss, w
+    losses = []
+    threshold = 1e-8
+
+    for i in range(max_iters):
+        loss = calculate_neg_log_like_loss(y, tx, w)
+        gradient = calculate_gradient_sig(y, tx, w)
+        w = w - (gamma * gradient)
+        # log info
+        if i % 100 == 0:
+           print("Current iteration={i}, loss={l}".format(i=i, l=loss))
+        losses.append(loss)
+        if len(losses) > 1 and np.abs(losses[-1] - losses[-2]) < threshold:
+            break
+        print("loss={l}".format(l=calculate_neg_log_like_loss(y, tx, w)))
+    return calculate_neg_log_like_loss(y, tx, w), w
 
 def reg_logistic_regression(y, tx, lambda_, initial_w, max_iters, gamma):
     """Regularized logistic regression using gradient descent or SGD"""
-    raise NotImplementedError
+    w = initial_w
+    losses = []
+    threshold = 1e-8
+
+    for i in range(max_iters):
+        loss = calculate_reg_loss(y, tx, w, lambda_)
+        gradient = calculate_gradient_sig(y, tx, w) + 2*lambda_*w
+        w = w - (gamma * gradient)
+
+
+        # log info
+        # if i % 100 == 0:
+        #     per = percentageGood(y, tx,w)
+        #     print("Current iteration={i}, percentage={l}".format(i=i, l=per))
+        losses.append(loss)
+        if len(losses) > 1 and np.abs(losses[-1] - losses[-2]) < threshold:
+            break
+    return calculate_reg_loss(y, tx, w, lambda_), w
