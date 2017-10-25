@@ -26,7 +26,7 @@ def cross_validation_run(tx, y):
     goodPer = []
     for k in range(0, k_fold):
         loss_te, w_, goodPerI = cross_validation(y, tx, k_indices, k)
-        
+
         rmse_test.append(loss_te)
         w.append(w_)
 
@@ -66,29 +66,38 @@ def cross_validation(y, x, k_indices, k):
     # ***************************************************
     max_iters = 500;
 
-    lambda_ = 1e-4;
+    lambda_ = np.logspace(-5, 0, 15);
+    best_lambda = 0.0
+    best_perc = 0.0
 
-    #w = imp.ridge_regression(y[train_ind], x[train_ind], lambda_)
-    loss_tr, w = imp.least_squares(y[train_ind], x[train_ind])
-    #perBefore = percentageGood(y[train_ind], x[train_ind],w)
-    #print("Size of w before : ", np.max(w), " - - - - - - - - - - - - - - - - - - - Per ridge regression : ", perBefore )
-     
-    #gamma = 1e-5 
-    #lambda_ = 0.1;
-    #loss_tr, w = imp.reg_logistic_regression(y[train_ind], x[train_ind], lambda_, w, max_iters, gamma)
-
-    #perAfter = percentageGood(y[train_ind], x[train_ind],w)
-
-    #print("Size of  w after : ", np.max(w))
-
-    #if perAfter > perBefore:
+    for lambd in lambda_:
+        w = imp.ridge_regression(y[train_ind], x[train_ind], lambd)
+        goodPer = percentageGood(y[k_indices[k]], x[k_indices[k]], w)
+        #print("Percentage: ", goodPer, "% lambda: ", lambd)
+        if best_perc < goodPer:
+            best_perc = goodPer
+            best_lambda = lambd
+    #loss_tr, w = imp.least_squares(y[train_ind], x[train_ind])
+    # perBefore = percentageGood(y[train_ind], x[train_ind],w)
+    # print("Size of w before : ", np.max(w), " - - - - - - - - - - - - - - - - - - - Per ridge regression : ", perBefore )
+    #
+    # gamma = 1e-5
+    # lambda_ = 0.1;
+    # loss_tr, w = imp.reg_logistic_regression(y[train_ind], x[train_ind], lambda_, w, max_iters, gamma)
+    #
+    # perAfter = percentageGood(y[train_ind], x[train_ind],w)
+    #
+    # print("Size of  w after : ", np.max(w))
+    #
+    # if perAfter > perBefore:
     #    print("Improvement : % = ",perAfter, "  diff : ", perAfter-perBefore)
-    #else:
-     #   print("Penalty : % = ",perAfter, "  diff : ", perAfter-perBefore)
+    # else:
+    #    print("Penalty : % = ",perAfter, "  diff : ", perAfter-perBefore)
 
     # ***************************************************
     # calculate the loss for train and test data:
     # ***************************************************
     loss_te = compute_mse(y[k_indices[k]], x[k_indices[k]], w)
-    goodPer = percentageGood(y[k_indices[k]], x[k_indices[k]], w)
-    return loss_te, w, goodPer
+    w = imp.ridge_regression(y[train_ind], x[train_ind], best_lambda)
+    print("best lambda: ", best_lambda, "best perc: ", best_perc)
+    return loss_te, w, best_perc

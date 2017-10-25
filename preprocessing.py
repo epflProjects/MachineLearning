@@ -19,10 +19,12 @@ def addColumns(tx,n):
     return ret
 
 def addFunckyThings(M, tx):
-	ret = M
+    ret = M
 	#logTx = tx+1+np.abs(np.min(tx))
 	#ret = np.hstack((ret,np.log(logTx)))
 	#ret = np.hstack((ret,np.exp(tx)))
-	ret = np.hstack((ret,np.sin(tx)))
-	return ret
-	
+	#ret = np.hstack((ret,np.sin(tx)))
+    n = len(tx[0])
+    for i in range(n):
+        ret = np.hstack((ret, np.multiply(tx[:, i], tx.T).T))
+    return ret
