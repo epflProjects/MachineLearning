@@ -66,17 +66,20 @@ def cross_validation(y, x, k_indices, k):
     # ***************************************************
     max_iters = 500;
 
-    lambda_ = np.logspace(-5, 0, 15);
+    lambda_ = np.logspace(-10, 0, 50);
     best_lambda = 0.0
     best_perc = 0.0
 
     for lambd in lambda_:
-        w = imp.ridge_regression(y[train_ind], x[train_ind], lambd)
-        goodPer = percentageGood(y[k_indices[k]], x[k_indices[k]], w)
-        #print("Percentage: ", goodPer, "% lambda: ", lambd)
-        if best_perc < goodPer:
-            best_perc = goodPer
-            best_lambda = lambd
+        try:
+            w = imp.ridge_regression(y[train_ind], x[train_ind], lambd)
+            goodPer = percentageGood(y[k_indices[k]], x[k_indices[k]], w)
+            #print("Percentage: ", goodPer, "% lambda: ", lambd)
+            if best_perc < goodPer:
+                best_perc = goodPer
+                best_lambda = lambd
+        except np.linalg.linalg.LinAlgError as err:
+            pass
     #loss_tr, w = imp.least_squares(y[train_ind], x[train_ind])
     # perBefore = percentageGood(y[train_ind], x[train_ind],w)
     # print("Size of w before : ", np.max(w), " - - - - - - - - - - - - - - - - - - - Per ridge regression : ", perBefore )
