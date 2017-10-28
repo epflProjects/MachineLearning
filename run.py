@@ -21,7 +21,7 @@ y_clustered, tx_clustered, ids_clustered, test_y_clustered, test_tx_clustered, t
 for i in range(min_poly_degree, max_poly_degree+1):
     coeffArr = np.full((4), i)
     tx_clustered, test_tx_clustered = preprocessing(tx_clustered, test_tx_clustered, coeffArr)
-    w, perf_of_columns, predictions = search_best_for_each_group(i, y_clustered, tx_clustered, test_y_clustered, test_tx_clustered)
+    w, perf_of_columns, predictions = search_best_polynomial_fit(i, y_clustered, tx_clustered, test_y_clustered, test_tx_clustered)
     for index, el in enumerate(perf_of_columns):
         if el > best_perf_of_columns[index]:
             best_perf_of_columns[index] = el
