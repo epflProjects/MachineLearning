@@ -9,12 +9,15 @@ def compute_gradient(y, tx, w):
     e = y-tx.dot(w)
     return -1/N*tx.T.dot(e)
 
+
 def standardizeMatrix(tx):
+    """Standardize the argument matrix"""
     for col in range(len(tx[0])):
         if col != 22:
             tx[:,col], mean, std = standardize(tx[:,col])
     return tx
-     
+
+
 def standardize(x):
     """Standardize the original data set."""
     mean_x = np.mean(x)
@@ -29,11 +32,10 @@ def batch_iter(y, tx, batch_size, num_batches=1, shuffle=True):
     """
     Generate a minibatch iterator for a dataset.
     Takes as input two iterables (here the output desired values 'y' and the input data 'tx')
-    Outputs an iterator which gives mini-batches of `batch_size` matching elements from `y` and `tx`.
     Data can be randomly shuffled to avoid ordering in the original data messing with the randomness of the minibatches.
-    Example of use :
-    for minibatch_y, minibatch_tx in batch_iter(y, tx, 32):
-        <DO-SOMETHING>
+
+    Returns:
+        an iterator which gives mini-batches of `batch_size` matching elements from `y` and `tx`
     """
     data_size = len(y)
 
