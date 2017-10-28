@@ -9,7 +9,8 @@
   Arnaud Pannatier - 
   Bastian Nanchen - 
   Matteo Giorla\\
-  \textit{EPFL}
+  \textit{Group : }Max and Lily learn ML \\
+  \textit{EPFL 2017}
 }
 \maketitle
 
@@ -45,29 +46,30 @@ reader's head.
   A short comment on the obtained results and the difficulties we encountered.
 \end{description}
 
+
 \section{ML Methods seen in Class}
 
 \subsection{Linear regression using gradient descent}
-To achieve good linear regression, its loss function must be minimized. In this case the loss function considered is the mean square error (MSE). To minimize it the gradient descent process is applied : its an iterative process that improve at each step the weight vector by stepping in the opposite direction of the computed gradient. 
+To achieve good linear regression, the loss function must be minimized. In this case the considered loss function is the mean square error (MSE). To minimize it we apply the gradient descent process which is an iterative process that improves the weight vector at each step by moving in the opposite direction of the computed gradient. 
 
 \subsection{Linear regression using stochastic gradient descent}
-The same principle as in the first method is used, but instead of computing the gradient at each step, which is very expensive, we move forward multiple steps by selecting an approximation of the gradient which is computing using a random batch of indices.
+The same principle as in the first method is used, but instead of computing the gradient at each step, which is very expensive, we move forward multiple steps by selecting an approximation of the gradient. This approximation is computed using a random batch of indices.
 
 \subsection{Least squares regression using normal equations}
-Another way of computing the optimum of the loss function is to solve it analytically. It is not always possible but it works well with linear regression using mean square error : the process of optimization becomes in this case equivalent to solve a linear system of equation called \textit{normal equations}. In some cases, the implementation of these methods causes some troubles : if some of the columns are nearly colinear, the matrix of this system is ill-conditioned and leads to big numerical error. To take account of this phenomenon some preprocessing of the data is applied and the singular matrix error are treated differently. 
+Another way of computing the optimum of the loss function is to solve it analytically. It is not always possible but it works well with linear regression using mean square error : the process of optimization becomes in this case equivalent to solving a linear system of equations called \textit{normal equations}. In some cases, the implementation of these methods causes some trouble : if some of the columns are nearly collinear, the matrix of this system is ill-conditioned and leads to big numerical errors. To take this phenomenon into account some preprocessing of the data is applied and singular matrix errors are treated differently.
 
 \subsection{Ridge regression using normal equations}
-In order to have a more simpler and meaningful model, it's convenient to penalized the complicated one's directly in the cost function. This is done by adding a a \textit{regularization} term $\lambda \vert\vert w \vert\vert ^2$. Fortunately \textit{normal equations} of this particular problem can be computed as well. This is \textit{ridge regression}.
+In order to have a simpler and more meaningful model, it is convenient to penalize the complicated models directly in the cost function. This is done by adding a \textit{regularization} term $\lambda \vert\vert w \vert\vert ^2$. Fortunately \textit{normal equations} of this particular problem can be computed as well. Solving it is called \textit{ridge regression}.
 
 \subsection{Logistic regression using gradient descent}
-The loss function \textit{MSE} is in theory not very well suited for binary classification. To recall the process, in binary classification the model gives prediction that are quantified to two value using a treshold process. As the predicted value can become very large before the quantization, they contribute a lot more to the square loss error than their final value. To take account of these considerations, the \textit{logistic function} is used to transform the prediction into value between 0 and 1. Naturally this transformation will induce an other loss function and therefore an new gradient function. But then the gradient descent process is used to find the optimal weights. In some case, the value of the weights can be large so computing the exponential leads to overflow error in the \textit{logistic function}. In order to solve this problem, the equivalent function : 
+The \textit{MSE loss function} is in theory not very well suited for binary classification. To recall the process, in binary classification the model gives predictions that are quantified by two values using a threshold process. As the predicted value can become very large before the quantization, they contribute a lot more to the \textit{square loss error} than their final value. To take these considerations into account, the \textit{logistic function} is used to transform the prediction into a value between 0 and 1. Naturally this transformation will induce an other loss function and therefore a new gradient function. The gradient descent process is then used to find the optimal weights. In some cases, the value of the weights can be large, so computing the exponential leads to overflow errors in the \textit{logistic function}. In order to solve this problem, the following equivalent function is used : 
 \begin{equation}
 f(x) = \frac{1}{2}+\frac{1}{2}\tanh \left(\frac{x}{2}\right)
 \end{equation} 
-is used.
+
 \subsection{Regularized logistic regression using gradient descent}
 
-As in the case of \textit{ridge regression}, it's often more meaningful to have smaller value for the weights. To take this in account a \textit{regularization parameter} $\lambda \vert\vert w \vert\vert ^2$ is added to the loss function. It's gradient is the computed and the gradient descent process is used for the optimization.
+As in the case of \textit{ridge regression}, it's often more meaningful to have smaller values for the weights. To take this into account, a \textit{regularization parameter} $\lambda \vert\vert w \vert\vert ^2$ is added to the loss function. Its gradient is then computed and the gradient descent process is used for the optimization.
 
 
 \section{Our Approach}
@@ -86,11 +88,17 @@ cross validation avec une fonction moins merdique que la loss
 
 \section{Results}
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\columnwidth]{graph}
+  \caption{TODO.}
+\end{figure}
 
-
-
-
-
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\columnwidth]{table}
+  \caption{TODO.}
+\end{figure}
 
 
 
