@@ -16,6 +16,7 @@ def neg_log_likelihood_loss(y, tx, w):
 def calculate_reg_loss(y, tx, w, lambda_):
     """compute the cost by negative log likelihood and adding the regularization term"""
     return neg_log_likelihood_loss(y, tx, w) + (lambda_ * np.linalg.norm(w)**2)
+  
 
 def compute_gradient_sig(y, tx, w):
     """compute the gradient of loss."""

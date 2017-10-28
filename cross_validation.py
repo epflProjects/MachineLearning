@@ -23,7 +23,6 @@ def cross_validation_run(tx, y):
     goodPer = []
     for k in range(0, k_fold):
         loss_te, w_, goodPerI = cross_validation(y, tx, k_indices, k)
-
         rmse_test.append(loss_te)
         w.append(w_)
 
@@ -47,7 +46,6 @@ def build_k_indices(y, k_fold, seed):
     return np.array(k_indices)
 
 
-## A modifier encore pour les tests
 def cross_validation(y, x, k_indices, k):
     """ Cross Validation on our train sample using ridge regression
 
