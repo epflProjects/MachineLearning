@@ -1,0 +1,95 @@
+\documentclass[10pt,conference,compsocconf]{IEEEtran}
+
+\usepackage{hyperref}
+\usepackage{graphicx}
+
+\begin{document}
+\title{Machine Learning - Project 1}
+\author{
+  Arnaud Pannatier - 
+  Bastian Nanchen - 
+  Matteo Giorla\\
+  \textit{EPFL}
+}
+\maketitle
+
+\begin{abstract}
+  A critical part of scientific discovery is the
+  communication of research findings to peers or the general public.
+  Mastery of the process of scientific communication improves the
+  visibility and impact of research. While this guide is a necessary
+  tool for learning how to write in a manner suitable for publication
+  at a scientific venue, it is by no means sufficient, on its own, to
+  make its reader an accomplished writer. 
+  This guide should be a starting point for further development of 
+  writing skills.
+\end{abstract}
+
+\section{Introduction}
+
+The aim of writing a paper is to infect the mind of your reader with
+the brilliance of your idea. 
+The hope is that after reading your
+paper, the audience will be convinced to try out your idea. In other
+words, it is the medium to transport the idea from your head to your
+reader's head.
+
+\section{The Structure of a Paper}
+
+\begin{description}
+\item[ML Methods seen in Class] \ \\
+  An explanation on the way we implemented the 6 traditional machine learning methods.
+\item[Our approach] \ \\
+  A descritption of the different steps from the raw data to the results.
+\item[Results] \ \\
+  A short comment on the obtained results and the difficulties we encountered.
+\end{description}
+
+\section{ML Methods seen in Class}
+
+\subsection{Linear regression using gradient descent}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. 
+
+\subsection{Linear regression using stochastic gradient descent}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. 
+
+\subsection{Least squares regression using normal equations}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. 
+
+\subsection{Ridge regression using normal equations}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. 
+
+\subsection{Logistic regression using gradient descent}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. 
+
+\subsection{Regularized logistic regression using gradient descent}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. 
+
+
+\section{Our Approach}
+
+\subsection{Preprocessing and data cleaning}
+We tried to clean up the data by removing the meaningless variables (whose value is -999). To do so we first noticed that the data could be clustered into 4 groups defined by their PRIjetnum value (which can be 0, 1, 2 or 3). This attribute defines how many "jet of particles" were detected by the collider. For each of the groups the same attributes are set to -999, since for example, if only one jet was detected the data of the second jet would logically be meaningless. After grouping the data into these 4 clusters we removed collinear columns since they would not have any incidence on the regression and would even get in our way when trying to compute the least squares and ridge regressions.
+
+We tried using standardization of the columns but it appeared that it gave us slightly worse results.
+
+\subsection{Feature engineering}
+\subsection{Model comparison}
+cross validation avec une fonction moins merdique que la loss
+
+
+
+
+\section{Results}
+
+
+
+
+
+
+
+
+
+\end{document}
+
+
