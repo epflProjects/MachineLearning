@@ -48,7 +48,7 @@ reader's head.
 \section{ML Methods seen in Class}
 
 \subsection{Linear regression using gradient descent}
-To compute the last weight vector of the method we iteratively step in the opposite direction of the computed gradient. We finally compute the loss using the Mean Square Error (MSE).
+To achieve good linear regression, its loss function must be minimized. In this case the loss function considered is the mean square error (MSE). To minimize it the gradient descent process is applied : its an iterative process that improve at each step the weight vector by stepping in the opposite direction of the computed gradient. 
 
 \subsection{Linear regression using stochastic gradient descent}
 The same principle as in the first method is used, but instead of computing the gradient at each step, which is very expensive, we move forward multiple steps by selecting an approximation of the gradient which is computing using a random batch of indices.
