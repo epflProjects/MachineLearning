@@ -14,4 +14,3 @@ def percentageGood(y, tx,w):
     N = len(y)
     e = (y+y_pred)/2
     return e @ e /N
-    

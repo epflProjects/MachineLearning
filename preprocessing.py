@@ -1,13 +1,10 @@
 import numpy as np
 
-
-def selectColumns(tx, n):
-    if n >= len(tx):
-        return tx
-    else:
-        return tx[:,:n]
+def prepro(M,c):
+    return add_product_between_columns(addColumns(M, c), M)
 
 def addColumns(tx,n):
+    """Extends the data matrix by adding the power of the columns"""
     ret = tx
 
     for i in range(1,n):
@@ -18,13 +15,12 @@ def addColumns(tx,n):
          	ret = np.hstack([ret, np.ones((len(tx),1))])
     return ret
 
-def addFunckyThings(M, tx):
+
+def add_product_between_columns(M, tx):
+    """Extend the data matrix by adding the product between columns"""
     ret = M
-	#logTx = tx+1+np.abs(np.min(tx))
-	#ret = np.hstack((ret,np.log(logTx)))
-	#ret = np.hstack((ret,np.exp(tx)))
-	#ret = np.hstack((ret,np.sin(tx)))
     n = len(tx[0])
+
     for i in range(n):
         ret = np.hstack((ret, np.multiply(tx[:, i], tx.T).T))
     return ret
