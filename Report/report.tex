@@ -69,7 +69,6 @@ is used.
 
 As in the case of \textit{ridge regression}, it's often more meaningful to have smaller value for the weights. To take this in account a \textit{regularization parameter} $\lambda \vert\vert w \vert\vert ^2$ is added to the loss function. It's gradient is the computed and the gradient descent process is used for the optimization.
 
-
 \section{Our Approach}
 
 \subsection{Preprocessing and data cleaning}
@@ -77,7 +76,12 @@ We tried to clean up the data by removing the meaningless variables (whose value
 
 We tried using standardization of the columns but it appeared that it gave us slightly worse results.
 
+\subsection{Cross-validation and better evaluation function}
+In ordre to see the improvement, the cross-validation process was employed. In this way, we could see if at some point the data was overfitted by the model. To get a more meaningful evaluation function of the model, we created a function that return the percentage of good predicted entries. Combine with cross-validation, this tools really helped finding what was our best model.
+
 \subsection{Feature engineering}
+To get better results, we had the idea to fit the features not just linearly but with higher degree polynomials. To achieve this purpose, we extend the data by adding multiple times the data matrix at increasing powers. The risk was at certain point to overfit the data, but we could see this limit by using the cross validation. 
+
 \subsection{Model comparison}
 cross validation avec une fonction moins merdique que la loss
 
