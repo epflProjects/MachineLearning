@@ -28,12 +28,7 @@
 
 \section{Introduction}
 
-The aim of writing a paper is to infect the mind of your reader with
-the brilliance of your idea. 
-The hope is that after reading your
-paper, the audience will be convinced to try out your idea. In other
-words, it is the medium to transport the idea from your head to your
-reader's head.
+All the data measured at the CERN the last three years takes about 100 petaoctets \cite{CERN}. To treat this huge amount of data, state of the art algorithms are required. Machine Learning methods are particullarly well suited for this kind of problems.
 
 \section{The Structure of a Paper}
 
@@ -71,7 +66,6 @@ f(x) = \frac{1}{2}+\frac{1}{2}\tanh \left(\frac{x}{2}\right)
 
 As in the case of \textit{ridge regression}, it's often more meaningful to have smaller values for the weights. To take this into account, a \textit{regularization parameter} $\lambda \vert\vert w \vert\vert ^2$ is added to the loss function. Its gradient is then computed and the gradient descent process is used for the optimization.
 
-
 \section{Our Approach}
 
 \subsection{Preprocessing and data cleaning}
@@ -79,12 +73,14 @@ We tried to clean up the data by removing the meaningless variables (whose value
 
 We tried using standardization of the columns but it appeared that it gave us slightly worse results.
 
+\subsection{Cross-validation and better evaluation function}
+In order to see the improvement, the cross-validation process was employed. In this way, we could see if at some point the data was overfitted by the model. To get a more meaningful evaluation function of the model, we created a function that return the percentage of good predicted entries. Combine with cross-validation, this tools really helped finding what was our best model.
+
 \subsection{Feature engineering}
+To get better results, we had the idea to fit the features not just linearly but with higher degree polynomials. To achieve this purpose, we extend the data by adding multiple times the data matrix at increasing powers. The risk was at certain point to overfit the data, but we could see this limit by using the cross validation. 
+
 \subsection{Model comparison}
-cross validation avec une fonction moins merdique que la loss
-
-
-
+The different methods were used to get prediction from the data. Their efficency were evaluate using the evaluation function. Only two given adequate results : \textit{least square} and \textit{ridge regression}. Sadly the four other needed fine tuning in order to work well and even with that they did not improve the results. 
 
 \section{Results}
 
@@ -100,6 +96,20 @@ cross validation avec une fonction moins merdique que la loss
   \caption{TODO.}
 \end{figure}
 
+
+\section{Conclusion}
+Machine Learning methods coupled with featuring engineering have given outstanding results as more of 80\% of the entries have been well categorized. In particular \textit{ridge regression} was well suited for this set of data, and the better improvment in the categorization process was observed when the data were fitted with polynomials.
+
+
+\begin{thebibliography}{9}
+\bibitem{CERN}
+Cian O'Luanaigh, \textit{Le centre de données du CERN franchit les 100 pétaoctets} \\
+consulted the 28.10.17 at \url{https://home.cern/fr/about/updates/2013/02/cern-data-centre-passes-100-petabytes}
+\bibitem{Course}
+Pr. Martin Jaggi and Ruediger Urbanke \textit{Machine Learning course} \\
+Given at EPFL, 2017 \\
+ \url{https://mlo.epfl.ch/page-146520.html}
+\end{thebibliography}
 
 
 \end{document}
