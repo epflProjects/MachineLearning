@@ -2,6 +2,8 @@
 
 \usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage[]{algorithm2e}
+\usepackage{placeins}
 
 \begin{document}
 \title{Machine Learning - Project 1}
@@ -15,15 +17,8 @@
 \maketitle
 
 \begin{abstract}
-  A critical part of scientific discovery is the
-  communication of research findings to peers or the general public.
-  Mastery of the process of scientific communication improves the
-  visibility and impact of research. While this guide is a necessary
-  tool for learning how to write in a manner suitable for publication
-  at a scientific venue, it is by no means sufficient, on its own, to
-  make its reader an accomplished writer. 
-  This guide should be a starting point for further development of 
-  writing skills.
+The goal of this project is to characterize events measured by CERN colliders to detect Higgs bosons which play a fundamental role in particles physics. Using machine learning methods we achieved to classify the CERN measures with an 83\% accuracy.
+
 \end{abstract}
 
 \section{Introduction}
@@ -33,7 +28,7 @@ All the data measured at the CERN the last three years takes about 100 petaoctet
 \section{The Structure of a Paper}
 
 \begin{description}
-\item[ML Methods seen in Class] \ \\
+\item[ML Methods] \ \\
   An explanation on the way we implemented the 6 traditional machine learning methods.
 \item[Our approach] \ \\
   A descritption of the different steps from the raw data to the results.
@@ -80,35 +75,58 @@ In order to see the improvement, the cross-validation process was employed. In t
 To get better results, we had the idea to fit the features not just linearly but with higher degree polynomials. To achieve this purpose, we extend the data by adding multiple times the data matrix at increasing powers. The risk was at certain point to overfit the data, but we could see this limit by using the cross validation. 
 
 \subsection{Model comparison}
-The different methods were used to get prediction from the data. Their efficency were evaluate using the evaluation function. Only two given adequate results : \textit{least square} and \textit{ridge regression}. Sadly the four other needed fine tuning in order to work well and even with that they did not improve the results. 
+The different methods were used to get prediction from the data. Their efficiency were evaluate using the evaluation function. Only two given adequate results : \textit{least square} and \textit{ridge regression}. Sadly the four other needed fine tuning in order to work well and even with that they did not improve the results. 
+
+\section{Procedure}
+
+\begin{algorithm}[h]
+\DontPrintSemicolon
+\KwData{The CSV file containing the data to classify}
+ \KwResult{Predictions}
+ Data is clustered into 4 groups as explained in the \textit{Preprocessing and data cleaning} subsection\;
+\For{Degrees up to 13}{
+Feature engineering (extending the matrix with additional degrees\;
+\For{Each of the 4 groups} {
+\For{Subgroup in cross validation} {
+Select best lambda and apply ridge regression\;
+}
+Remember the best prediction\;
+}
+}
+Recombine the data of all groups\;
+Return the prediction\;
+\end{algorithm}
+
+\newpage
 
 \section{Results}
+As mentionned in the \textit{Preprocessing and data cleaning} subsection standardization didn't give good result and lead to the 2 score falls in submissions 3 and 6.
+
+The table below explains the different steps we took to improve the predictions accuracy and the corresponding score.
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=\columnwidth]{graph}
-  \caption{TODO.}
+  \caption{Progression of score.}
 \end{figure}
+\FloatBarrier
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=\columnwidth]{table}
-  \caption{TODO.}
+  \caption{Description of the progression of score.}
 \end{figure}
+\FloatBarrier
 
 
 \section{Conclusion}
-Machine Learning methods coupled with featuring engineering have given outstanding results as more of 80\% of the entries have been well categorized. In particular \textit{ridge regression} was well suited for this set of data, and the better improvment in the categorization process was observed when the data were fitted with polynomials.
+Machine Learning methods coupled with feature engineering have given great results as more of 83\% of the entries have been well categorized. In particular \textit{ridge regression} was well suited for this set of data, and the better improvement in the categorization process was observed when the data was fitted with polynomials.
 
 
 \begin{thebibliography}{9}
 \bibitem{CERN}
 Cian O'Luanaigh, \textit{Le centre de données du CERN franchit les 100 pétaoctets} \\
 consulted the 28.10.17 at \url{https://home.cern/fr/about/updates/2013/02/cern-data-centre-passes-100-petabytes}
-\bibitem{Course}
-Pr. Martin Jaggi and Ruediger Urbanke \textit{Machine Learning course} \\
-Given at EPFL, 2017 \\
- \url{https://mlo.epfl.ch/page-146520.html}
 \end{thebibliography}
 
 
