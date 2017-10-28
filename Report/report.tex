@@ -27,12 +27,7 @@
 
 \section{Introduction}
 
-The aim of writing a paper is to infect the mind of your reader with
-the brilliance of your idea. 
-The hope is that after reading your
-paper, the audience will be convinced to try out your idea. In other
-words, it is the medium to transport the idea from your head to your
-reader's head.
+All the data measured at the CERN the last three years takes about 100 petaoctets \cite{CERN}. To treat this huge amount of data, state of the art algorithms are required. Machine Learning methods are particullarly well suited for this kind of problems.
 
 \section{The Structure of a Paper}
 
@@ -85,17 +80,22 @@ To get better results, we had the idea to fit the features not just linearly but
 \subsection{Model comparison}
 The different methods were used to get prediction from the data. Their efficency were evaluate using the evaluation function. Only two given adequate results : \textit{least square} and \textit{ridge regression}. Sadly the four other needed fine tuning in order to work well and even with that they did not improve the results. 
 
-
-
-
 \section{Results}
 
 
+\section{Conclusion}
+Machine Learning methods coupled with featuring engineering have given outstanding results as more of 80\% of the entries have been well categorized. In particular \textit{ridge regression} was well suited for this set of data, and the better improvment in the categorization process was observed when the data were fitted with polynomials.
 
 
-
-
-
+\begin{thebibliography}{9}
+\bibitem{CERN}
+Cian O'Luanaigh, \textit{Le centre de données du CERN franchit les 100 pétaoctets} \\
+consulted the 28.10.17 at \url{https://home.cern/fr/about/updates/2013/02/cern-data-centre-passes-100-petabytes}
+\bibitem{Course}
+Pr. Martin Jaggi and Ruediger Urbanke \textit{Machine Learning course} \\
+Given at EPFL, 2017 \\
+ \url{https://mlo.epfl.ch/page-146520.html}
+\end{thebibliography}
 
 
 \end{document}
