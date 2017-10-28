@@ -54,16 +54,20 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendi
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. 
 
 \subsection{Least squares regression using normal equations}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. 
+Another way of computing the optimum of the loss function is to solve it analytically. It is not always possible but it works well with linear regression using mean square error : the process of optimization becomes in this case equivalent to solve a linear system of equation called \textit{normal equations}. In some cases, the implementation of these methods causes some troubles : if some of the columns are nearly colinear, the matrix of this system is ill-conditioned and leads to big numerical error. To take account of this phenomenon some preprocessing of the data is applied and the singular matrix error are treated differently. 
 
 \subsection{Ridge regression using normal equations}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. 
+In order to have a more simpler and meaningful model, it's convenient to penalized the complicated one's directly in the cost function. This is done by adding a a \textit{regularization} term $\lambda \vert\vert w \vert\vert ^2$. Fortunately \textit{normal equations} of this particular problem can be computed as well. This is \textit{ridge regression}.
 
 \subsection{Logistic regression using gradient descent}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. 
-
+The loss function \textit{MSE} is in theory not very well suited for binary classification. To recall the process, in binary classification the model gives prediction that are quantified to two value using a treshold process. As the predicted value can become very large before the quantization, they contribute a lot more to the square loss error than their final value. To take account of these considerations, the \textit{logistic function} is used to transform the prediction into value between 0 and 1. Naturally this transformation will induce an other loss function and therefore an new gradient function. But then the gradient descent process is used to find the optimal weights. In some case, the value of the weights can be large so computing the exponential leads to overflow error in the \textit{logistic function}. In order to solve this problem, the equivalent function : 
+\begin{equation}
+f(x) = \frac{1}{2}+\frac{1}{2}\tanh \left(\frac{x}{2}\right)
+\end{equation} 
+is used.
 \subsection{Regularized logistic regression using gradient descent}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. 
+
+As in the case of \textit{ridge regression}, it's often more meaningful to have smaller value for the weights. To take this in account a \textit{regularization parameter} $\lambda \vert\vert w \vert\vert ^2$ is added to the loss function. It's gradient is the computed and the gradient descent process is used for the optimization.
 
 
 \section{Our Approach}
