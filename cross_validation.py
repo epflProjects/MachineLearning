@@ -55,7 +55,7 @@ def cross_validation(y, x, k_indices, k):
     y_range = np.arange(len(y))
     train_ind = np.delete(y_range, k_indices[k])
 
-    lambda_ = np.logspace(-10, 0, 100)
+    lambda_ = np.logspace(-8, 0, 100)
     #lambda_ = np.logspace(-5, 0, 15)
     best_lambda = 0.0
     best_perc = 0.0
