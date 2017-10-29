@@ -17,9 +17,10 @@ min_poly_degree = 8
 max_poly_degree = 13
 
 
+    y_clustered, initial_tx_clustered, ids_clustered, test_y_clustered, test_tx_clustered, test_ids_clustered = prepare_clusters(data_train, data_test)
 
 for i in range(min_poly_degree, max_poly_degree+1):
-    y_clustered, tx_clustered, ids_clustered, test_y_clustered, test_tx_clustered, test_ids_clustered = prepare_clusters(data_train, data_test)
+    tx_clustered = initial_tx_clustered
     coeffArr = [i, i, i, i] #np.full((4), i)
     tx_clustered, test_tx_clustered = preprocessing(tx_clustered, test_tx_clustered, coeffArr)
     w, perf_of_columns, predictions = search_best_polynomial_fit(i, y_clustered, tx_clustered, test_y_clustered, test_tx_clustered)
