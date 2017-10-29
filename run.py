@@ -40,5 +40,5 @@ test_ids, y_pred = zip(*sorted(zip(test_ids, y_pred)))
 print("--- csv created ---")
 
 # Output Data
-name = 'submission.csv'
+name = 'test_perf_submission.csv'
 create_csv_submission(test_ids, y_pred, name)
