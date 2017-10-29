@@ -16,12 +16,13 @@ best_perf_of_columns = [0, 0, 0, 0] #np.full((4), 0)
 min_poly_degree = 8
 max_poly_degree = 13
 
-y_clustered, tx_clustered, ids_clustered, test_y_clustered, test_tx_clustered, test_ids_clustered = prepare_clusters(data_train, data_test)
+
 
 for i in range(min_poly_degree, max_poly_degree+1):
+    y_clustered, tx_clustered, ids_clustered, test_y_clustered, test_tx_clustered, test_ids_clustered = prepare_clusters(data_train, data_test)
     coeffArr = [i, i, i, i] #np.full((4), i)
-    tx_clustered_, test_tx_clustered_ = preprocessing(tx_clustered, test_tx_clustered, coeffArr)
-    w, perf_of_columns, predictions = search_best_polynomial_fit(i, y_clustered, tx_clustered_, test_y_clustered, test_tx_clustered_)
+    tx_clustered, test_tx_clustered = preprocessing(tx_clustered, test_tx_clustered, coeffArr)
+    w, perf_of_columns, predictions = search_best_polynomial_fit(i, y_clustered, tx_clustered, test_y_clustered, test_tx_clustered)
     for index, el in enumerate(perf_of_columns):
         if el > best_perf_of_columns[index]:
             best_perf_of_columns[index] = el
