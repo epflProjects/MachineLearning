@@ -17,7 +17,7 @@ min_poly_degree = 8
 max_poly_degree = 13
 
 
-    y_clustered, initial_tx_clustered, ids_clustered, test_y_clustered, test_tx_clustered, test_ids_clustered = prepare_clusters(data_train, data_test)
+y_clustered, initial_tx_clustered, ids_clustered, test_y_clustered, test_tx_clustered, test_ids_clustered = prepare_clusters(data_train, data_test)
 
 for i in range(min_poly_degree, max_poly_degree+1):
     tx_clustered = initial_tx_clustered
@@ -25,15 +25,19 @@ for i in range(min_poly_degree, max_poly_degree+1):
     tx_clustered, test_tx_clustered = preprocessing(tx_clustered, test_tx_clustered, coeffArr)
     w, perf_of_columns, predictions = search_best_polynomial_fit(i, y_clustered, tx_clustered, test_y_clustered, test_tx_clustered)
     for index, el in enumerate(perf_of_columns):
+        # TODO print(el, ">", best_perf_of_columns[index])
         if el > best_perf_of_columns[index]:
             best_perf_of_columns[index] = el
             test_y_clustered[index] = predictions[index]
 
+print(best_perf_of_columns)
 # Post Processing
 test_ids = [item for sublist in test_ids_clustered for item in sublist]
 y_pred = [item for sublist in test_y_clustered for item in sublist]
+print("--- Post Processing ---")
 
 test_ids, y_pred = zip(*sorted(zip(test_ids, y_pred)))
+print("--- csv created ---")
 
 # Output Data
 name = 'submission.csv'
