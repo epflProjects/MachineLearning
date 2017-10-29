@@ -7,9 +7,8 @@ def addColumns(tx,n):
     """Extends the data matrix by adding the power of the columns"""
     ret = tx
 
-    for i in range(1,n):
-
-        if i >1:
+    for i in range(1, n):
+        if i > 1:
             ret = np.hstack((ret,tx**i))
         else:
          	ret = np.hstack([ret, np.ones((len(tx),1))])
