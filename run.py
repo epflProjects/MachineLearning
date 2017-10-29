@@ -13,8 +13,8 @@ data_test = load_csv_data('Data/test.csv', False)
 print("--- Data Loaded ---")
 
 best_perf_of_columns = [0, 0, 0, 0] #np.full((4), 0)
-min_poly_degree = 8
-max_poly_degree = 13
+min_poly_degree = 10
+max_poly_degree = 12
 
 
 y_clustered, initial_tx_clustered, ids_clustered, test_y_clustered, test_tx_clustered, test_ids_clustered = prepare_clusters(data_train, data_test)
