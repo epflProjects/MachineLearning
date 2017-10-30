@@ -36,7 +36,6 @@ else:
     (best_perf_of_columns, best_poly_degree_per_group, test_y_clustered), test_ids_clustered = preprocessing(data_train, data_test, null_array, null_array, best_poly_degree_per_group)
 
     print("--- Post Processing ---")
-    # Post Processing
     test_ids = [item for sublist in test_ids_clustered for item in sublist]
     y_pred = [item for sublist in test_y_clustered for item in sublist]
 
