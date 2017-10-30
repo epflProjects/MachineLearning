@@ -19,6 +19,7 @@ best_poly_degree_per_group = [9, 11, 11, 12] # [ 10, 11, 12, 12]
 
 test_y_clustered, test_ids_clustered = preprocessing(data_train, data_test, best_perf_of_columns, best_poly_degree_per_group)
 
+print("--- Post Processing ---")
 # Post Processing
 test_ids = [item for sublist in test_ids_clustered for item in sublist]
 y_pred = [item for sublist in test_y_clustered for item in sublist]
@@ -26,5 +27,6 @@ y_pred = [item for sublist in test_y_clustered for item in sublist]
 test_ids, y_pred = zip(*sorted(zip(test_ids, y_pred)))
 
 # Output Data
-name = 'seven_submission.csv'
+name = 'try_submission.csv'
 create_csv_submission(test_ids, y_pred, name)
+print("--- csv created ---")
