@@ -5,7 +5,7 @@ def search_best_polynomial_fit_per_group(data_train, data_test, min_degree, max_
     best_perf_of_columns = np.zeros(4)
     best_poly_degree_per_group = np.zeros(4)
     for number_columns in range(min_degree, max_degree + 1):
-        preprocessing(data_train, data_test, best_perf_of_columns, best_poly_degree_per_group)
+        test_y_clustered, test_ids_clustered = preprocessing(data_train, data_test, best_perf_of_columns, best_poly_degree_per_group)
     return test_y_clustered, test_ids_clustered
 
 def preprocessing(data_train, data_test, best_per_of_columns, best_number_of_colums):
