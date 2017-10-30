@@ -23,13 +23,16 @@ else:
     data_test = load_csv_data('Data/test.csv', False)
     print("--- Data Loaded ---")
 
-    """Uncomment this line to """
+    """Uncomment this line to search the best polynomial degree per PRI_jet_num groups using cross-validation and ridge regression
+        This function takes about 60 minutes with a good laptop"""
     #test_y_clustered, test_ids_clustered, best_poly_degree_per_group = search_best_polynomial_fit_per_group(data_train, data_test, 9, 12)
 
-    #best_perf_of_columns = [ 0.84521379, 0.80938564, 0.83928855, 0.83112254]
     null_array = [0, 0, 0, 0]
+    """Results of the search; search_best_polynomial_fit_per_group function"""
     best_poly_degree_per_group = [ 10, 11, 12, 12]
 
+    """Compute the predictions in searching for the optimal lambda for ridge regression
+        This function takes about 17 minutes with a good laptop"""
     test_y_clustered, test_ids_clustered = preprocessing(data_train, data_test, null_array, null_array, best_poly_degree_per_group)
 
     print("--- Post Processing ---")
@@ -40,6 +43,6 @@ else:
     test_ids, y_pred = zip(*sorted(zip(test_ids, y_pred)))
 
     # Output Data
-    name = 'try_submission.csv'
+    name = 'submission.csv'
     create_csv_submission(test_ids, y_pred, name)
     print("--- csv created ---")
