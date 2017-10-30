@@ -74,7 +74,7 @@ We tried using standardization of the columns but it appeared that it gave us sl
 In order to see the improvement, the cross-validation process was employed. In this way, we could see if at some point the data was overfitted by the model. To get a more meaningful evaluation function of the model, we created a function that return the percentage of good predicted entries. Combine with cross-validation, this tools really helped finding what was our best model.
 
 \subsection{Feature engineering}
-To get better results, we had the idea to fit the features not just linearly but with higher degree polynomials. To achieve this purpose, we extend the data by adding multiple times the data matrix at increasing powers. The risk was at certain point to overfit the data, but we could see this limit by using the cross validation. 
+To get better results, we had the idea to fit the features not just linearly but with higher degree polynomials. To achieve this purpose, we extend the data by adding multiple times the data matrix at increasing powers, we also added the product between columns. The risk was at certain point to overfit the data, but we could see this limit by using the cross validation. 
 
 \subsection{Model comparison}
 The different methods were used to get prediction from the data. Their efficiency were evaluate using the evaluation function. Only two given adequate results : \textit{least square} and \textit{ridge regression}. Sadly the four other needed fine tuning in order to work well and even with that they did not improve the results. 
@@ -87,7 +87,7 @@ The different methods were used to get prediction from the data. Their efficienc
  \KwResult{Predictions}
  Data is clustered into 4 groups as explained in the \textit{Preprocessing and data cleaning} subsection\;
 \For{Degrees up to 13}{
-Feature engineering (extending the matrix with additional degrees\;
+Feature engineering (extending the matrix with additional degrees) \;
 \For{Each of the 4 groups} {
 \For{Subgroup in cross validation} {
 Select best lambda and apply ridge regression\;
