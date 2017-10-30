@@ -1,10 +1,16 @@
 from preprocessing import *
 from cross_validation import *
 
+def search_best_polynomial_fit_per_group(data_train, data_test, min_degree, max_degree):
+    best_perf_of_columns = np.zeros(4)
+    best_poly_degree_per_group = np.zeros(4)
+    for number_columns in range(min_degree, max_degree + 1):
+        preprocessing(data_train, data_test, best_perf_of_columns, best_poly_degree_per_group)
+    return test_y_clustered, test_ids_clustered
+
 def preprocessing(data_train, data_test, best_per_of_columns, best_number_of_colums):
     y, tx, ids = data_train
     test_y, test_tx,test_ids = data_test
-
 
     PRI_jet_num_colomn_train = tx[:, 22]
     PRI_jet_num_colomn_test = test_tx[:, 22]
@@ -17,19 +23,19 @@ def preprocessing(data_train, data_test, best_per_of_columns, best_number_of_col
     test_ids_clustered = list()
 
     for i in range(4):
-        indices = [ind for ind,a in enumerate(PRI_jet_num_colomn_train) if a == i]
+        indices = [ind for ind, a in enumerate(PRI_jet_num_colomn_train) if a == i]
 
         y_clustered.append(y[indices])
         tx_clustered.append(tx[indices])
         ids_clustered.append(ids[indices])
 
-        test_indices = [ind for ind,a in enumerate(PRI_jet_num_colomn_test) if a == i]
+        test_indices = [ind for ind, a in enumerate(PRI_jet_num_colomn_test) if a == i]
 
         test_y_clustered.append(test_y[test_indices])
         test_tx_clustered.append(test_tx[test_indices])
         test_ids_clustered.append(test_ids[test_indices])
 
-        #delete colinear columns and preprocess the data
+        # delete colinear columns and preprocess the data
         indices_to_delete = list()
         for col in range(tx_clustered[i].shape[1]):
             if min(tx_clustered[i][:, col]) == max(tx_clustered[i][:, col]):
