@@ -2,11 +2,6 @@ from preprocessing import *
 from cross_validation import *
 
 def search_best_polynomial_fit_per_group(data_train, data_test, min_degree, max_degree):
-    """Research best polynomial degree per group
-
-    Returns
-        
-        """
     best_perf_of_columns = np.zeros(4)
     best_poly_degree_per_group = np.zeros(4)
     for number_columns in range(min_degree, max_degree + 1):
@@ -15,7 +10,6 @@ def search_best_polynomial_fit_per_group(data_train, data_test, min_degree, max_
     return test_y_clustered, test_ids_clustered, best_poly_degree_per_group
 
 def preprocessing(data_train, data_test, best_per_of_columns, best_number_of_colums, degree_per_group):
-    """""""
     y, tx, ids = data_train
     test_y, test_tx,test_ids = data_test
 
@@ -59,11 +53,7 @@ def preprocessing(data_train, data_test, best_per_of_columns, best_number_of_col
 
 
 def run_cross_validation(tx_clustered, y_clustered, test_tx_clustered, test_y_clustered, best_per_of_columns, best_number_of_colums, degree):
-"""Perform cross-validation
 
-Returns
-    A list of the best performance per group, a list of the best performance per group
-    and test_y clustered"""
     w = list()
     result = list()
 
