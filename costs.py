@@ -13,4 +13,4 @@ def percentageGood(y, tx,w):
     y_pred = predict_labels(w,tx)
     N = len(y)
     e = (y+y_pred)/2
-    return e @ e /N
+    return e.dot(e) / N

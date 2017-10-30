@@ -9,7 +9,7 @@ def cross_validation_run(tx, y):
     """Perform the 4 groups cross-validation
 
     Returns
-        An array of weights, the loss and the percentage of good predictions"""
+        A list of weights, the loss and the percentage of good predictions"""
 
     seed = 1
     k_fold = 4
@@ -36,7 +36,7 @@ def build_k_indices(y, k_fold, seed):
     """build k indices for k-fold.
 
     Returns
-        An array of indices corresponding to each fold"""
+        A array of indices corresponding to each fold"""
     num_row = y.shape[0]
     interval = int(num_row / k_fold)
     np.random.seed(seed)
@@ -50,7 +50,7 @@ def cross_validation(y, x, k_indices, k):
     """ Cross Validation on our train sample using ridge regression
 
     Returns
-        An array of weights, the loss and the percentage of good predictions"""
+        The loss, an array of weights and the percentage of good predictions"""
 
     y_range = np.arange(len(y))
     train_ind = np.delete(y_range, k_indices[k])

@@ -1,6 +1,7 @@
 import numpy as np
 
 def prepro(M,c):
+    """Applies the different preprocessing functions (see below)"""
     return add_product_between_columns(addColumns(M, c), M)
 
 def addColumns(tx,n):
