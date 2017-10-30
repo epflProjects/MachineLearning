@@ -23,6 +23,5 @@ def add_product_between_columns(M, tx):
 
     for i in range(n):
         ret = np.hstack((ret, np.multiply(tx[:, i], tx.T).T))
-    for i in range(n):
-        ret = np.hstack((ret, np.add(tx[:, i], tx.T).T))
+
     return ret

@@ -53,7 +53,6 @@ def preprocessing(data_train, data_test, best_per_of_columns, best_number_of_col
 
 
 def run_cross_validation(tx_clustered, y_clustered, test_tx_clustered, test_y_clustered, best_per_of_columns, best_number_of_colums, degree):
-
     w = list()
     result = list()
 
