@@ -21,9 +21,11 @@ y_clustered, initial_tx_clustered, ids_clustered, test_y_clustered, initial_test
 
 for i in range(min_poly_degree, max_poly_degree+1):
     tx_clustered = initial_tx_clustered
+    print("before: ",len(initial_tx_clustered))
     test_tx_clustered = initial_test_tx_clustered
     coeffArr = [i, i, i, i] #np.full((4), i)
     tx_clustered, test_tx_clustered = preprocessing(tx_clustered, test_tx_clustered, coeffArr)
+    print("after:", len(initial_tx_clustered), len(tx_clustered))
     w, perf_of_columns, predictions = search_best_polynomial_fit(i, y_clustered, tx_clustered, test_y_clustered, test_tx_clustered)
     for index, el in enumerate(perf_of_columns):
         # TODO print(el, ">", best_perf_of_columns[index])
