@@ -23,17 +23,19 @@ The goal of this project is to characterize events measured by CERN colliders to
 
 \section{Introduction}
 
-All the data measured at the CERN the last three years takes about 100 petaoctets \cite{CERN}. To treat this huge amount of data, state of the art algorithms are required. Machine Learning methods are particullarly well suited for this kind of problems.
+All the data measured at the CERN the last three years takes about 100 petabytes \cite{CERN}. To treat this huge amount of data, state of the art algorithms are required. Machine Learning methods are particularly well suited for this kind of problems.
 
 \section{The Structure of a Paper}
 
 \begin{description}
 \item[ML Methods] \ \\
-  An explanation on the way we implemented the 6 traditional machine learning methods.
+  The 6 traditional machine learning methods.
 \item[Our approach] \ \\
-  A descritption of the different steps from the raw data to the results.
+  An explanation of the preprocessing we did and details on some techniques we used in our code.
+\item[Procedure] \ \\
+  A summary of the steps from raw data to the results.
 \item[Results] \ \\
-  A short comment on the obtained results and the difficulties we encountered.
+  A comment on the results and possible improvement.
 \end{description}
 
 
@@ -97,8 +99,6 @@ Recombine the data of all groups\;
 Return the prediction\;
 \end{algorithm}
 
-\newpage
-
 \section{Results}
 As mentionned in the \textit{Preprocessing and data cleaning} subsection standardization didn't give good result and lead to the 2 score falls in submissions 3 and 6.
 
@@ -120,7 +120,9 @@ The table below explains the different steps we took to improve the predictions 
 
 
 \section{Conclusion}
-Machine Learning methods coupled with feature engineering have given great results as more of 83\% of the entries have been well categorized. In particular \textit{ridge regression} was well suited for this set of data, and the better improvement in the categorization process was observed when the data was fitted with polynomials.
+Machine Learning methods coupled with feature engineering have given great results as more of 83\% of the entries have been well categorized. In particular \textit{ridge regression} was well suited for this data set, and the best improvement in the categorization process was observed when the data was fitted with polynomials.
+
+A lead to investigate to improve the results would be to find a specific way to increase the prediction quality for the group with \texttt{PRI\_jet\_num = 1} since this cluster currently has an accuracy rate of ~80\% in comparison to the overall result of more than 83\%.
 
 
 \begin{thebibliography}{9}
