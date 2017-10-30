@@ -33,7 +33,7 @@ else:
 
     """Compute the predictions in searching for the optimal lambda for ridge regression
         This function takes about 17 minutes with a good laptop"""
-    test_y_clustered, test_ids_clustered = preprocessing(data_train, data_test, null_array, null_array, best_poly_degree_per_group)
+    (best_perf_of_columns, best_poly_degree_per_group, test_y_clustered), test_ids_clustered = preprocessing(data_train, data_test, null_array, null_array, best_poly_degree_per_group)
 
     print("--- Post Processing ---")
     # Post Processing
