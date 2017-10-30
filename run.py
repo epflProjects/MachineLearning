@@ -23,24 +23,19 @@ else:
     data_test = load_csv_data('Data/test.csv', False)
     print("--- Data Loaded ---")
 
-    best_perf_of_columns = np.full((4), 0)
-    min_poly_degree = 8
-    max_poly_degree = 13
+    """Uncomment this line to search the best polynomial degree per PRI_jet_num groups using cross-validation and ridge regression
+        This function takes about 60 minutes with a good laptop"""
+    #test_y_clustered, test_ids_clustered, best_poly_degree_per_group = search_best_polynomial_fit_per_group(data_train, data_test, 9, 12)
 
-    y_clustered, normalTX, ids_clustered, test_y_clustered, normal_test_tx_clustered, test_ids_clustered = prepare_clusters(data_train, data_test)
+    null_array = [0, 0, 0, 0]
+    """Results of the search; search_best_polynomial_fit_per_group function"""
+    best_poly_degree_per_group = [ 10, 11, 12, 12]
 
-    for i in range(min_poly_degree, max_poly_degree+1):
-        tx_clustered = normalTX
-        test_tx_clustered = normal_test_tx_clustered
-        coeffArr = np.full((4), i)
-        tx_clustered, test_tx_clustered = preprocessing(tx_clustered, test_tx_clustered, coeffArr)
-        w, perf_of_columns, predictions = search_best_polynomial_fit(i, y_clustered, tx_clustered, test_y_clustered, test_tx_clustered)
-        for index, el in enumerate(perf_of_columns):
-            if el > best_perf_of_columns[index]:
-                best_perf_of_columns[index] = el
-                test_y_clustered[index] = predictions[index]
+    """Compute the predictions in searching for the optimal lambda for ridge regression
+        This function takes about 17 minutes with a good laptop"""
+    (best_perf_of_columns, best_poly_degree_per_group, test_y_clustered), test_ids_clustered = preprocessing(data_train, data_test, null_array, null_array, best_poly_degree_per_group)
 
-    # Post Processing
+    print("--- Post Processing ---")
     test_ids = [item for sublist in test_ids_clustered for item in sublist]
     y_pred = [item for sublist in test_y_clustered for item in sublist]
 
@@ -49,3 +44,4 @@ else:
     # Output Data
     name = 'submission.csv'
     create_csv_submission(test_ids, y_pred, name)
+    print("--- csv created ---")

@@ -96,7 +96,7 @@ def reg_logistic_regression(y, tx, lambda_, initial_w, max_iters, gamma):
 
     Returns
         The loss and an array of weights"""
-        
+
     w = initial_w
     losses = []
     threshold = 1e-8
