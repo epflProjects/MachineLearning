@@ -100,6 +100,9 @@ ENV/
 # mypy
 .mypy_cache/
 
+# Data folder
+Data/
+
 # Data too big 
 Data/test.csv
 
