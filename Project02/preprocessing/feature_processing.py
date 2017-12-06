@@ -7,17 +7,15 @@ words       = [line.rstrip() for line in open('vocab_cut.txt')]
 
 train       = train_pos + train_neg
 features    = []
-labels      = np.zeros(len(train));
+labels      = [];
 
-labels[1:len(train_pos)] = 1 
 
 # TODO: normalise word vectors
 k = 0
 for tweet in train:
-    k+=1
+
     if k%1000 == 0:
         print(k, " tweets have been transformed")
-
     split = str.split(tweet, ' ')
     n_words = len(split)
     sigma = 0
@@ -31,9 +29,15 @@ for tweet in train:
                 continue
     try:
         features.append(sigma / n_words)    # get the average of the word vectors
+        if k < len(train_pos):
+            labels.append(1)
+        else :
+            labels.append(0)
+
     except ZeroDivisionError:
         continue    # Tweet did not contain any words in our vocab
         # TODO: how should we handle these cases?
+    k+=1    
 
 np.save('features', features)
 np.save('labels', labels)
