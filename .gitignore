@@ -109,3 +109,9 @@ Data/test.csv
 # DS_store 
 .DS_Store
 Data/.DS_Store
+Project02/preprocessing/twitter-datasets/sample_submission.csv
+Project02/preprocessing/twitter-datasets/test_data.txt
+Project02/preprocessing/twitter-datasets/train_neg.txt
+Project02/preprocessing/twitter-datasets/train_neg_full.txt
+Project02/preprocessing/twitter-datasets/train_pos.txt
+Project02/preprocessing/twitter-datasets/train_pos_full.txt
