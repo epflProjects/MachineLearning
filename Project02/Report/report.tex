@@ -1,0 +1,79 @@
+\documentclass[10pt,conference,compsocconf]{IEEEtran}
+
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage[]{algorithm2e}
+\usepackage{placeins}
+
+\begin{document}
+\title{Machine Learning - Project 1}
+\author{
+ Alexander Holloway - Bastian Nanchen - Arnaud Pannatier 
+  \\
+  \textit{Group : }Max and Lily learn ML \\
+  \textit{EPFL 2017}
+}
+\maketitle
+
+\begin{abstract}
+The goal of this project is to characterize events measured by CERN colliders to detect Higgs bosons which play a fundamental role in particles physics. Using machine learning methods we achieved to classify the CERN measures with an 83\% accuracy.
+
+\end{abstract}
+
+\section{Introduction}
+
+
+\section{The Structure of a Paper}
+
+\begin{description}
+\item[ML Methods] \ \\
+  The 6 traditional machine learning methods.
+\item[Our approach] \ \\
+  An explanation of the preprocessing we did and details on some techniques we used in our code.
+\item[Procedure] \ \\
+  A summary of the steps from raw data to the results.
+\item[Results] \ \\
+  A comment on the results and possible improvement.
+\end{description}
+
+
+\section{ML Methods seen in Class}
+\section{Our Approach}
+
+
+\section{Procedure}
+
+\begin{algorithm}[h]
+\DontPrintSemicolon
+\KwData{The CSV file containing the data to classify}
+ \KwResult{Predictions}
+ Data is clustered into 4 groups as explained in the \textit{Preprocessing and data cleaning} subsection\;
+\For{Degrees up to 13}{
+Feature engineering (extending the matrix with additional degrees) \;
+\For{Each of the 4 groups} {
+\For{Subgroup in cross validation} {
+Select best lambda and apply ridge regression\;
+}
+Remember the best prediction\;
+}
+}
+Recombine the data of all groups\;
+Return the prediction\;
+\end{algorithm}
+
+\section{Results}
+
+
+
+\section{Conclusion}
+
+\begin{thebibliography}{9}
+\bibitem{CERN}
+Cian O'Luanaigh, \textit{Le centre de données du CERN franchit les 100 pétaoctets} \\
+consulted the 28.10.17 at \url{https://home.cern/fr/about/updates/2013/02/cern-data-centre-passes-100-petabytes}
+\end{thebibliography}
+
+
+\end{document}
+
+
