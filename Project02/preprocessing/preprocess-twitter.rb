@@ -38,9 +38,9 @@ def tokenize input
 			# TODO: determine if the end letter should be repeated once or twice (use lexicon/dict)
 			$~[1] + $~[2] + " <ELONG>"
 		}
-		.gsub(/([^a-z0-9()<>'`\-]){2,}/){ |word|
-			"#{word.downcase} <ALLCAPS>"
-		}
+		#.gsub(/([^a-z0-9()<>'`\-]){2,}/){ |word|
+		#	"#{word.downcase} <ALLCAPS>"
+		#}
 
 	return input
 end
