@@ -136,7 +136,7 @@ with tf.Graph().as_default():
         saver = tf.train.Saver(tf.global_variables(), max_to_keep=FLAGS.num_checkpoints)
 
         # Write vocabulary
-        #vocab_processor.save(os.path.join(out_dir, "vocab"))
+        vocab_processor.save(os.path.join(out_dir, "vocab"))
 
         # Initialize all variables
         sess.run(tf.global_variables_initializer())
@@ -146,7 +146,7 @@ with tf.Graph().as_default():
     # initial matrix with random uniform
         initW = np.random.uniform(-0.25,0.25,(len(vocab_processor.vocabulary_), FLAGS.embedding_dim))
         # load any vectors from the word2vec
-        print("Load word2vec file\n")
+        print("Load embeddings file\n")
         with open("embeddings/final.txt") as f:
             header = f.readline()
             vocab_size, layer1_size = map(int, header.split())
