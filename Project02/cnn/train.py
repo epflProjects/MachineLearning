@@ -6,7 +6,7 @@ import os
 import time
 import datetime
 import data_helpers
-from text_cnn import TextCNN
+from cnn import TextCNN
 from tensorflow.contrib import learn
 
 # Parameters
@@ -14,8 +14,8 @@ from tensorflow.contrib import learn
 
 # Data loading params
 tf.flags.DEFINE_float("dev_sample_percentage", .1, "Percentage of the training data to use for validation")
-tf.flags.DEFINE_string("positive_data_file", "./data/rt-polaritydata/rt-polarity.pos", "Data source for the positive data.")
-tf.flags.DEFINE_string("negative_data_file", "./data/rt-polaritydata/rt-polarity.neg", "Data source for the negative data.")
+tf.flags.DEFINE_string("positive_data_file", "./data/train_pos.txt", "Data source for the positive data.")
+tf.flags.DEFINE_string("negative_data_file", "./data/train_neg.txt", "Data source for the negative data.")
 
 # Model Hyperparameters
 tf.flags.DEFINE_integer("embedding_dim", 200, "Dimensionality of character embedding (default: 128)")
@@ -41,6 +41,9 @@ for attr, value in sorted(FLAGS.__flags.items()):
     print("{}={}".format(attr.upper(), value))
 print("")
 
+# TODO Variables
+embeddings_dimension = 200
+
 
 # Data Preparation
 # ==================================================
@@ -51,6 +54,7 @@ x_text, y = data_helpers.load_data_and_labels(FLAGS.positive_data_file, FLAGS.ne
 
 # Build vocabulary
 max_document_length = max([len(x.split(" ")) for x in x_text])
+# [line.rstrip() for line in open("embeddings/train_full_vocab.txt")]
 vocab_processor = learn.preprocessing.VocabularyProcessor(max_document_length)
 x = np.array(list(vocab_processor.fit_transform(x_text)))
 
@@ -70,7 +74,6 @@ del x, y, x_shuffled, y_shuffled
 
 print("Vocabulary Size: {:d}".format(len(vocab_processor.vocabulary_)))
 print("Train/Dev split: {:d}/{:d}".format(len(y_train), len(y_dev)))
-
 
 # Training
 # ==================================================
@@ -133,10 +136,36 @@ with tf.Graph().as_default():
         saver = tf.train.Saver(tf.global_variables(), max_to_keep=FLAGS.num_checkpoints)
 
         # Write vocabulary
-        vocab_processor.save(os.path.join(out_dir, "vocab"))
+        #vocab_processor.save(os.path.join(out_dir, "vocab"))
 
         # Initialize all variables
         sess.run(tf.global_variables_initializer())
+        # Embeddings loading
+        # initial matrix with random uniform
+
+    # initial matrix with random uniform
+        initW = np.random.uniform(-0.25,0.25,(len(vocab_processor.vocabulary_), FLAGS.embedding_dim))
+        # load any vectors from the word2vec
+        print("Load word2vec file\n")
+        with open("embeddings/final.txt") as f:
+            header = f.readline()
+            vocab_size, layer1_size = map(int, header.split())
+            binary_len = np.dtype('float32').itemsize * layer1_size
+            for line in range(vocab_size):
+                word = []
+                while True:
+                    ch = f.read(1)
+                    if ch == ' ':
+                        word = ''.join(word)
+                        break
+                    if ch != '\n':
+                        word.append(ch)
+                idx = vocab_processor.vocabulary_.get(word)
+                if idx != 0:
+                    initW[idx] = np.fromstring(f.readline())
+                else:
+                    f.readline()
+        sess.run(cnn.W.assign(initW))
 
         def train_step(x_batch, y_batch):
             """

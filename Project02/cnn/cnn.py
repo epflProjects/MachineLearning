@@ -1,24 +1,33 @@
-import tenserflow as tf
+import tensorflow as tf
 import numpy as np
 
-embeddings  = np.load('embeddings.npy')
-train_pos   = [line.rstrip() for line in open('twitter-datasets/train_pos_full.txt')]
-train_neg   = [line.rstrip() for line in open('twitter-datasets/train_neg_full.txt')]
-test        = [line.split(',',1)[1].rstrip() for line in open('twitter-datasets/test_data.txt')]
-words       = [line.rstrip() for line in open('vocab_cut.txt')]
 
-class TweetCNN(object):
-    def __init__(self, sequence_length, num_classes, vocab_size, embedding_size, filter_sizes, num_filters):
-        self.input_x = tf.placeholder(tf.int32, [Non, sequence_length], name="input_x")
-        self.input_y = tf.placeholder(tf.float32, [Non, num_classes], name="input_y")
+class TextCNN(object):
+    """
+    A CNN for text classification.
+    Uses an embedding layer, followed by a convolutional, max-pooling and softmax layer.
+    """
+    def __init__(
+      self, sequence_length, num_classes, vocab_size,
+      embedding_size, filter_sizes, num_filters, l2_reg_lambda=0.0):
+
+        # Placeholders for input, output and dropout
+        self.input_x = tf.placeholder(tf.int32, [None, sequence_length], name="input_x")
+        self.input_y = tf.placeholder(tf.float32, [None, num_classes], name="input_y")
         self.dropout_keep_prob = tf.placeholder(tf.float32, name="dropout_keep_prob")
+        self.W = tf.Variable(tf.random_uniform([vocab_size, embedding_size], -1.0, 1.0), name="W")
+        self.embedded_chars = tf.nn.embedding_lookup(self.W, self.input_x)
+
+        # Keeping track of l2 regularization loss (optional)
+        l2_loss = tf.constant(0.0)
 
         # Embedding layer
         with tf.device('/cpu:0'), tf.name_scope("embedding"):
             self.W = tf.Variable(
-                tf.random_uniform([vocab_size, embedding_size], -1.0, 1.0), name="W")
+                tf.random_uniform([vocab_size, embedding_size], -1.0, 1.0),
+                name="W")
             self.embedded_chars = tf.nn.embedding_lookup(self.W, self.input_x)
-            self.embedded_chars_expanded = tf.expand_dims(self.embedded_chars, -1
+            self.embedded_chars_expanded = tf.expand_dims(self.embedded_chars, -1)
 
         # Create a convolution + maxpool layer for each filter size
         pooled_outputs = []
@@ -45,7 +54,7 @@ class TweetCNN(object):
                     name="pool")
                 pooled_outputs.append(pooled)
 
-                # Combine all the pooled features
+        # Combine all the pooled features
         num_filters_total = num_filters * len(filter_sizes)
         self.h_pool = tf.concat(pooled_outputs, 3)
         self.h_pool_flat = tf.reshape(self.h_pool, [-1, num_filters_total])

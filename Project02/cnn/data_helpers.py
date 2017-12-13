@@ -24,6 +24,21 @@ def clean_str(string):
     string = re.sub(r"\s{2,}", " ", string)
     return string.strip().lower()
 
+def load_text_data(data_file):
+    """
+    Loads MR polarity data from files, splits the data into words and generates labels.
+    Returns split sentences and labels.
+    """
+    # Load data from files
+    examples = list(open(data_file, "r").readlines())
+    examples = [s.strip() for s in examples]
+
+    # Split by words
+    x_text = examples
+    x_text = [clean_str(sent) for sent in x_text]
+
+    return [x_text, None]
+
 
 def load_data_and_labels(positive_data_file, negative_data_file):
     """
