@@ -9,18 +9,33 @@ import data_helpers
 from cnn import TextCNN
 from tensorflow.contrib import learn
 
+os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
+
 # Parameters
 # ==================================================
 
+positive_data = "./data/preprocess_train_pos.txt"
+negative_data = "./data/preprocess_train_neg.txt"
+
+embeddings_dimension = 200
+filter_sizes = "3,4,5"
+filter_numbers = 10 # TODO originally 128
+dropout_keep_proba = 0.5
+l2 = 0.0 # TODO try with 0.1 and suggest to modify it after each training step
+batch_size = 64
+epoch_numbers = 200
+
+
+
 # Data loading params
 tf.flags.DEFINE_float("dev_sample_percentage", .1, "Percentage of the training data to use for validation")
-tf.flags.DEFINE_string("positive_data_file", "./data/train_pos.txt", "Data source for the positive data.")
-tf.flags.DEFINE_string("negative_data_file", "./data/train_neg.txt", "Data source for the negative data.")
+tf.flags.DEFINE_string("positive_data_file", "./data/preprocess_train_pos.txt", "Data source for the positive data.")
+tf.flags.DEFINE_string("negative_data_file", "./data/preprocess_train_neg.txt", "Data source for the negative data.")
 
 # Model Hyperparameters
 tf.flags.DEFINE_integer("embedding_dim", 200, "Dimensionality of character embedding (default: 128)")
 tf.flags.DEFINE_string("filter_sizes", "3,4,5", "Comma-separated filter sizes (default: '3,4,5')")
-tf.flags.DEFINE_integer("num_filters", 128, "Number of filters per filter size (default: 128)")
+tf.flags.DEFINE_integer("num_filters", 10, "Number of filters per filter size (default: 128)") # TODO 128
 tf.flags.DEFINE_float("dropout_keep_prob", 0.5, "Dropout keep probability (default: 0.5)")
 tf.flags.DEFINE_float("l2_reg_lambda", 0.0, "L2 regularization lambda (default: 0.0)")
 
@@ -147,7 +162,7 @@ with tf.Graph().as_default():
         initW = np.random.uniform(-0.25,0.25,(len(vocab_processor.vocabulary_), FLAGS.embedding_dim))
         # load any vectors from the word2vec
         print("Load embeddings file\n")
-        with open("embeddings/final.txt") as f:
+        with open("embeddings/glove.twitter.27B.200d.txt") as f:
             header = f.readline()
             vocab_size, layer1_size = map(int, header.split())
             binary_len = np.dtype('float32').itemsize * layer1_size
@@ -162,7 +177,7 @@ with tf.Graph().as_default():
                         word.append(ch)
                 idx = vocab_processor.vocabulary_.get(word)
                 if idx != 0:
-                    initW[idx] = np.fromstring(f.readline())
+                    initW[idx] = np.fromstring(f.readline(), sep=" ") # TODO string size must be a multiple of element size
                 else:
                     f.readline()
         sess.run(cnn.W.assign(initW))
