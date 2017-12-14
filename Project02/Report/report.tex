@@ -4,6 +4,7 @@
 \usepackage{graphicx}
 \usepackage[]{algorithm2e}
 \usepackage{placeins}
+\usepackage[usenames, dvipsnames]{color}
 
 \begin{document}
 \title{Machine Learning - Project 1}
@@ -16,14 +17,8 @@
 \maketitle
 
 \begin{abstract}
-The goal of this project is to characterize events measured by CERN colliders to detect Higgs bosons which play a fundamental role in particles physics. Using machine learning methods we achieved to classify the CERN measures with an 83\% accuracy.
-
+Sentiment classification is an active area of research in the field of machine learning. Here, we present the results of a study into supervised learning methods for classifying the emotional senitment of Tweets -- either positive, or negative -- according to the presence of an emoticon. To this end, we leverage state-of-the-art pre-processing and feature engineering methods, and provide a comparison of learning methods that make use of the resultant features. Finally, we describe in detail the best model we identified for this purpose: \textcolor{blue}{Convolutional neural network, I suppose}, which achieved \textcolor{blue}{x accuracy} on unseen data.
 \end{abstract}
-
-\section{Introduction}
-
-
-\section{The Structure of a Paper}
 
 \begin{description}
 \item[Preprocessing the data] \ \\
@@ -36,18 +31,15 @@ Description of the different methods that were used as : Logistic regression, CN
 Presenation of the results of the differents methods.
 \item[Discussion] \ \\
  A comment on the results and possible improvement.  
-
 \end{description}
 
-
-\section{Preprocessing the data}
-\section{Data}
-\section{Classification Methods}
-\section{Results}
-\section{Discussion}
-\section{Conclusion}
-
-
+\input{sec-processing}
+\input{sec-data}
+\input{sec-methods}
+\input{sec-results}
+\input{sec-discussion}
+\bibliographystyle{IEEEtran}
+\bibliography{report}
 
 %\begin{algorithm}[h]
 %\DontPrintSemicolon
@@ -73,7 +65,4 @@ Presenation of the results of the differents methods.
 %consulted the 28.10.17 at \url{https://home.cern/fr/about/updates/2013/02/cern-data-centre-passes-100-petabytes}
 %\end{thebibliography}
 
-
 \end{document}
-
-
