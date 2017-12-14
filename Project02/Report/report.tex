@@ -26,52 +26,52 @@ The goal of this project is to characterize events measured by CERN colliders to
 \section{The Structure of a Paper}
 
 \begin{description}
-\item[ML Methods] \ \\
-  The 6 traditional machine learning methods.
-\item[Our approach] \ \\
-  An explanation of the preprocessing we did and details on some techniques we used in our code.
-\item[Procedure] \ \\
-  A summary of the steps from raw data to the results.
+\item[Preprocessing the data] \ \\
+List of operation that was used to transform the raw data.
+\item[Data] \ \\
+Transforming the preprocessed text data into more practical format. 
+\item[Classification Methods] \ \\
+Description of the different methods that were used as : Logistic regression, CNN, ...
 \item[Results] \ \\
-  A comment on the results and possible improvement.
+Presenation of the results of the differents methods.
+\item[Discussion] \ \\
+ A comment on the results and possible improvement.  
+
 \end{description}
 
 
-\section{ML Methods seen in Class}
-\section{Our Approach}
-
-
-\section{Procedure}
-
-\begin{algorithm}[h]
-\DontPrintSemicolon
-\KwData{The CSV file containing the data to classify}
- \KwResult{Predictions}
- Data is clustered into 4 groups as explained in the \textit{Preprocessing and data cleaning} subsection\;
-\For{Degrees up to 13}{
-Feature engineering (extending the matrix with additional degrees) \;
-\For{Each of the 4 groups} {
-\For{Subgroup in cross validation} {
-Select best lambda and apply ridge regression\;
-}
-Remember the best prediction\;
-}
-}
-Recombine the data of all groups\;
-Return the prediction\;
-\end{algorithm}
-
+\section{Preprocessing the data}
+\section{Data}
+\section{Classification Methods}
 \section{Results}
-
-
-
+\section{Discussion}
 \section{Conclusion}
 
-\begin{thebibliography}{9}
-\bibitem{CERN}
-Cian O'Luanaigh, \textit{Le centre de données du CERN franchit les 100 pétaoctets} \\
-consulted the 28.10.17 at \url{https://home.cern/fr/about/updates/2013/02/cern-data-centre-passes-100-petabytes}
-\end{thebibliography}
+
+
+%\begin{algorithm}[h]
+%\DontPrintSemicolon
+%\KwData{The CSV file containing the data to classify}
+% \KwResult{Predictions}
+% Data is clustered into 4 groups as explained in the \textit{Preprocessing and data cleaning} subsection\;
+%\For{Degrees up to 13}{
+%Feature engineering (extending the matrix with additional degrees) \;
+%\For{Each of the 4 groups} {
+%\For{Subgroup in cross validation} {
+%Select best lambda and apply ridge regression\;
+%}
+%Remember the best prediction\;
+%}
+%}
+%Recombine the data of all groups\;
+%Return the prediction\;
+%\end{algorithm}
+
+%\begin{thebibliography}{9}
+%\bibitem{CERN}
+%Cian O'Luanaigh, \textit{Le centre de données du CERN franchit les 100 pétaoctets} \\
+%consulted the 28.10.17 at \url{https://home.cern/fr/about/updates/2013/02/cern-data-centre-passes-100-petabytes}
+%\end{thebibliography}
 
 
 \end{document}
