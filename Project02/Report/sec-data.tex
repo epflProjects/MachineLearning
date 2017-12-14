@@ -1,0 +1,8 @@
+\section{Data}
+\label{sec:data}
+
+The data supplied through the online competition platform consists of 2.5 million labelled training examples, which take the form of Tweets that previously contained either positive or negative emoticons. The dataset is split down the middle, with 1.25 million training examples available for each class---positive and negative. Contrary to other similar classification tasks presented in the literature \textcolor{blue}{(citations here)}, there are no ``neutral'' class labels in this dataset. The absence of such indeterminate class labels allows us to formulate this problem as a binary classification task, which is advantageous.
+
+Due to the nature of the Twitter platform, the dataset contains many ``words'' that do not belong in a tradition English lexicon. Examples of these are usernames, URLs, hashtags, colloquialisms or slang, and even typographical errors (both intential and unintentional). Usernames and URLs were already stripped from the data, however the presence of other artefacts poses both issues and opportunities for this classification task. For example, the presence of repeated punctuation marks or characters may not make syntactic sense in trational language, but more often than not has semantic meaning within a Tweet \textcolor{blue}{(citation)}. Similarly, hashtags can provide significant predictive power for the sentiment of phrase, without containing meaning in a traditional pragmatic sense.
+
+A detailed explanation of the specific language artefacts we processed, and the ways in which we leveraged them to improve classification performnce is presented in Section \ref{sec:processing}.
