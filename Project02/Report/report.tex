@@ -4,6 +4,7 @@
 \usepackage{graphicx}
 \usepackage[]{algorithm2e}
 \usepackage{placeins}
+\usepackage[english]{babel}
 \usepackage[usenames, dvipsnames]{color}
 
 \begin{document}
@@ -21,10 +22,10 @@ Sentiment classification is an active area of research in the field of machine l
 \end{abstract}
 
 \begin{description}
-\item[Preprocessing the data] \ \\
-List of operation that was used to transform the raw data.
 \item[Data] \ \\
 Transforming the preprocessed text data into more practical format. 
+\item[Preprocessing the data] \ \\
+List of operation that was used to transform the raw data.
 \item[Classification Methods] \ \\
 Description of the different methods that were used as : Logistic regression, CNN, ...
 \item[Results] \ \\
@@ -33,36 +34,13 @@ Presenation of the results of the differents methods.
  A comment on the results and possible improvement.  
 \end{description}
 
-\input{sec-processing}
 \input{sec-data}
+\input{sec-processing}
 \input{sec-methods}
 \input{sec-results}
 \input{sec-discussion}
+
 \bibliographystyle{IEEEtran}
 \bibliography{report}
-
-%\begin{algorithm}[h]
-%\DontPrintSemicolon
-%\KwData{The CSV file containing the data to classify}
-% \KwResult{Predictions}
-% Data is clustered into 4 groups as explained in the \textit{Preprocessing and data cleaning} subsection\;
-%\For{Degrees up to 13}{
-%Feature engineering (extending the matrix with additional degrees) \;
-%\For{Each of the 4 groups} {
-%\For{Subgroup in cross validation} {
-%Select best lambda and apply ridge regression\;
-%}
-%Remember the best prediction\;
-%}
-%}
-%Recombine the data of all groups\;
-%Return the prediction\;
-%\end{algorithm}
-
-\begin{thebibliography}{9}
-\bibitem{GloVe} 
-"GloVe: Global Vectors for Word Representation." Accessed December 14, 2017.
-https://nlp.stanford.edu/projects/glove/.
-\end{thebibliography}
 
 \end{document}
