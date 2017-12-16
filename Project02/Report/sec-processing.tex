@@ -1,18 +1,29 @@
 \section{Feature processing}
 \label{sec:processing}
-In order to train learning models using the Twitter data, it was necessary to perform pre-processing to create useful features that characterise the two classes we seek to disambiguate. The dataset that was provided include some basic preprocessing but additional transformation were performed in order to improve our classification performance. Some transformations are inspired by the Glove documentation \cite{Glove}. 
+In order to train learning models using the Twitter data, it was necessary to perform pre-processing to create useful features that characterise the two classes we seek to disambiguate. To this end, we employed pre-processing that broadly fits into two categories: Tweet transformation, and transformation to word-embeddings.
 
-\subsection{Base transformations}
+\subsection{Tweet transformation}
+The dataset that was provided had already undergone some basic Tweet transformation pre-processing, but additional transformations were performed in order to improve our classification performance. The following transformations were inspired by the GloVe documentation \cite{pennington2014glove}.
+
+\subsubsection{Base transformations}
 Each line of the provided data files represents one Tweet, with all words separated by a single whitespace. All URLs have been removed, and mentions of other users are replaced by the tag \texttt{<user>}. Necessarily, all emoticons have also been removed, however there is no indication of their presence within the original Tweet.
 
-\subsection{Number transformation}
+\subsubsection{Number transformation}
 The idea is that all the numbers contained in a tweet have the same meaning for sentiment analysis. Therefore it makes sense to group them. To do that all the numbers are replaced with a tag: \texttt{<NUMBER>}
 
-\subsection{Hashtag splitting}
+\subsubsection{Hashtag splitting}
 The hashtag part of the tweet is especially hard to process. For now most of the hashtag are treated as different words in the vocabulary. Of course, if the program manages to split them the right way, it will add a lot of understanding for the machine. A basic idea was to replace the \# by the tag \texttt{<HASHTAG>} and then split all the words on uppercase letters. Sometimes the hashtag are in uppercase, Obviously in that case, the hashtag shouldn't be splited. So all the words are kept like that and an additionnal \texttt{<ALLCAPS>} is added at the end of the hashtag. For example the hashtag \texttt{\#ILikeMachineLearning} will be transformed in \texttt{<HASHTAG> I Like Machine Learning} and \texttt{\#ILIKEMACHINELEARNING} will be transformed in \texttt{<HASHTAG> ILIKEMACHINELEARNING <ALLCAPS>}. 
 
-\subsection{Punctuation repetitions}
+\subsubsection{Punctuation repetitions}
 Sometimes the punctuation is repeated at the ends of words. As before, it's more convenient to treat an expression like \texttt{!!!!!} the same way that \texttt{!!!} and not as two differents words. Therefore each time a punctuation mark is repeated, it is transformed in \texttt{punctuation mark <REPEAT>}. 
 
-\subsection{Elongated words}
+\subsubsection{Elongated words}
 In some tweets the last letter of some words is repeated. This is a similar problem than before. All these expressions should be treated as the same word in the vocabulary. In order to do so, all the repeated letters at the end of a word are replaced be \texttt{word without repetition <ELONG>}.
+
+\subsection{Word embeddings}
+
+\subsubsection{GloVe}
+
+\subsubsection{word2vec}
+
+\subsubsection{Sentiment-specific word embeddings}
