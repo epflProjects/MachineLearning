@@ -1,11 +1,12 @@
-\section{Processing the data}
-Tweets are really messy kind of data. In order to be able to work with them, a lot of operation must be performed. The dataset that was provided include some basic preprocessing but some additional transformation have been added in order to improve the predictions. Some transformations are inspired by the Glove documentation \cite{Glove}. 
+\section{Feature processing}
+\label{sec:processing}
+In order to train learning models using the Twitter data, it was necessary to perform pre-processing to create useful features that characterise the two classes we seek to disambiguate. The dataset that was provided include some basic preprocessing but additional transformation were performed in order to improve our classification performance. Some transformations are inspired by the Glove documentation \cite{Glove}. 
 
-\subsection{Base transformation}
-The dataset that is employed consist of 1.25 millions of positive tweets and the same number of negative tweets for the training part and 10'000 tweets to evaluate. Each line of the data file represents one tweet and all words are separated with a single whitespace. All the link have been removed. When another user is cited, the name of the user is replaced by the tag \texttt{<user>}. And all the smiley have been removed. 
+\subsection{Base transformations}
+Each line of the provided data files represents one Tweet, with all words separated by a single whitespace. All URLs have been removed, and mentions of other users are replaced by the tag \texttt{<user>}. Necessarily, all emoticons have also been removed, however there is no indication of their presence within the original Tweet.
 
 \subsection{Number transformation}
-The idea is that all the numbers contained in a tweet have the same meaning for sentiment analysis. Therefor it makes sense to group them. To do that all the numbers are replaced with a tag : \texttt{<NUMBER>}
+The idea is that all the numbers contained in a tweet have the same meaning for sentiment analysis. Therefore it makes sense to group them. To do that all the numbers are replaced with a tag: \texttt{<NUMBER>}
 
 \subsection{Hashtag splitting}
 The hashtag part of the tweet is especially hard to process. For now most of the hashtag are treated as different words in the vocabulary. Of course, if the program manages to split them the right way, it will add a lot of understanding for the machine. A basic idea was to replace the \# by the tag \texttt{<HASHTAG>} and then split all the words on uppercase letters. Sometimes the hashtag are in uppercase, Obviously in that case, the hashtag shouldn't be splited. So all the words are kept like that and an additionnal \texttt{<ALLCAPS>} is added at the end of the hashtag. For example the hashtag \texttt{\#ILikeMachineLearning} will be transformed in \texttt{<HASHTAG> I Like Machine Learning} and \texttt{\#ILIKEMACHINELEARNING} will be transformed in \texttt{<HASHTAG> ILIKEMACHINELEARNING <ALLCAPS>}. 
@@ -15,7 +16,3 @@ Sometimes the punctuation is repeated at the ends of words. As before, it's more
 
 \subsection{Elongated words}
 In some tweets the last letter of some words is repeated. This is a similar problem than before. All these expressions should be treated as the same word in the vocabulary. In order to do so, all the repeated letters at the end of a word are replaced be \texttt{word without repetition <ELONG>}.
-
-
-\label{sec:processing}
-
