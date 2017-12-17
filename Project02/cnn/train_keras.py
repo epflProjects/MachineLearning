@@ -163,7 +163,7 @@ sequence_input = Input(shape=(MAX_SEQUENCE_LENGTH,), dtype='int32')
 embedded_sequences = embedding_layer(sequence_input)
 
 for fsz in filter_sizes:
-    l_conv = Conv1D(nb_filter=128,filter_length=fsz, activation='relu')(embedded_sequences)
+    l_conv = Conv1D(nb_filter=128, filter_length=fsz, activation='relu')(embedded_sequences)
     l_pool = MaxPooling1D(5)(l_conv)
     convs.append(l_pool)
 
