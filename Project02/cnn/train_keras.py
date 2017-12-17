@@ -24,7 +24,7 @@ MAX_NB_WORDS = 20000
 EMBEDDING_DIM = 200
 VALIDATION_SPLIT = 0.2
 
-PREDICT = True
+PREDICT = False
 
 def clean_str(string):
     """
@@ -66,7 +66,7 @@ def load_data_and_labels(positive_data_file, negative_data_file):
     return [x_text, y]
 
 print("Loading data...")
-x_text, labels = load_data_and_labels("./data/train_pos.txt", "./data/train_neg.txt")
+x_text, labels = load_data_and_labels("./data/preprocess_train_pos.txt", "./data/preprocess_train_neg.txt")
 
 tokenizer = Tokenizer(num_words=MAX_NB_WORDS)
 tokenizer.fit_on_texts(x_text)
@@ -88,7 +88,7 @@ y_train = labels[:-nb_validation_samples]
 x_val = data[-nb_validation_samples:]
 y_val = labels[-nb_validation_samples:]
 
-print('Number of positive and negative reviews in training and validation set ')
+print('Number of positive and negative reviews in training and validation set')
 print(y_train.sum(axis=0))
 print(y_val.sum(axis=0))
 
@@ -135,11 +135,11 @@ print('Total %s word vectors in embeddings file' % len(embeddings_index))
 # model.compile(loss='categorical_crossentropy',
 #               optimizer='rmsprop',
 #               metrics=['acc'])
-#
-# print("model fitting - simplified convolutional neural network")
-# model.summary()
-# model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=10, batch_size=128)
-# model.save("./runs/simpleModel.h5")
+
+#print("model fitting - simplified convolutional neural network")
+#model.summary()
+#model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=10, batch_size=128)
+#model.save("./runs/simpleModel.h5")
 
 
 ##
@@ -164,24 +164,24 @@ filter_sizes = [3, 4, 5]
 sequence_input = Input(shape=(MAX_SEQUENCE_LENGTH,), dtype='int32')
 embedded_sequences = embedding_layer(sequence_input)
 
-if PREDICT:
-    for fsz in filter_sizes:
-        l_conv = Conv1D(nb_filter=128, filter_length=fsz, activation='relu')(embedded_sequences)
-        l_pool = MaxPooling1D(5)(l_conv)
-        convs.append(l_pool)
+for fsz in filter_sizes:
+    l_conv = Conv1D(nb_filter=128, filter_length=fsz, activation='relu')(embedded_sequences)
+    l_pool = MaxPooling1D(5)(l_conv)
+    convs.append(l_pool)
 
-    l_merge = Merge(mode='concat', concat_axis=1)(convs)
-    l_cov1= Conv1D(activation='relu', filters=128, kernel_size=5)(l_merge)
-    l_pool1 = MaxPooling1D(5)(l_cov1)
-    l_cov2 = Conv1D( activation='relu', filters=128, kernel_size=5)(l_pool1)
-    l_pool2 = MaxPooling1D(30)(l_cov2)
-    l_flat = Flatten()(l_pool2)
-    l_dense = Dense(128, activation='relu')(l_flat)
-    preds = Dense(2, activation='softmax')(l_dense)
+l_merge = Merge(mode='concat', concat_axis=1)(convs)
+l_cov1= Conv1D(activation='relu', filters=128, kernel_size=5)(l_merge)
+l_pool1 = MaxPooling1D(5)(l_cov1)
+l_cov2 = Conv1D( activation='relu', filters=128, kernel_size=5)(l_pool1)
+l_pool2 = MaxPooling1D(30)(l_cov2)
+l_flat = Flatten()(l_pool2)
+l_dense = Dense(128, activation='relu')(l_flat)
+preds = Dense(2, activation='softmax')(l_dense)
 
-    model = Model(sequence_input, preds)
-    model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['acc'])
+model = Model(sequence_input, preds)
+model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['acc'])
 
+if not PREDICT:
     print("model fitting - more complex convolutional neural network")
     model.summary()
     model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=20, batch_size=50)
