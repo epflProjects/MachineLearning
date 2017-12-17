@@ -3,7 +3,7 @@
 In order to train learning models using the Twitter data, it was necessary to perform pre-processing to create useful features that characterise the two classes we seek to disambiguate. To this end, we employed pre-processing that broadly fits into two categories: Tweet transformation, and transformation to word-embeddings.
 
 \subsection{Tweet transformation}
-The dataset that was provided had already undergone some basic Tweet transformation pre-processing, but additional transformations were performed in order to improve our classification performance. The following transformations were inspired by the GloVe documentation \cite{pennington2014glove}.
+The dataset that was provided had already undergone some basic Tweet transformation pre-processing, but additional transformations were performed in order to improve our classification performance. The following transformations were inspired by the GloVe documentation \cite{glove}.
 
 \subsubsection{Base transformations}
 Each line of the provided data files represents one Tweet, with all words separated by a single whitespace. All URLs have been removed, and mentions of other users are replaced by the tag \texttt{<user>}. Necessarily, all emoticons have also been removed, however there is no indication of their presence within the original Tweet.
