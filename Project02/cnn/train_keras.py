@@ -139,7 +139,7 @@ print('Total %s word vectors in embeddings file' % len(embeddings_index))
 # print("model fitting - simplified convolutional neural network")
 # model.summary()
 # model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=10, batch_size=128)
-# model.save_weights("./runs/simpleModel.h5")
+# model.save("./runs/simpleModel.h5")
 
 
 ##
@@ -164,27 +164,28 @@ filter_sizes = [3, 4, 5]
 sequence_input = Input(shape=(MAX_SEQUENCE_LENGTH,), dtype='int32')
 embedded_sequences = embedding_layer(sequence_input)
 
-for fsz in filter_sizes:
-    l_conv = Conv1D(nb_filter=128, filter_length=fsz, activation='relu')(embedded_sequences)
-    l_pool = MaxPooling1D(5)(l_conv)
-    convs.append(l_pool)
-
-l_merge = Merge(mode='concat', concat_axis=1)(convs)
-l_cov1= Conv1D(activation='relu', filters=128, kernel_size=5)(l_merge)
-l_pool1 = MaxPooling1D(5)(l_cov1)
-l_cov2 = Conv1D( activation='relu', filters=128, kernel_size=5)(l_pool1)
-l_pool2 = MaxPooling1D(30)(l_cov2)
-l_flat = Flatten()(l_pool2)
-l_dense = Dense(128, activation='relu')(l_flat)
-preds = Dense(2, activation='softmax')(l_dense)
-
-model = Model(sequence_input, preds)
-model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['acc'])
 if PREDICT:
+    for fsz in filter_sizes:
+        l_conv = Conv1D(nb_filter=128, filter_length=fsz, activation='relu')(embedded_sequences)
+        l_pool = MaxPooling1D(5)(l_conv)
+        convs.append(l_pool)
+
+    l_merge = Merge(mode='concat', concat_axis=1)(convs)
+    l_cov1= Conv1D(activation='relu', filters=128, kernel_size=5)(l_merge)
+    l_pool1 = MaxPooling1D(5)(l_cov1)
+    l_cov2 = Conv1D( activation='relu', filters=128, kernel_size=5)(l_pool1)
+    l_pool2 = MaxPooling1D(30)(l_cov2)
+    l_flat = Flatten()(l_pool2)
+    l_dense = Dense(128, activation='relu')(l_flat)
+    preds = Dense(2, activation='softmax')(l_dense)
+
+    model = Model(sequence_input, preds)
+    model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['acc'])
+
     print("model fitting - more complex convolutional neural network")
     model.summary()
     model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=20, batch_size=50)
-    model.save_weights("./runs/complexModel.h5")
+    model.save("./runs/complexModel.h5")
 else:
     weights = model.load_weights("./runs/simpleModel.h5")
     x_test, y = load_data_and_labels("./data/test_data.txt", "./data/test_data.txt")
