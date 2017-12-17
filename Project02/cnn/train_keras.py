@@ -24,6 +24,8 @@ MAX_NB_WORDS = 20000
 EMBEDDING_DIM = 200
 VALIDATION_SPLIT = 0.2
 
+PREDICT = True
+
 def clean_str(string):
     """
     Tokenization/string cleaning for dataset
@@ -64,7 +66,7 @@ def load_data_and_labels(positive_data_file, negative_data_file):
     return [x_text, y]
 
 print("Loading data...")
-x_text, labels = load_data_and_labels("./data/preprocess_train_pos_full.txt", "./data/preprocess_train_neg_full.txt")
+x_text, labels = load_data_and_labels("./data/train_pos.txt", "./data/train_neg.txt")
 
 tokenizer = Tokenizer(num_words=MAX_NB_WORDS)
 tokenizer.fit_on_texts(x_text)
@@ -178,8 +180,13 @@ preds = Dense(2, activation='softmax')(l_dense)
 
 model = Model(sequence_input, preds)
 model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['acc'])
-
-print("model fitting - more complex convolutional neural network")
-model.summary()
-model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=20, batch_size=50)
-model.save_weights("./runs/complexModel.h5")
+if PREDICT:
+    print("model fitting - more complex convolutional neural network")
+    model.summary()
+    model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=20, batch_size=50)
+    model.save_weights("./runs/complexModel.h5")
+else:
+    weights = model.load_weights("./runs/simpleModel.h5")
+    x_test, y = load_data_and_labels("./data/test_data.txt", "./data/test_data.txt")
+    z = model.predict(x_test, batch_size=128, verbose=1)
+    print(z)
