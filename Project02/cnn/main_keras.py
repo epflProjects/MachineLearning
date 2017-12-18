@@ -68,16 +68,9 @@ def load_data_and_labels(positive_data_file, negative_data_file):
     return [x_text, y]
 
 print("Loading data...")
-#x_text, labels = load_data_and_labels("./data/train_pos.txt", "./data/train_neg.txt")
-source_test = open("./data/test_data.txt", "r")
-rdr_test = csv.reader(source_test)
-tests = list()
-for r in rdr_test:
-    tests.append(r[1])
+x_train, labels = load_data_and_labels("./data/train_pos.txt", "./data/train_neg.txt")
+
 #tests = list(open("./data/test_data.txt", "r").readlines())
-tests = [s.strip() for s in tests]
-print(len(tests))
-x_test = [clean_str(sent) for sent in tests]
 
 # tokenizer = Tokenizer(num_words=MAX_NB_WORDS)
 # tokenizer.fit_on_texts(x_test)
@@ -200,13 +193,11 @@ if not PREDICT:
     model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=20, batch_size=50)
     model.save("./runs/complexModel.h5")
 else:
-    json_file = open("data/model.json", "r")
-    loaded_model_json = json_file.read()
-    json_file.close()
-    loaded_model = model_from_json(loaded_model_json)
-    weights = loaded_model.load_weights("./runs/simpleModel.h5")
-    print("Calculation of the predictions")
-    loaded_model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['acc'])
+    # json_file = open("data/model.json", "r")
+    # loaded_model_json = json_file.read()
+    # json_file.close()
+    # loaded_model = model_from_json(loaded_model_json)
+
     # tests = list(open("./data/test_data.txt", "r").readlines())
     # tests = [s.strip() for s in tests]
     # x_test = [clean_str(sent) for sent in tests]
@@ -221,26 +212,65 @@ else:
     tests = [s.strip() for s in tests]
     x_test = [clean_str(sent) for sent in tests]
     tokenizer = Tokenizer(num_words=MAX_NB_WORDS)
-    tokenizer.fit_on_texts(x_test)
+    tokenizer.fit_on_texts(x_train)
     sequences = tokenizer.texts_to_sequences(x_test)
 
+
     word_index = tokenizer.word_index
+    GLOVE_DIR = "./embeddings/"
+    embeddings_index = {}
+    f = open(os.path.join(GLOVE_DIR, 'glove.twitter.27B.200d.txt'))
+    for line in f:
+        values = line.split()
+        word = values[0]
+        coefs = np.asarray(values[1:], dtype='float32')
+        embeddings_index[word] = coefs
+    f.close()
+    embedding_matrix = np.random.random((len(word_index) + 1, EMBEDDING_DIM))
+    for word, i in word_index.items():
+        embedding_vector = embeddings_index.get(word)
+        if embedding_vector is not None:
+            # words not found in embedding index will be all-zeros.
+            embedding_matrix[i] = embedding_vector
+
+    embedding_layer = Embedding(len(word_index) + 1,
+                                EMBEDDING_DIM,
+                                weights=[embedding_matrix],
+                                input_length=MAX_SEQUENCE_LENGTH,
+                                trainable=True)
+
+    sequence_input = Input(shape=(MAX_SEQUENCE_LENGTH,), dtype='int32')
+    embedded_sequences = embedding_layer(sequence_input)
+    l_cov1 = Conv1D(128, 5, activation='relu')(embedded_sequences)
+    l_pool1 = MaxPooling1D(5)(l_cov1)
+    l_cov2 = Conv1D(128, 5, activation='relu')(l_pool1)
+    l_pool2 = MaxPooling1D(5)(l_cov2)
+    l_cov3 = Conv1D(128, 5, activation='relu')(l_pool2)
+    l_pool3 = MaxPooling1D(35)(l_cov3)  # global max pooling
+    l_flat = Flatten()(l_pool3)
+    l_dense = Dense(128, activation='relu')(l_flat)
+    preds = Dense(2, activation='softmax')(l_dense)
+
+    loaded_model = Model(sequence_input, preds)
+    loaded_model.load_weights("./runs/simpleModel.h5")
+    print("Calculation of the predictions")
+    loaded_model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['acc'])
     print('Found %s unique tokens.' % len(word_index))
 
     data = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
 
-    labels = to_categorical(np.asarray(labels))
-    print('Shape of data tensor:', data.shape)
-    print('Shape of label tensor:', labels.shape)
+    # labels = to_categorical(np.asarray(labels))
+    # print('Shape of data tensor:', data.shape)
+    # print('Shape of label tensor:', labels.shape)
 
-    indices = np.arange(data.shape[0])
-    np.random.shuffle(indices)
-    data = data[indices]
-    nb_validation_samples = int(1 * data.shape[0])
+    # indices = np.arange(data.shape[0])
+    #np.random.shuffle(indices)
+    #data = data[indices]
+    # nb_validation_samples = int(1 * data.shape[0])
 
     x_test = data
     z = loaded_model.predict(x_test, verbose=1)
-    #print(z)
+    # print(z)
     prediction = np.argmax(z, axis=-1)
     with open("data/predictions.csv", "w") as prediction_file:
         wtr = csv.writer(prediction_file)
