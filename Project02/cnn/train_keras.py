@@ -68,7 +68,7 @@ def load_data_and_labels(positive_data_file, negative_data_file):
     return [x_text, y]
 
 print("Loading data...")
-x_text, labels = load_data_and_labels("./data/preprocess_train_pos.txt", "./data/preprocess_train_neg.txt")
+x_text, labels = load_data_and_labels("./data/preprocess_train_pos_full.txt", "./data/preproceess_train_neg_full.txt")
 
 tokenizer = Tokenizer(num_words=MAX_NB_WORDS)
 tokenizer.fit_on_texts(x_text)
@@ -139,16 +139,14 @@ print('Total %s word vectors in embeddings file' % len(embeddings_index))
 # model_json = model.to_json()
 # with open('data/convModel.json', 'w') as json_file:
 #     json_file.write(simplejson.dumps(simplejson.loads(model_json), indent=4))
-# with open("data/model.json", "w") as json_file:
-#     json_file.write(simplejson.dumps(simplejson.loads(model_json), indent=4))
-
-#print("model fitting - simplified convolutional neural network")
-#model.summary()
-#model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=10, batch_size=128)
-#model.save("./runs/simpleModel.h5")
+#
+# print("model fitting - simplified convolutional neural network")
+# model.summary()
+# model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=10, batch_size=128)
+# model.save("./runs/simpleModel2.h5")
 
 
-##
+## Paper Convolution
 
 embedding_matrix = np.random.random((len(word_index) + 1, EMBEDDING_DIM))
 for word, i in word_index.items():
@@ -186,61 +184,66 @@ preds = Dense(2, activation='softmax')(l_dense)
 
 model = Model(sequence_input, preds)
 model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['acc'])
+print("model fitting - more complex convolutional neural network")
+model.summary()
+model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=20, batch_size=50)
+print("Saving the model to disk")
+model.save("./runs/complexModel.h5")
 
-if not PREDICT:
-    print("model fitting - more complex convolutional neural network")
-    model.summary()
-    model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=20, batch_size=50)
-    print("Saving the model to disk in a JSON format")
-    model_json = model.to_json()
-    with open('data/convModel.json', 'w') as json_file:
-        json_file.write(simplejson.dumps(simplejson.loads(model_json), indent=4))
-    model.save("./runs/complexModel.h5")
-
-    ## TRY #####################################################################
-
-    source_test = open("./data/test_data.txt", "r")
-    #rdr_test = csv.reader(source_test)
-
-    tests = list()
-    for r in source_test:
-        r = r.partition(",")[2]
-        tests.append(r)
-
-    tests = [s.strip() for s in tests]
-    x_test = [clean_str(sent) for sent in tests]
-    tokenizer = Tokenizer(num_words=MAX_NB_WORDS)
-    tokenizer.fit_on_texts(x_test)
-    sequences = tokenizer.texts_to_sequences(x_test)
-
-    word_index = tokenizer.word_index
-    print('Found %s unique tokens.' % len(word_index))
-
-    data = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
-
-    indices = np.arange(data.shape[0])
-    np.random.shuffle(indices)
-    data = data[indices]
-    nb_validation_samples = int(1 * data.shape[0])
-
-    x_test = data
-    z = model.predict(x_test, verbose=1)
-    #print(z)
-    prediction = np.argmax(z, axis=-1)
-    with open("data/predictions.csv", "w") as prediction_file:
-        wtr = csv.writer(prediction_file)
-        wtr.writerow(("Id", "Prediction"))
-        line = 1
-        for pred in prediction:
-            if pred == 0:
-                pred = str(-1)
-            else:
-                pred = str(1)
-            wtr.writerow((line, pred))
-            line += 1
-
-    ## END TRY #####################################################################
-else:
-    weights = model.load_weights("./runs/simpleModel.h5")
-    x_test, y = load_data_and_labels("./data/test_data.txt", "./data/test_data.txt")
-    z = model.predict(x_test, batch_size=128, verbose=1)
+# if not PREDICT:
+#     print("model fitting - more complex convolutional neural network")
+#     model.summary()
+#     model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=20, batch_size=50)
+#     # print("Saving the model to disk in a JSON format")
+#     # model_json = model.to_json()
+#     # with open('data/convModel.json', 'w') as json_file:
+#     #     json_file.write(simplejson.dumps(simplejson.loads(model_json), indent=4))
+#     print("Saving the model to disk")
+#     model.save("./runs/complexModel.h5")
+#
+#     ## TRY #####################################################################
+#
+#     source_test = open("./data/test_data.txt", "r")
+#     #rdr_test = csv.reader(source_test)
+#
+#     tests = list()
+#     for r in source_test:
+#         r = r.partition(",")[2]
+#         tests.append(r)
+#
+#     tests = [s.strip() for s in tests]
+#     x_test = [clean_str(sent) for sent in tests]
+#     tokenizer = Tokenizer(num_words=MAX_NB_WORDS)
+#     tokenizer.fit_on_texts(x_test)
+#     sequences = tokenizer.texts_to_sequences(x_test)
+#
+#     word_index = tokenizer.word_index
+#     print('Found %s unique tokens.' % len(word_index))
+#
+#     data = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
+#
+#     indices = np.arange(data.shape[0])
+#     np.random.shuffle(indices)
+#     data = data[indices]
+#     nb_validation_samples = int(1 * data.shape[0])
+#
+#     x_test = data
+#     z = model.predict(x_test, verbose=1)
+#     prediction = np.argmax(z, axis=-1)
+#     with open("data/predictions.csv", "w") as prediction_file:
+#         wtr = csv.writer(prediction_file)
+#         wtr.writerow(("Id", "Prediction"))
+#         line = 1
+#         for pred in prediction:
+#             if pred == 0:
+#                 pred = str(-1)
+#             else:
+#                 pred = str(1)
+#             wtr.writerow((line, pred))
+#             line += 1
+#
+#     ## END TRY #####################################################################
+# else:
+#     weights = model.load_weights("./runs/simpleModel.h5")
+#     x_test, y = load_data_and_labels("./data/test_data.txt", "./data/test_data.txt")
+#     z = model.predict(x_test, batch_size=128, verbose=1)
