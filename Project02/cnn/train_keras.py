@@ -21,7 +21,7 @@ from keras.layers import Conv1D, MaxPooling1D, Embedding, Merge, Dropout
 from keras.models import Model
 
 # TODO better fix of these numbers
-MAX_SEQUENCE_LENGTH = 1000
+MAX_SEQUENCE_LENGTH = 140
 MAX_NB_WORDS = 20000
 EMBEDDING_DIM = 200
 VALIDATION_SPLIT = 0.2 # TODO try 0.5?
