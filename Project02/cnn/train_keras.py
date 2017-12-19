@@ -21,10 +21,10 @@ from keras.layers import Conv1D, MaxPooling1D, Embedding, Merge, Dropout
 from keras.models import Model
 
 # TODO better fix of these numbers
-MAX_SEQUENCE_LENGTH = 140
+MAX_SEQUENCE_LENGTH = 1000 # TODO 1000 à la base
 MAX_NB_WORDS = 20000
 EMBEDDING_DIM = 200
-VALIDATION_SPLIT = 0.2 # TODO try 0.5?
+VALIDATION_SPLIT = 0.2
 
 PREDICT = False
 
@@ -68,7 +68,7 @@ def load_data_and_labels(positive_data_file, negative_data_file):
     return [x_text, y]
 
 print("Loading data...")
-x_text, labels = load_data_and_labels("./data/preprocess_train_pos_full.txt", "./data/preproceess_train_neg_full.txt")
+x_text, labels = load_data_and_labels("./data/preprocess_train_pos_full.txt", "./data/preprocess_train_neg_full.txt")
 
 tokenizer = Tokenizer(num_words=MAX_NB_WORDS)
 tokenizer.fit_on_texts(x_text)
@@ -135,10 +135,10 @@ print('Total %s word vectors in embeddings file' % len(embeddings_index))
 #
 # model = Model(sequence_input, preds)
 # model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['acc'])
-# print("Saving the model to disk in a JSON format")
-# model_json = model.to_json()
-# with open('data/convModel.json', 'w') as json_file:
-#     json_file.write(simplejson.dumps(simplejson.loads(model_json), indent=4))
+# # print("Saving the model to disk in a JSON format")
+# # model_json = model.to_json()
+# # with open('data/convModel.json', 'w') as json_file:
+# #     json_file.write(simplejson.dumps(simplejson.loads(model_json), indent=4))
 #
 # print("model fitting - simplified convolutional neural network")
 # model.summary()
