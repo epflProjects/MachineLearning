@@ -22,16 +22,20 @@ from keras.layers import Dense, Input, Flatten
 from keras.layers import Conv1D, MaxPooling1D, Embedding, Merge, Dropout
 from keras.models import Model
 
+### PARAMETERS
 # TODO better fix of these numbers
-MAX_SEQUENCE_LENGTH = 140
+MAX_SEQUENCE_LENGTH = 1000 # TODO how to fix?
 MAX_NB_WORDS = 20000
 EMBEDDING_DIM = 200
 VALIDATION_SPLIT = 0.2 # TODO try 0.5?
 
 PREDICT = False
 
+positive_data = "./data/train_pos.txt"
+negative_data = "./data/train_neg.txt"
+
 print("Loading data...")
-x_text, labels = load_data_and_labels("./data/preprocess_train_pos_full.txt", "./data/preproceess_train_neg_full.txt")
+x_text, labels = load_data_and_labels(positive_data, negative_data)
 
 tokenizer = Tokenizer(num_words=MAX_NB_WORDS)
 tokenizer.fit_on_texts(x_text)
@@ -60,7 +64,8 @@ print(y_val.sum(axis=0))
 print("Importing embeddings...")
 embeddings_index = get_embeddings("glove.twitter.27B.200d.txt")
 
-model = get_model_simple_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM)
+#model = get_model_simple_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM)
+model = get_model_paper_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM)
 model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['acc'])
 # print("Saving the model to disk in a JSON format")
 # model_json = model.to_json()
