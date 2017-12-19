@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import numpy as np
 import pandas as pd
 import json
@@ -27,11 +30,11 @@ from keras.models import Model
 MAX_SEQUENCE_LENGTH = 1000 # TODO how to fix?
 MAX_NB_WORDS = 20000
 EMBEDDING_DIM = 200
-VALIDATION_SPLIT = 0.2 # TODO try 0.5?
+VALIDATION_SPLIT = 0.04
 
 PREDICT = False
 
-positive_data = "./data/train_pos.txt"
+positive_data = "./data/preprocess_train_pos.txt"
 negative_data = "./data/train_neg.txt"
 
 print("Loading data...")

@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import numpy as np
 import pandas as pd
 from collections import defaultdict
@@ -78,7 +81,6 @@ preds = Dense(2, activation='softmax')(l_dense)
 loaded_model = get_model_simple_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM)
 loaded_model.load_weights("./runs/simpleModel.h5")
 print("Calculation of the predictions")
-loaded_model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['acc'])
 print('Found %s unique tokens.' % len(word_index))
 
 x_test = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
