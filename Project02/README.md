@@ -76,6 +76,6 @@ Optional parameters:
 ```
 
 ## Authors
-Arnaud Pannatier, Bastian Nanchen, Alexander Holloway
+Arnaud Pannatier, Alexander Holloway, Bastian Nanchen
 
 _EPFL Machine Learning CS-433 Course 2017_

@@ -13,6 +13,7 @@ from keras.preprocessing.sequence import pad_sequences
 
 os.environ['KERAS_BACKEND'] = "tensorflow" # theano'
 
+# Script parameters
 parser = argparse.ArgumentParser()
 
 parser.add_argument("-conv", "--convolution", dest="conv_algo", type=str, default="complex_conv", help="Convolution algorithm; you need to choose between 'simple_conv' and 'complex_conv' (by default)")
@@ -25,7 +26,7 @@ parser.add_argument("-batch_size", "--batch_size", dest="batch_size", default=64
 
 args = parser.parse_args()
 
-### PARAMETERS
+# Parameters
 DATA_DIR = "./data/"
 MAX_SEQUENCE_LENGTH = 1000 # TODO how to fix?
 MAX_NB_WORDS = 20000
@@ -44,6 +45,7 @@ negative_data = os.path.join(DATA_DIR, args.neg_file)
 print("Loading data...")
 x_text, labels = load_data_and_labels(positive_data, negative_data)
 
+# Text processing
 tokenizer = Tokenizer(num_words=MAX_NB_WORDS)
 tokenizer.fit_on_texts(x_text)
 sequences = tokenizer.texts_to_sequences(x_text)
@@ -53,6 +55,7 @@ print("Found", len(word_index), "unique tokens.")
 
 data = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
 
+# Randomly shuffle data and split train/test data
 indices = np.arange(data.shape[0])
 np.random.shuffle(indices)
 data = data[indices]
@@ -77,13 +80,9 @@ elif CONV_ALGO == conv_algorithms[0]:
     model = get_model_simple_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM)
 elif CONV_ALGO == conv_algorithms[1]:
     model = get_model_paper_2_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM)
-# model = get_model_paper_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM)
-
 
 print("model fitting - simplified convolutional neural network")
 model.summary()
-# model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=10, batch_size=128)
-# model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=10, batch_size=50)
 model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=EPOCHS, batch_size=BATCH_SIZE)
 
 print("saving model on disk")

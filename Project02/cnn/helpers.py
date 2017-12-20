@@ -7,8 +7,8 @@ import os
 
 def clean_str(string):
     """
-    Tokenization/string cleaning for dataset
-    Every dataset is lower cased except
+    String cleaning for all datasets except for SST.
+    Original taken from https://github.com/yoonkim/CNN_sentence/blob/master/process_data.py
     """
     string = re.sub(r"[^A-Za-z0-9(),!?\'\`]", " ", string)
     string = re.sub(r"\'s", " \'s", string)
@@ -25,15 +25,15 @@ def clean_str(string):
     string = re.sub(r"\s{2,}", " ", string)
     return string.strip().lower()
 
-def load_data_and_labels(positive_data_file, negative_data_file):
+def load_data_and_labels(positive_data, negative_data):
     """
-    Loads MR polarity data from files, splits the data into words and generates labels.
-    Returns split sentences and labels.
+    Loads data from files, splits the data into words and generates labels.
+    Returns sentences and labels.
     """
     # Load data from files
-    positive_examples = list(open(positive_data_file, "r").readlines())
+    positive_examples = list(open(positive_data, "r").readlines())
     positive_examples = [s.strip() for s in positive_examples]
-    negative_examples = list(open(negative_data_file, "r").readlines())
+    negative_examples = list(open(negative_data, "r").readlines())
     negative_examples = [s.strip() for s in negative_examples]
     # Split by words
     x_text = positive_examples + negative_examples
@@ -45,14 +45,17 @@ def load_data_and_labels(positive_data_file, negative_data_file):
     return [x_text, y]
 
 def get_embeddings(embeddings_file):
-    GLOVE_DIR = "./embeddings/"
+    """
+    Load the embeddings from file.
+    Returns a dictionary of word -> vector.
+    """
     embeddings_index = {}
-    f = open(os.path.join(GLOVE_DIR, embeddings_file))
+    f = open(os.path.join("./embeddings/", embeddings_file))
     for line in f:
         values = line.split()
         word = values[0]
-        coefs = np.asarray(values[1:], dtype='float32')
-        embeddings_index[word] = coefs
+        coeffs = np.asarray(values[1:], dtype='float32')
+        embeddings_index[word] = coeffs
     f.close()
 
     print("Total", len(embeddings_index), "word vectors in embeddings file")

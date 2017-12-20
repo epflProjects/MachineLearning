@@ -14,6 +14,7 @@ from keras.models import load_model
 
 os.environ['KERAS_BACKEND'] = "tensorflow" # theano'
 
+# Script parameters
 parser = argparse.ArgumentParser()
 
 parser.add_argument("-m_file", "--model_file", dest="model_file", type=str, default="paper2Model.h5", help="Name of the h5 file containing the model")
@@ -23,7 +24,7 @@ parser.add_argument("-test_file", "--test_file", dest="test_file", type=str, def
 
 args = parser.parse_args()
 
-### PARAMETERS
+# Parameters
 DATA_DIR = "./data/"
 MAX_SEQUENCE_LENGTH = 1000
 MAX_NB_WORDS = 20000
@@ -36,7 +37,7 @@ print("Loading data...")
 x_train, labels = load_data_and_labels(positive_data, negative_data)
 
 source_test = open(test_data, "r")
-
+# clean the test_data
 tests = list()
 for r in source_test:
     r = r.partition(",")[2]
@@ -44,6 +45,8 @@ for r in source_test:
 
 tests = [s.strip() for s in tests]
 x_test = [clean_str(sent) for sent in tests]
+
+# Text processing
 tokenizer = Tokenizer(num_words=MAX_NB_WORDS)
 tokenizer.fit_on_texts(x_train)
 sequences = tokenizer.texts_to_sequences(x_test)
@@ -58,6 +61,7 @@ print("Found", len(word_index), "unique tokens.")
 
 x_test = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
 
+# Predictions
 z = loaded_model.predict(x_test, verbose=1)
 prediction = np.argmax(z, axis=-1)
 
