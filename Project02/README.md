@@ -26,6 +26,7 @@ The program outputs a CSV inside `cnn/data` directory containing 2 columns.
 ## How to run
 If you want to create the CSV file with the prediction made on `cnn/data/test.csv` using the best trained and saved model:
 `python3 main.py`
+
 Optional parameters:
 ```
 -m_file MODEL_FILE, --model_file MODEL_FILE
@@ -42,6 +43,7 @@ Optional parameters:
 
 If you want to train a model:
 `python3 train.py`
+
 Optional parameters:
 ```
 -conv CONV_ALGO, --convolution CONV_ALGO
