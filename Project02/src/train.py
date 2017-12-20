@@ -3,7 +3,7 @@
 
 import numpy as np
 from helpers import load_data_and_labels, get_embeddings
-from models import get_model_simple_convolution, get_model_paper_convolution, get_model_paper_2_convolution
+from models import get_model_simple_convolution, get_model_cnn_without_dropout, get_model_cnn_dropout
 
 import os
 import argparse
@@ -16,7 +16,7 @@ os.environ['KERAS_BACKEND'] = "tensorflow" # theano'
 # Script parameters
 parser = argparse.ArgumentParser()
 
-parser.add_argument("-conv", "--convolution", dest="conv_algo", type=str, default="complex_conv", help="Convolution algorithm; you need to choose between 'simple_conv' and 'complex_conv' (by default)")
+parser.add_argument("-cnn", "--cnn_algo", dest="conv_algo", type=str, default="cnn_dropout", help="Convolution algorithm; you need to choose between 'simple_conv', 'cnn_without_dropout' and 'cnn_dropout' (by default)")
 parser.add_argument("-epochs", "--numb_epochs", dest="epochs", default=10, type=int, help="Number of epochs")
 parser.add_argument("-pos_file", "--pos_train_file", dest="pos_file", default="preprocess_train_pos_full.txt", type=str, help="Name of the positive training file located in the data/ directory")
 parser.add_argument("-neg_file", "--neg_train_file", dest="neg_file", type=str, default="preprocess_train_neg_full.txt", help="Name of the negative training file located in the data/ directory")
@@ -37,7 +37,7 @@ CONV_ALGO = args.conv_algo
 EPOCHS = args.epochs
 BATCH_SIZE = args.batch_size
 
-conv_algorithms = ["simple_conv", "complex_conv"]
+conv_algorithms = ["simple_conv", "cnn_without_dropout", "cnn_dropout"]
 
 positive_data = os.path.join(DATA_DIR, args.pos_file)
 negative_data = os.path.join(DATA_DIR, args.neg_file)
@@ -75,15 +75,17 @@ print("Importing embeddings...")
 embeddings_index = get_embeddings(EMBEDDING_FILE)
 
 if CONV_ALGO not in conv_algorithms:
-    raise ValueError("The convolution algorithms chosen doesn't exist; you have the choice between 'simple_conv' and 'complex_conv'")
+    raise ValueError("The convolution algorithms chosen doesn't exist; you have the choice between 'simple_conv', 'cnn_without_dropout' and 'cnn_dropout' (by default)")
 elif CONV_ALGO == conv_algorithms[0]:
     model = get_model_simple_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM)
 elif CONV_ALGO == conv_algorithms[1]:
-    model = get_model_paper_2_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM)
+    model = get_model_cnn_without_dropout(embeddings_index, word_index, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM)
+elif CONV_ALGO == conv_algorithms[2]:
+    model = get_model_cnn_dropout(embeddings_index, word_index, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM)
 
 print("model fitting - simplified convolutional neural network")
 model.summary()
 model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=EPOCHS, batch_size=BATCH_SIZE)
 
 print("saving model on disk")
-model.save("./runs/paper2ModelTest.h5")
+model.save("./runs/cnnModel.h5")

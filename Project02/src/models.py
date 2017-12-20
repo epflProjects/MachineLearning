@@ -44,8 +44,9 @@ def get_model_simple_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENG
 
     return model
 
-def get_model_paper_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM):
+def get_model_cnn_without_dropout(embeddings_index, word_index, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM):
     """
+    Convolutional Neural Network without dropout layer
     """
     embedding_matrix = np.random.random((len(word_index) + 1, EMBEDDING_DIM))
     for word, i in word_index.items():
@@ -81,7 +82,7 @@ def get_model_paper_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENGT
 
     return model
 
-def get_model_paper_2_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM):
+def get_model_cnn_dropout(embeddings_index, word_index, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM):
     """
     Convolutional Neural Network with filters of size 3, 4 and 5 and dropout probabilities of (0.5, 0.8).
     Based on http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/

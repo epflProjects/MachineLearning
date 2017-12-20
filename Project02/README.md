@@ -9,7 +9,7 @@ This software performs sentiment analysis of tweets and then classify them into 
 - Numpy
 
 ## Architecture of the Code
-The code is contained inside the `cnn/` folder.
+The code is contained inside the `src/` folder.
 - `main.py` : the main script, which will perform predictions on a test file based on a loaded model. See below all the parameters you can set. If you run `python3 main.py`(without parameters) you will obtain our best result.
 - `train.py` : file containing a complete training of a convolutional neural network. See below all the parameters you can set.
 - `models.py` : file containing methods that implement 2 different convolutional neural networks (CNN).
@@ -20,24 +20,24 @@ The `preprocessing` folder contains all the files used to generate the embedding
 The `experimentation` folder contains all files, which are not used to obtain our best result, but were useful during our seek to obtain a good CNN.
 
 ## Input Data Requirements
-Make sure you have the two files train and test at the right place : './cnn/data/train.txt' and './cnn/data/test.txt'.
-The embeddings have to be located: './cnn/embeddings/embeddings.txt'.
-The h5 model file have to be located: './cnn/runs/model.h5'.
+Make sure you have the two files train and test at the right place : './src/data/train.txt' and './src/data/test.txt'.
+The embeddings have to be located: './src/embeddings/embeddings.txt'.
+The h5 model file have to be located: './src/runs/model.h5'.
 To obtain our best result you need to have:
-- './cnn/data/preprocess_train_pos_full.txt'
-- './cnn/data/preprocess_train_neg_full.txt'
-- './cnn/embeddings/glove.twitter.27B.200d.txt'
-- './cnn/runs/complexModel.h5'
+- './src/data/preprocess_train_pos_full.txt'
+- './src/data/preprocess_train_neg_full.txt'
+- './src/embeddings/glove.twitter.27B.200d.txt'
+- './src/runs/complexModel.h5'
 
 ## Output Data Form
-The `main.py` outputs a CSV, inside './cnn/data/' directory, containing 2 columns.
+The `main.py` outputs a CSV, inside './src/data/' directory, containing 2 columns.
 - `Id` : the id of the data.
 - `Prediction` : `1` if the tweet is evaluated as positive, `-1` as negative.
 
-The `train.py` saves the trained model inside a h5 file at './cnn/runs/'.
+The `train.py` saves the trained model inside a h5 file at './src/runs/'.
 
 ## How to run
-If you want to create the CSV file with the prediction made on 'cnn/data/test.csv' using a saved model:
+If you want to create the CSV file with the prediction made on './src/data/test.csv' using a saved model:
 `python3 main.py`
 
 Optional parameters:
@@ -53,15 +53,17 @@ Optional parameters:
   -test_file TEST_FILE, --test_file TEST_FILE
                         Name of the file that you want to make predictions
 ```
+By default: `python3 main.py -m_file paper2Model.h5 -pos_file preprocess_train_pos_full.txt -neg_file preprocess_train_neg_full -test_file test_data.txt`
 
 If you want to train a model:
 `python3 train.py`
 
 Optional parameters:
 ```
--conv CONV_ALGO, --convolution CONV_ALGO
+-cnn CONV_ALGO, --cnn_algo CONV_ALGO
                         Convolution algorithm; you need to choose between
-                        'simple_conv' and 'complex_conv'
+                        'simple_conv', 'cnn_without_dropout' and 'cnn_dropout'
+                        (by default)
   -epochs EPOCHS, --numb_epochs EPOCHS
                         Number of epochs
   -pos_file POS_FILE, --pos_train_file POS_FILE
@@ -78,6 +80,7 @@ Optional parameters:
   -batch_size BATCH_SIZE, --batch_size BATCH_SIZE
                         Size of the batches during the training
 ```
+By default: `python3 train.py -cnn cnn_dropout -epochs 10 -pos_file preprocess_train_pos_full.txt -neg_file preprocess_train_neg_full -emb_file glove.twitter.27B.200d.txt -emb_dim 200 -batch_size 64`
 
 ## Authors
 Arnaud Pannatier, Alexander Holloway, Bastian Nanchen
