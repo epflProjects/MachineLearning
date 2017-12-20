@@ -13,6 +13,11 @@ from keras.models import Model
 os.environ['KERAS_BACKEND']= "tensorflow"
 
 def get_model_simple_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM):
+    """
+    Simple Convolutional Neural Network using 128 filters of size 5 and max pooling of size 5 and global max pooling (size 35).
+    Based on https://richliao.github.io/supervised/classification/2016/11/26/textclassifier-convolutional/
+    Returns the compiled model.
+    """
     embedding_matrix = np.random.random((len(word_index) + 1, EMBEDDING_DIM))
     for word, i in word_index.items():
         embedding_vector = embeddings_index.get(word)
@@ -40,6 +45,8 @@ def get_model_simple_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENG
     return model
 
 def get_model_paper_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM):
+    """
+    """
     embedding_matrix = np.random.random((len(word_index) + 1, EMBEDDING_DIM))
     for word, i in word_index.items():
         embedding_vector = embeddings_index.get(word)
@@ -75,6 +82,11 @@ def get_model_paper_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENGT
     return model
 
 def get_model_paper_2_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM):
+    """
+    Convolutional Neural Network
+    Based on http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/
+    Returns the compiled model.
+    """
     dropout_prob = [0.5, 0.8]
     convs = []
     filter_sizes = [3, 4, 5]
