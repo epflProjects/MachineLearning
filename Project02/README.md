@@ -1,30 +1,39 @@
 # Machine Learning - Text Classification
 
-This software allows to classify data detected in a particles collider into 2 groups depending on the detection or not of the Higgs boson.
+This software performs sentiment analysis of tweets and then classify them into 2 groups: positive or negative.
 
 ## Requirements
 - Python 3
-- TensorFlow
 - Keras
+- TensorFlow
 - Numpy
 
 ## Architecture of the Code
 The code is contained inside the `cnn/` folder.
-- `main.py` : the main script
-- `train.py` :
-- `models.py` :
-- `helpers.py` :
+- `main.py` : the main script, which will perform predictions on a test file based on a loaded model. See below all the parameters you can set. If you run `python3 main.py`(without parameters) you will obtain our best result.
+- `train.py` : file containing a complete training of a convolutional neural network. See below all the parameters you can set.
+- `models.py` : file containing methods that implement 2 different convolutional neural networks (CNN).
+- `helpers.py` : file containg helping methods for the `main.py` and `train.py`.
 
 ## Input Data Requirements
-Make sure you have the two files train and test at the right place : './cnn/data/train.csv' and './cnn/data/test.csv'
+Make sure you have the two files train and test at the right place : './cnn/data/train.txt' and './cnn/data/test.txt'.
+The embeddings have to be located: './cnn/embeddings/embeddings.txt'.
+The h5 model file have to be located: './cnn/runs/model.h5'.
+To obtain our best result you need to have:
+- './cnn/data/preprocess_train_pos_full.txt'
+- './cnn/data/preprocess_train_neg_full.txt'
+- './cnn/embeddings/glove.twitter.27B.200d.txt'
+- './cnn/runs/complexModel.h5'
 
 ## Output Data Form
-The program outputs a CSV inside `cnn/data` directory containing 2 columns.
+The `main.py` outputs a CSV, inside './cnn/data/' directory, containing 2 columns.
 - `Id` : the id of the data.
 - `Prediction` : `1` if the tweet is evaluated as positive, `-1` as negative.
 
+The `train.py` saves the trained model inside a h5 file at './cnn/runs/'.
+
 ## How to run
-If you want to create the CSV file with the prediction made on `cnn/data/test.csv` using the best trained and saved model:
+If you want to create the CSV file with the prediction made on 'cnn/data/test.csv' using a saved model:
 `python3 main.py`
 
 Optional parameters:

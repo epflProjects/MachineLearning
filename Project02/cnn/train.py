@@ -87,4 +87,4 @@ model.summary()
 model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=EPOCHS, batch_size=BATCH_SIZE)
 
 print("saving model on disk")
-model.save("./runs/paper2Model.h5")
+model.save("./runs/paper2ModelTest.h5")

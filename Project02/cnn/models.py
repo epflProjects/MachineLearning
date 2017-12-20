@@ -2,26 +2,15 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-import pandas as pd
-import json
-from collections import defaultdict
-import re
-from helpers import load_data_and_labels, get_embeddings
 
-import sys
 import os
-
-os.environ['KERAS_BACKEND']= "tensorflow"
-# theano'
-
-from keras.preprocessing.text import Tokenizer
-from keras.preprocessing.sequence import pad_sequences
-from keras.utils.np_utils import to_categorical
 
 from keras.layers import Embedding
 from keras.layers import Dense, Input, Flatten
 from keras.layers import Conv1D, MaxPooling1D, Embedding, Merge, Dropout, Concatenate
 from keras.models import Model
+
+os.environ['KERAS_BACKEND']= "tensorflow"
 
 def get_model_simple_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM):
     embedding_matrix = np.random.random((len(word_index) + 1, EMBEDDING_DIM))

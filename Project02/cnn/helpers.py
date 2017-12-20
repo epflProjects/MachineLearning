@@ -3,7 +3,6 @@
 
 import numpy as np
 import re
-import sys
 import os
 
 def clean_str(string):
