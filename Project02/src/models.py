@@ -29,15 +29,15 @@ def get_model_simple_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENG
 
     sequence_input = Input(shape=(MAX_SEQUENCE_LENGTH,), dtype='int32')
     embedded_sequences = embedding_layer(sequence_input)
-    l_cov1 = Conv1D(128, 5, activation='relu')(embedded_sequences)
-    l_pool1 = MaxPooling1D(5)(l_cov1)
-    l_cov2 = Conv1D(128, 5, activation='relu')(l_pool1)
-    l_pool2 = MaxPooling1D(5)(l_cov2)
-    l_cov3 = Conv1D(128, 5, activation='relu')(l_pool2)
-    l_pool3 = MaxPooling1D(35)(l_cov3)  # global max pooling
-    l_flat = Flatten()(l_pool3)
-    l_dense = Dense(128, activation='relu')(l_flat)
-    preds = Dense(2, activation='softmax')(l_dense)
+    conv_layer = Conv1D(128, 5, activation='relu')(embedded_sequences)
+    maxPool_layer = MaxPooling1D(5)(conv_layer)
+    conv_layer = Conv1D(128, 5, activation='relu')(maxPool_layer)
+    maxPool_layer = MaxPooling1D(5)(conv_layer)
+    conv_layer = Conv1D(128, 5, activation='relu')(maxPool_layer)
+    globalPool_layer = MaxPooling1D(35)(conv_layer)  # global max pooling
+    flat_layer = Flatten()(globalPool_layer)
+    dense_layer = Dense(128, activation='relu')(flat_layer)
+    preds = Dense(2, activation='softmax')(dense_layer)
 
     model = Model(sequence_input, preds)
     model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['acc'])

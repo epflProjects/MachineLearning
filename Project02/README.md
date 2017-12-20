@@ -15,6 +15,10 @@ The code is contained inside the `cnn/` folder.
 - `models.py` : file containing methods that implement 2 different convolutional neural networks (CNN).
 - `helpers.py` : file containg helping methods for the `main.py` and `train.py`.
 
+The `preprocessing` folder contains all the files used to generate the embeddings. They are not used in the four python files above.
+
+The `experimentation` folder contains all files, which are not used to obtain our best result, but were useful during our seek to obtain a good CNN.
+
 ## Input Data Requirements
 Make sure you have the two files train and test at the right place : './cnn/data/train.txt' and './cnn/data/test.txt'.
 The embeddings have to be located: './cnn/embeddings/embeddings.txt'.
