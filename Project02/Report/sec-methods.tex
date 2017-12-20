@@ -19,10 +19,14 @@ The more advanced classification technic of \textit{Support vector machine} is i
 
 Neural nets were also used on tweets features. This neural net has two layers of size TODO COMPLETE: (..,..). This was to take account that a neural network of  two layers is sufficient to represent any vectorial function.  If this technic was giving the best results of all the one that were used on on tweets representation, it didn't lead to the sufficiently good results for the competition. 
 
-\subsection{Convolutional neural networks}
++\subsection{Convolutional neural networks}
 
-In order to achieve better classification, a convolutional neural network is applied. The idea is not just to look as the tweet as a vectorial sum of embeddings, but to consider their places in the tweets as well. In this case, all the tweets are represented by a matrix :  At each word of the tweet corresponds a line of the matrix, containing the embeddings of the words. This matrix has therefore a size of \texttt{(number of words in the tweet * dimension of embeddings)}. A first layer apply then the convolution, it creates some filters of given sizes (in our case 3,4,5), which will be slided over the tweets matrix. 
+In order to achieve better classification, a convolutional neural network is applied. The idea is not just to look as the tweet as a vectorial sum of embeddings, but to consider their places in the tweets as well. In this case, all the tweets are represented by a matrix :  At each word of the tweet corresponds a line of the matrix, containing the embeddings of the words. This matrix has therefore a size of \texttt{(number of words in the tweet * dimension of embeddings)}. A first layer apply then the convolution, it creates some filters of given sizes (in this case  3,4,5), which will be slided over the tweets matrix and output a results according to an activation function (in this case relu). Each convolution will create a tensor of a different size. A pooling process is then applied to theses different tensors, this will subsample the different tensors into tensors of a standard shape. Theses tensors are then combined to create a big feature vector of size \texttt{(batch size * total number of filter)}. These features are then use to get the prediction using matrix multiplication. 
 
+\subsection{Dropout layer}
+A classical problem in machine learning is overfitting. When a fully connected convolutional neural network is trained, allowing all the nodes to interact between them allows to much freedom for the system and it will overfit the data. To reduce this problem, a ``dropout'' is added to the convolutional neural network. At each step of the process a node is either kept or dropped out of the model with a given probability.  Of course the input nodes are excluded of this procedure in order to keep the most information. When data are tested, the full net is used and all the nodes are weighted by the keeping probability. 
+
+This methods has two big advantages : first, as all nodes are not trained with all the data, overfitting will be reduced. Second, the method improves significantly the speed of training. This technic reduces nodes interactions too, and therefore it leads to more robust features.
 
 \begin{figure}[h!]
 \centering
@@ -30,5 +34,5 @@ In order to achieve better classification, a convolutional neural network is app
 \caption{Model of the convolutional neural network used for sentiment analysis}
 \label{plot:CNN}
 \end{figure}
-
+\FloatBarrier
 \label{sec:methods}
