@@ -1,0 +1,8 @@
+\section{Discussion}
+\label{sec:discussion}
+
+Here we have presented several methods of data pre-processing to create features from word-embeddings, and subsequently used these features to train a number of models. Empirically, we found that three different word-embeddings -- namely GloVe, skip-gram, and sentiment-specific -- gave comparable performance in the context of a Tweet sentiment classification task.
+
+Classification performance was evaluated using four learning models: logistic regression, support vector machine, neural network, and convolutional neural network (CNN). Of these, all but the CNN took input in the form of word-embeddings which were aggregated per Tweet to create a so-called ``Tweet-embedding'' representation. The CNN accepted pre-trained word-embeddings that had not undergone such transformation, and in fact, achieved the best classification performance on an unseen test dataset.
+
+\textcolor{blue}{Some final comment on the methods used, and how we could improve performance further}
