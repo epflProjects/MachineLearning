@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import numpy as np
 import pandas as pd
 from collections import defaultdict
@@ -20,7 +23,7 @@ from keras.layers import Embedding
 from keras.layers import Dense, Input, Flatten
 from keras.layers import Conv1D, MaxPooling1D, Embedding, Merge, Dropout
 from keras.models import Model
-from keras.models import model_from_json
+from keras.models import model_from_json, load_model
 
 # TODO better fix of these numbers
 MAX_SEQUENCE_LENGTH = 1000
@@ -70,7 +73,7 @@ def load_data_and_labels(positive_data_file, negative_data_file):
     return [x_text, y]
 
 print("Loading data...")
-x_train, labels = load_data_and_labels("./data/train_pos.txt", "./data/train_neg.txt")
+x_train, labels = load_data_and_labels("./data/preprocess_train_pos_full.txt", "./data/preprocess_train_neg_full.txt")
 
 #tests = list(open("./data/test_data.txt", "r").readlines())
 
@@ -219,44 +222,45 @@ else:
 
 
     word_index = tokenizer.word_index
-    GLOVE_DIR = "./embeddings/"
-    embeddings_index = {}
-    f = open(os.path.join(GLOVE_DIR, 'glove.twitter.27B.200d.txt'))
-    for line in f:
-        values = line.split()
-        word = values[0]
-        coefs = np.asarray(values[1:], dtype='float32')
-        embeddings_index[word] = coefs
-    f.close()
-    embedding_matrix = np.random.random((len(word_index) + 1, EMBEDDING_DIM))
-    for word, i in word_index.items():
-        embedding_vector = embeddings_index.get(word)
-        if embedding_vector is not None:
-            # words not found in embedding index will be all-zeros.
-            embedding_matrix[i] = embedding_vector
+    # GLOVE_DIR = "./embeddings/"
+    # embeddings_index = {}
+    # f = open(os.path.join(GLOVE_DIR, 'glove.twitter.27B.200d.txt'))
+    # for line in f:
+    #     values = line.split()
+    #     word = values[0]
+    #     coefs = np.asarray(values[1:], dtype='float32')
+    #     embeddings_index[word] = coefs
+    # f.close()
+    # embedding_matrix = np.random.random((len(word_index) + 1, EMBEDDING_DIM))
+    # for word, i in word_index.items():
+    #     embedding_vector = embeddings_index.get(word)
+    #     if embedding_vector is not None:
+    #         # words not found in embedding index will be all-zeros.
+    #         embedding_matrix[i] = embedding_vector
+    #
+    # embedding_layer = Embedding(len(word_index) + 1,
+    #                             EMBEDDING_DIM,
+    #                             weights=[embedding_matrix],
+    #                             input_length=MAX_SEQUENCE_LENGTH,
+    #                             trainable=True)
+    #
+    # sequence_input = Input(shape=(MAX_SEQUENCE_LENGTH,), dtype='int32')
+    # embedded_sequences = embedding_layer(sequence_input)
+    # l_cov1 = Conv1D(128, 5, activation='relu')(embedded_sequences)
+    # l_pool1 = MaxPooling1D(5)(l_cov1)
+    # l_cov2 = Conv1D(128, 5, activation='relu')(l_pool1)
+    # l_pool2 = MaxPooling1D(5)(l_cov2)
+    # l_cov3 = Conv1D(128, 5, activation='relu')(l_pool2)
+    # l_pool3 = MaxPooling1D(35)(l_cov3)  # global max pooling
+    # l_flat = Flatten()(l_pool3)
+    # l_dense = Dense(128, activation='relu')(l_flat)
+    # preds = Dense(2, activation='softmax')(l_dense)
 
-    embedding_layer = Embedding(len(word_index) + 1,
-                                EMBEDDING_DIM,
-                                weights=[embedding_matrix],
-                                input_length=MAX_SEQUENCE_LENGTH,
-                                trainable=True)
-
-    sequence_input = Input(shape=(MAX_SEQUENCE_LENGTH,), dtype='int32')
-    embedded_sequences = embedding_layer(sequence_input)
-    l_cov1 = Conv1D(128, 5, activation='relu')(embedded_sequences)
-    l_pool1 = MaxPooling1D(5)(l_cov1)
-    l_cov2 = Conv1D(128, 5, activation='relu')(l_pool1)
-    l_pool2 = MaxPooling1D(5)(l_cov2)
-    l_cov3 = Conv1D(128, 5, activation='relu')(l_pool2)
-    l_pool3 = MaxPooling1D(35)(l_cov3)  # global max pooling
-    l_flat = Flatten()(l_pool3)
-    l_dense = Dense(128, activation='relu')(l_flat)
-    preds = Dense(2, activation='softmax')(l_dense)
-
-    loaded_model = Model(sequence_input, preds)
-    loaded_model.load_weights("./runs/simpleModel.h5")
+    #loaded_model = Model(sequence_input, preds
+    loaded_model = load_model("./runs/paper2Model.h5")
+    #loaded_model.load_weights("./runs/simpleModel.h5")
     print("Calculation of the predictions")
-    loaded_model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['acc'])
+    #loaded_model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['acc'])
     print('Found %s unique tokens.' % len(word_index))
 
     data = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)

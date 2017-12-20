@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import numpy as np
 import pandas as pd
 import json
@@ -20,10 +23,10 @@ from keras.layers import Conv1D, MaxPooling1D, Embedding, Merge, Dropout
 from keras.models import Model
 
 # TODO better fix of these numbers
-MAX_SEQUENCE_LENGTH = 1000 # TODO 1000 à la base
+MAX_SEQUENCE_LENGTH = 1000 # TODO 1000 à la base; 400 works with paper
 MAX_NB_WORDS = 20000
 EMBEDDING_DIM = 200
-VALIDATION_SPLIT = 0.2
+VALIDATION_SPLIT = 0.04
 
 PREDICT = False
 
@@ -187,7 +190,8 @@ print("model fitting - more complex convolutional neural network")
 model.summary()
 model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=20, batch_size=50)
 print("Saving the model to disk")
-model.save("./runs/complexModel.h5")
+model.save("/output/complexModel.h5")
+model.save_weights("/output/weights_complexModel.h5")
 
 # if not PREDICT:
 #     print("model fitting - more complex convolutional neural network")

@@ -2,28 +2,17 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-import pandas as pd
-import json
-import simplejson
-from collections import defaultdict
-import re
 from helpers import load_data_and_labels, get_embeddings
-from models import get_model_simple_convolution, get_model_paper_convolution
+from models import get_model_simple_convolution, get_model_paper_convolution, get_model_paper_2_convolution
 
-import sys
 import os
-
-os.environ['KERAS_BACKEND']= "tensorflow"
-# theano'
+import argparse
 
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
-from keras.utils.np_utils import to_categorical
 
-from keras.layers import Embedding
-from keras.layers import Dense, Input, Flatten
-from keras.layers import Conv1D, MaxPooling1D, Embedding, Merge, Dropout
-from keras.models import Model
+os.environ['KERAS_BACKEND'] = "tensorflow"
+# theano'
 
 ### PARAMETERS
 # TODO better fix of these numbers
@@ -34,7 +23,7 @@ VALIDATION_SPLIT = 0.04
 
 PREDICT = False
 
-positive_data = "./data/preprocess_train_pos.txt"
+positive_data = "./data/train_pos.txt"
 negative_data = "./data/train_neg.txt"
 
 print("Loading data...")
@@ -68,16 +57,15 @@ print("Importing embeddings...")
 embeddings_index = get_embeddings("glove.twitter.27B.200d.txt")
 
 #model = get_model_simple_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM)
-model = get_model_paper_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM)
-model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['acc'])
-# print("Saving the model to disk in a JSON format")
-# model_json = model.to_json()
-# with open('data/convModel.json', 'w') as json_file:
-#     json_file.write(simplejson.dumps(simplejson.loads(model_json), indent=4))
+# model = get_model_paper_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM)
+model = get_model_paper_2_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM)
 
 print("model fitting - simplified convolutional neural network")
 model.summary()
-model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=10, batch_size=128)
+# model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=10, batch_size=128)
+# model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=10, batch_size=50)
+model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=10, batch_size=64)
 
 print("saving model on disk")
-model.save("./runs/simpleModel2.h5")
+model.save("./runs/paper2Model.h5")
+model.save_weights("./runs/weights_paper2Model.h5")
