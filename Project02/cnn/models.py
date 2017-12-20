@@ -83,7 +83,7 @@ def get_model_paper_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENGT
 
 def get_model_paper_2_convolution(embeddings_index, word_index, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM):
     """
-    Convolutional Neural Network
+    Convolutional Neural Network with filters of size 3, 4 and 5 and dropout probabilities of (0.5, 0.8).
     Based on http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/
     Returns the compiled model.
     """
