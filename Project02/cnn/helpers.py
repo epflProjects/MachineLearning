@@ -48,7 +48,7 @@ def load_data_and_labels(positive_data_file, negative_data_file):
 def get_embeddings(embeddings_file):
     GLOVE_DIR = "./embeddings/"
     embeddings_index = {}
-    f = open(os.path.join(GLOVE_DIR, 'glove.twitter.27B.200d.txt'))
+    f = open(os.path.join(GLOVE_DIR, embeddings_file))
     for line in f:
         values = line.split()
         word = values[0]

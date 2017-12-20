@@ -15,7 +15,7 @@ os.environ['KERAS_BACKEND'] = "tensorflow" # theano'
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("-conv", "--convolution", dest="conv_algo", type=str, default="complex_conv", help="Convolution algorithm; you need to choose between 'simple_conv' and 'complex_conv'")
+parser.add_argument("-conv", "--convolution", dest="conv_algo", type=str, default="complex_conv", help="Convolution algorithm; you need to choose between 'simple_conv' and 'complex_conv' (by default)")
 parser.add_argument("-epochs", "--numb_epochs", dest="epochs", default=10, type=int, help="Number of epochs")
 parser.add_argument("-pos_file", "--pos_train_file", dest="pos_file", default="preprocess_train_pos_full.txt", type=str, help="Name of the positive training file located in the data/ directory")
 parser.add_argument("-neg_file", "--neg_train_file", dest="neg_file", type=str, default="preprocess_train_neg_full.txt", help="Name of the negative training file located in the data/ directory")
