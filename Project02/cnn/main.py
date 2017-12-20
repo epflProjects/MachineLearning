@@ -6,63 +6,70 @@ import csv
 from helpers import load_data_and_labels, clean_str
 
 import os
+import argparse
 
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from keras.models import load_model
 
-os.environ['KERAS_BACKEND'] = "tensorflow"
-# theano'
+os.environ['KERAS_BACKEND'] = "tensorflow" # theano'
 
-# TODO better fix of these numbers
+parser = argparse.ArgumentParser()
+
+parser.add_argument("-m_file", "--model_file", dest="model_file", type=str, default="paper2Model.h5", help="Name of the h5 file containing the model")
+parser.add_argument("-pos_file", "--pos_train_file", dest="pos_file", default="preprocess_train_pos_full.txt", type=str, help="Name of the positive training file located in the data/ directory")
+parser.add_argument("-neg_file", "--neg_train_file", dest="neg_file", type=str, default="preprocess_train_neg_full.txt", help="Name of the negative training file located in the data/ directory")
+parser.add_argument("-test_file", "--test_file", dest="test_file", type=str, default="test_data.txt", help="Name of the file that you want to make predictions")
+
+args = parser.parse_args()
+
+### PARAMETERS
+DATA_DIR = "./data/"
 MAX_SEQUENCE_LENGTH = 1000
 MAX_NB_WORDS = 20000
-EMBEDDING_DIM = 200
 
-PREDICT = True
-
-positive_data = "./data/preprocess_train_pos_full.txt"
-negative_data = "./data/preprocess_train_neg_full.txt"
+positive_data = os.path.join(DATA_DIR, args.pos_file)
+negative_data = os.path.join(DATA_DIR, args.neg_file)
+test_data = os.path.join(DATA_DIR, args.test_file)
 
 print("Loading data...")
 x_train, labels = load_data_and_labels(positive_data, negative_data)
 
-if PREDICT:
-    source_test = open("./data/test_data.txt", "r")
+source_test = open(test_data, "r")
 
-    tests = list()
-    for r in source_test:
-        r = r.partition(",")[2]
-        tests.append(r)
+tests = list()
+for r in source_test:
+    r = r.partition(",")[2]
+    tests.append(r)
 
-    tests = [s.strip() for s in tests]
-    x_test = [clean_str(sent) for sent in tests]
-    tokenizer = Tokenizer(num_words=MAX_NB_WORDS)
-    tokenizer.fit_on_texts(x_train)
-    sequences = tokenizer.texts_to_sequences(x_test)
+tests = [s.strip() for s in tests]
+x_test = [clean_str(sent) for sent in tests]
+tokenizer = Tokenizer(num_words=MAX_NB_WORDS)
+tokenizer.fit_on_texts(x_train)
+sequences = tokenizer.texts_to_sequences(x_test)
 
-    word_index = tokenizer.word_index
+word_index = tokenizer.word_index
 
-    print("Load model")
-    loaded_model = load_model("./runs/paper2Model.h5")
+print("Load model")
+loaded_model = load_model(os.path.join("./runs/", args.model_file))
 
-    print("Calculation of the predictions")
-    print("Found", len(word_index), "unique tokens.")
+print("Calculation of the predictions")
+print("Found", len(word_index), "unique tokens.")
 
-    x_test = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
+x_test = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
 
-    z = loaded_model.predict(x_test, verbose=1)
-    prediction = np.argmax(z, axis=-1)
+z = loaded_model.predict(x_test, verbose=1)
+prediction = np.argmax(z, axis=-1)
 
-    print("rendering of the predictions.csv inside the data/ directory")
-    with open("data/predictions.csv", "w") as prediction_file:
-        wtr = csv.writer(prediction_file)
-        wtr.writerow(("Id", "Prediction"))
-        line = 1
-        for pred in prediction:
-            if pred == 0:
-                pred = str(-1)
-            else:
-                pred = str(1)
-            wtr.writerow((line, pred))
-            line += 1
+print("rendering of the predictions.csv inside the data/ directory")
+with open(os.path.join(DATA_DIR, "predictions.csv"), "w") as prediction_file:
+    wtr = csv.writer(prediction_file)
+    wtr.writerow(("Id", "Prediction"))
+    line = 1
+    for pred in prediction:
+        if pred == 0:
+            pred = str(-1)
+        else:
+            pred = str(1)
+        wtr.writerow((line, pred))
+        line += 1
