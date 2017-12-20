@@ -120,3 +120,5 @@ Project02/Report/report.pdf
 *.aux
 *.out
 *.txt
+Project02/floyd/
+*.h5
