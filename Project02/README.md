@@ -13,7 +13,7 @@ The code is contained inside the `src/` folder.
 - `main.py` : the main script, which will perform predictions on a test file based on a loaded model. See below all the parameters you can set. If you run `python3 main.py`(without parameters) you will obtain our best result.
 - `train.py` : file containing a complete training of a convolutional neural network. See below all the parameters you can set.
 - `models.py` : file containing methods that implement 2 different convolutional neural networks (CNN).
-- `helpers.py` : file containg helping methods for the `main.py` and `train.py`.
+- `helpers.py` : file containing helping methods for the `main.py` and `train.py`.
 
 The `preprocessing` folder contains all the files used to generate the embeddings. They are not used in the four python files above.
 
