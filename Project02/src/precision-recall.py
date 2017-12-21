@@ -20,7 +20,7 @@ os.environ['KERAS_BACKEND'] = "tensorflow" # theano'
 parser = argparse.ArgumentParser()
 
 
-parser.add_argument("-m_file", "--model_file", dest="model_file", type=str, default="paper2Model.h5", help="Name of the h5 file containing the model")
+parser.add_argument("-m_file", "--model_file", dest="model_file", type=str, default="complexModel.h5", help="Name of the h5 file containing the model")
 parser.add_argument("-cnn", "--cnn_algo", dest="conv_algo", type=str, default="cnn_dropout", help="Convolution algorithm; you need to choose between 'simple_conv', 'cnn_without_dropout' and 'cnn_dropout' (by default)")
 parser.add_argument("-epochs", "--numb_epochs", dest="epochs", default=10, type=int, help="Number of epochs")
 parser.add_argument("-pos_file", "--pos_train_file", dest="pos_file", default="preprocess_train_pos_full.txt", type=str, help="Name of the positive training file located in the data/ directory")
@@ -84,12 +84,10 @@ print("Found", len(word_index), "unique tokens.")
 z = loaded_model.predict(x_val, verbose=1)
 prediction = np.argmax(z, axis=-1)
 
+y_val = np.argmax(y_val,axis=-1)
 
-score, acc = loaded_model.evaluate(x_val, y_test, batch_size=batch_size)
-print('Test score:', score)
-print('Test accuracy:', acc)
 
-precision, recall, _, _ = precision_recall_fscore_support(y_test, prediction, average='macro')
+precision, recall, _, _ = precision_recall_fscore_support(y_val, prediction, average='macro')
 print("Precision", precision)
 print("Recall", recall)
 

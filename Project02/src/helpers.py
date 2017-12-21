@@ -9,6 +9,7 @@ def clean_str(string):
     """
     String cleaning for all datasets except for SST.
     Original taken from https://github.com/yoonkim/CNN_sentence/blob/master/process_data.py
+    (Code from the http://arxiv.org/abs/1408.5882 paper)
     """
     string = re.sub(r"[^A-Za-z0-9(),!?\'\`]", " ", string)
     string = re.sub(r"\'s", " \'s", string)
