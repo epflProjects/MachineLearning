@@ -4,7 +4,7 @@ This software performs sentiment analysis of tweets and then classify them into 
 
 ## TL;DR
 In order to obtain the predictions of our best model on `test_data.txt`, you need previously to be sure to have on your computer wget. If it is not the case: `brew install wget`.
-Then you can run `./run.sh` inside the `src/` directory. The `predictions.csv` is created inside the `/src/data/` directory.
+Then you can run `./run.sh` inside the `src/` directory. First it downloads all the mandatory files (embeddings, train and test data), then it runs `python3 run.py`. The `predictions.csv` is created inside the `/src/data/` directory.
 
 ## Requirements
 Everything was tested on macOS.
@@ -16,11 +16,7 @@ Everything was tested on macOS.
 
 ## Architecture of the Code
 The code is contained inside the `src/` folder.
-- `run.py` : the main script, which will perform predictions on a test file based on a loaded model. The script should take a bit less than 10 minutes to complete. See below all the parameters you can set. If you run
-```bash
-$ python3 run.py
-```
-(without parameters) you will obtain our best result.
+- `run.py` : the main script, which will perform predictions on a test file based on a loaded model. The script should take a bit less than 10 minutes to complete. See below all the parameters you can set. If you run `python3 run.py`(without parameters) you will obtain our best result.
 - `train.py` : file containing a complete training of a convolutional neural network. See below all the parameters you can set.
 - `models.py` : file containing methods that implement 2 different convolutional neural networks (CNN).
 - `helpers.py` : file containing helping methods for the `run.py` and `train.py`.
