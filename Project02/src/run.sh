@@ -2,4 +2,4 @@
 wget -O data.tgz https://drive.switch.ch/index.php/s/ij4XoRAJtGjBA8m/download && \
   tar -cvzf data.tgz
 # Run the main script that generates our best predictions
-python main.py
+python run.py

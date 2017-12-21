@@ -2,6 +2,10 @@
 
 This software performs sentiment analysis of tweets and then classify them into 2 groups: positive or negative.
 
+## TL;TR
+In order to obtain the predictions of our best model on `test_data.txt`, you need previously to be sure to have on your computer wget. If it is not the case: `brew install wget`.
+Then you can run `./run.sh` inside the `src/` directory. The `predictions.csv` is created inside the `/src/data/` directory.
+
 ## Requirements
 # Dependencies
 - Python 3
@@ -16,10 +20,10 @@ This software performs sentiment analysis of tweets and then classify them into 
 
 ## Architecture of the Code
 The code is contained inside the `src/` folder.
-- `main.py` : the main script, which will perform predictions on a test file based on a loaded model. See below all the parameters you can set. If you run `python3 main.py`(without parameters) you will obtain our best result.
+- `run.py` : the main script, which will perform predictions on a test file based on a loaded model. The script should take a bit less than 10 minutes to complete. See below all the parameters you can set. If you run `python3 run.py`(without parameters) you will obtain our best result.
 - `train.py` : file containing a complete training of a convolutional neural network. See below all the parameters you can set.
 - `models.py` : file containing methods that implement 2 different convolutional neural networks (CNN).
-- `helpers.py` : file containing helping methods for the `main.py` and `train.py`.
+- `helpers.py` : file containing helping methods for the `run.py` and `train.py`.
 
 The `preprocessing` folder contains all the files used to generate the embeddings. They are not used in the four python files above.
 
@@ -42,7 +46,7 @@ To obtain our best result you need to have:
 - `./src/runs/cnnModel.h5`
 
 ## Output Data Form
-The `main.py` outputs a CSV, inside `./src/data/` directory, containing 2 columns.
+The `run.py` outputs a CSV, inside `./src/data/` directory, containing 2 columns.
 - `Id` : the id of the data.
 - `Prediction` : `1` if the tweet is evaluated as positive, `-1` as negative.
 
@@ -50,7 +54,7 @@ The `train.py` saves the trained model inside a h5 file at './src/runs/'.
 
 ## How to run
 If you want to create the CSV file with the prediction made on `./src/data/test.csv` using a saved model:
-`python3 main.py`
+`python3 run.py`
 
 Optional parameters:
 ```
@@ -65,7 +69,7 @@ Optional parameters:
   -test_file TEST_FILE, --test_file TEST_FILE
                         Name of the file that you want to make predictions
 ```
-By default: `python3 main.py -m_file paper2Model.h5 -pos_file preprocess_train_pos_full.txt -neg_file preprocess_train_neg_full -test_file test_data.txt`
+By default: `python3 run.py -m_file paper2Model.h5 -pos_file preprocess_train_pos_full.txt -neg_file preprocess_train_neg_full -test_file test_data.txt`
 
 If you want to train a model:
 `python3 train.py`
