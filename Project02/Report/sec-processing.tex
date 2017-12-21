@@ -20,6 +20,8 @@ Sometimes the punctuation is repeated at the ends of words. As before, it's more
 \subsubsection{Elongated words}
 In some tweets the last letter of some words is repeated. This is a similar problem than before. All these expressions should be treated as the same word in the vocabulary. In order to do so, all the repeated letters at the end of a word are replaced be \texttt{word without repetition <ELONG>}.
 
+\textcolor{blue}{Add details of lowercase and punctuation formatting in the model}
+
 \subsection{Word embeddings}
 After the Tweets are modified in their original text format, it is necessary to transform them to a numerical format. Several methods exist for achieving this, \emph{e.g.} bag of words or $n$-gram representations. Recently, so-called ``word embedding'' formats \cite{} have been employed to great success in next classification tasks. In short, word embeddings map words to high-dimensional vectors that seek to characterise the words' usage in various semantic contexts. \cite{} Examples of their use in recent literature are manifold \cite{} and thus we investigated several variations of this representation.
 
