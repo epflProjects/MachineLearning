@@ -1,4 +1,8 @@
 \section{Results}
+\textcolor{blue}{Speaking about the three methods on with tweet-embeddings}
+
+As the two convolutional neural nets were giving the best results, they were trained for longer times using the full dataset provided. After a few hours of training, some results appeared [FIG. \ref{plot:CNNaccuracy}]. The figure display the training accuracy of the two models. The first one was not using the dropout method as opposed as the second one. 96\% of the data are kept for training the neural net and 4\% is used to validate the predictions. Each time all the train data are learned by the neural net, the test sample is evaluated. These results corresponds to the cross on the figure. The convolutional neural net using dropout was faster to train, as expected. And it was giving more significant results. So after a while the training of the other network was stop, and only the one with dropout was kept. 
+
 \label{sec:results}
 \begin{figure}[h!]
 \centering
@@ -14,14 +18,14 @@
   \begin{tabular}[c]{lllll}
     Input format&Model&Precision&Recall&Accuracy\\
     \hline
-    Tweet-embed.&Logistic regression & 0.00       & 0.00  & 0.00 \\
-    Tweet-embed.&SVM                 & 0.00       & 0.00  & 0.00 \\
-    Tweet-embed.&Neural network	& 0.00	& 0.00	&	0.00 \\
-    Word-embed.&CNN w.o. dropout                & 0.00	& 0.00	&	0.00 \\
-    Word-embed.&CNN w. dropout & 0.00 & 0.00 & 0.00
+    Tweet-embed.&Logistic regression &    60.84   & 60.64 & 60.60 \\
+    Tweet-embed.&SVM                 &   63.69     & 62.05  & 61.96 \\
+    Tweet-embed.&Neural network	& 67.04	& 65.53	& 65.45 \\
+    Word-embed.&CNN w.o. dropout   & 0.00	& 0.00	&  81.12 \\
+    Word-embed.&CNN w. dropout & 0.00 & 0.00 & 84.21
     
   \end{tabular}
-  \caption{Classification performances using local hold-out testing, for various input data formats.}
+  \caption{Classification performances using local hold-out testing, for various input data formats.All the data are given in \%}
   \label{tab:results}
 \end{table}
 
