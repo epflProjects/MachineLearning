@@ -16,13 +16,13 @@ As the two convolutional neural nets were giving the best results, they were tra
 \begin{table}[h]
   \centering
   \begin{tabular}[c]{lllll}
-    Input format&Model&Precision&Recall&Accuracy\\
+    Input format&Model&Accuracy&Precision&Recall\\
     \hline
-    Tweet-embed.&Logistic regression &    60.84   & 60.64 & 60.60 \\
-    Tweet-embed.&SVM                 &   63.69     & 62.05  & 61.96 \\
-    Tweet-embed.&Neural network	& 67.04	& 65.53	& 65.45 \\
-    Word-embed.&CNN w.o. dropout   & 0.00	& 0.00	&  81.12 \\
-    Word-embed.&CNN w. dropout & 0.00 & 0.00 & 84.21
+    Tweet-embed.&Logistic regression & 60.60 &    60.84   & 60.64  \\
+    Tweet-embed.&SVM             & 61.96    &   63.69     & 62.05   \\
+    Tweet-embed.&Neural network & 65.45	& 67.04	& 65.53	 \\
+    Word-embed.&CNN w.o. dropout &  81.12  & 0.00	& 0.00	 \\
+    Word-embed.&CNN w. dropout & 84.29 & 0.00 & 0.00 
     
   \end{tabular}
   \caption{Classification performances using local hold-out testing, for various input data formats.All the data are given in \%}
