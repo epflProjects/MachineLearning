@@ -3,10 +3,16 @@
 This software performs sentiment analysis of tweets and then classify them into 2 groups: positive or negative.
 
 ## Requirements
+# Dependencies
 - Python 3
 - Keras
 - TensorFlow
 - Numpy
+
+# Files
+- Stanford Pretrained Glove Word Embeddings :
+- Training Data :
+- Test Data :
 
 ## Architecture of the Code
 The code is contained inside the `src/` folder.
@@ -23,7 +29,7 @@ The `experimentation` folder contains all files, which are not used to obtain ou
 The embeddings reside in the `src/embeddings/` directory.
 This project used two embeddings:
 - `sentiment.txt` : it is the sentiment word embeddings file.
-- `glove.twitter.27B.200d.txt` : GlOve by https://nlp.stanford.edu/projects/glove/
+- `glove.twitter.27B.200d.txt` : Stanford Pretrained Glove Word Embeddings by https://nlp.stanford.edu/projects/glove/
 
 ## Input Data Requirements
 Make sure you have the two files train and test at the right place : `./src/data/`.
@@ -33,7 +39,7 @@ To obtain our best result you need to have:
 - `./src/data/preprocess_train_pos_full.txt`
 - `./src/data/preprocess_train_neg_full.txt`
 - `./src/embeddings/glove.twitter.27B.200d.txt`
-- `./src/runs/complexModel.h5`
+- `./src/runs/cnnModel.h5`
 
 ## Output Data Form
 The `main.py` outputs a CSV, inside `./src/data/` directory, containing 2 columns.
