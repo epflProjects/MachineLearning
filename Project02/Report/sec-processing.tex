@@ -20,9 +20,8 @@ Some Tweets contain punctuation that is repeated at the end of a word. As before
 \subsubsection{Elongated words}
 In some tweets the last letter of some words is repeated. This is a similar problem than before. All these expressions should be treated as the same word in the vocabulary. In order to do so, all the repeated letters at the end of a word are replaced by a tag \texttt{<ELONG>}.
 
-\subsubsection{Last preprocessing step}
-In order to have a definitive clean dataset to works with, a last preprocessing step is applied. A blank space is added before all the quotation mark as \texttt{'ll, 're, 'm, ...} and before all punctuation signs. And all the data is set to lower case. This insure that all this expressions will be evaluated as the same during the learning process.
-
+\subsubsection{Contractions and casing}
+A final text processing step step is applied, where blank space is used to delimit contractions (\emph{i.e.} \texttt{'ll, 're, 'm, ...}) and and punctuation marks. In addition, all text is set to lowercase, in order to ensure that all phrases are evaluated equally regardless of casing during training.
 
 \subsection{Word embeddings}
 After the Tweets are modified in their original text format, it is necessary to transform them to a numerical format. Several methods exist for achieving this, \emph{e.g.} bag of words or $n$-gram representations. Recently, so-called ``word embedding'' formats \cite{} have been employed to great success in next classification tasks. In short, word embeddings map words to high-dimensional vectors that seek to characterise the words' usage in various semantic contexts. \cite{} Examples of their use in recent literature are manifold \cite{} and thus we investigated several variations of this representation.
