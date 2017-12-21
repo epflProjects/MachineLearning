@@ -79,19 +79,17 @@ loaded_model = load_model(os.path.join("./runs/", args.model_file))
 print("Calculation of the predictions")
 print("Found", len(word_index), "unique tokens.")
 
-sequences = tokenizer.texts_to_sequences(x_val)
-x_val = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
 
 # Predictions
 z = loaded_model.predict(x_val, verbose=1)
 prediction = np.argmax(z, axis=-1)
 
 
-score, acc = loaded_model.evaluate(x_test, y_test, batch_size=batch_size)
+score, acc = loaded_model.evaluate(x_val, y_test, batch_size=batch_size)
 print('Test score:', score)
 print('Test accuracy:', acc)
 
-precision, recall, _, _ = precision_recall_fscore_support(y_test, clf.predict(X_test), average='macro')
+precision, recall, _, _ = precision_recall_fscore_support(y_test, prediction, average='macro')
 print("Precision", precision)
 print("Recall", recall)
 
