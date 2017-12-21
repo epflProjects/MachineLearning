@@ -7,16 +7,12 @@ In order to obtain the predictions of our best model on `test_data.txt`, you nee
 Then you can run `./run.sh` inside the `src/` directory. The `predictions.csv` is created inside the `/src/data/` directory.
 
 ## Requirements
-# Dependencies
+Everything was tested on macOS.
+### Dependencies
 - Python 3
 - Keras
 - TensorFlow
 - Numpy
-
-# Files
-- Stanford Pretrained Glove Word Embeddings :
-- Training Data :
-- Test Data :
 
 ## Architecture of the Code
 The code is contained inside the `src/` folder.
@@ -33,7 +29,7 @@ The `experimentation` folder contains all files, which are not used to obtain ou
 The embeddings reside in the `src/embeddings/` directory.
 This project used two embeddings:
 - `sentiment.txt` : it is the sentiment word embeddings file.
-- `glove.twitter.27B.200d.txt` : Stanford Pretrained Glove Word Embeddings by https://nlp.stanford.edu/projects/glove/
+- `glove.twitter.27B.200d.txt` : Stanford Pretrained Glove Word Embeddings (https://nlp.stanford.edu/projects/glove/)
 
 ## Input Data Requirements
 Make sure you have the two files train and test at the right place : `./src/data/`.
