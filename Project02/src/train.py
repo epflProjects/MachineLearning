@@ -16,19 +16,19 @@ os.environ['KERAS_BACKEND'] = "tensorflow" # theano'
 # Script parameters
 parser = argparse.ArgumentParser()
 
-parser.add_argument("-cnn", "--cnn_algo", dest="conv_algo", type=str, default="cnn_dropout", help="Convolution algorithm; you need to choose between 'simple_conv', 'cnn_without_dropout' and 'cnn_dropout' (by default)")
-parser.add_argument("-epochs", "--numb_epochs", dest="epochs", default=10, type=int, help="Number of epochs")
-parser.add_argument("-pos_file", "--pos_train_file", dest="pos_file", default="preprocess_train_pos_full.txt", type=str, help="Name of the positive training file located in the data/ directory")
-parser.add_argument("-neg_file", "--neg_train_file", dest="neg_file", type=str, default="preprocess_train_neg_full.txt", help="Name of the negative training file located in the data/ directory")
-parser.add_argument("-emb_file", "--embeddings_file", dest="emb_file", default="glove.twitter.27B.200d.txt", type=str, help="name of the embeddings file located inside the embeddings/ folder")
-parser.add_argument("-emb_dim", "--embeddings_dim", dest="emb_dim", default=200, type=int, help="Dimension of the embeddings")
-parser.add_argument("-batch_size", "--batch_size", dest="batch_size", default=64, type=int, help="Size of the batches during the training")
+parser.add_argument("-cnn", "--cnn_algo", dest="conv_algo", type=str, default="cnn_dropout", help="Convolution algorithm; you need to choose between 'simple_conv', 'cnn_without_dropout' and 'cnn_dropout' (by default).")
+parser.add_argument("-epochs", "--numb_epochs", dest="epochs", default=10, type=int, help="Number of epochs. By default: 10.")
+parser.add_argument("-pos_file", "--pos_train_file", dest="pos_file", default="preprocess_train_pos_full.txt", type=str, help="Name of the positive training file located in the data/ directory. By default: preprocess_train_pos_full.txt.")
+parser.add_argument("-neg_file", "--neg_train_file", dest="neg_file", type=str, default="preprocess_train_neg_full.txt", help="Name of the negative training file located in the data/ directory. By default: preprocess_train_neg_full.txt.")
+parser.add_argument("-emb_file", "--embeddings_file", dest="emb_file", default="glove.twitter.27B.200d.txt", type=str, help="name of the embeddings file located inside the embeddings/ directory. By default: glove.twitter.27B.200d.txt.")
+parser.add_argument("-emb_dim", "--embeddings_dim", dest="emb_dim", default=200, type=int, help="Dimension of the embeddings. By default: 200.")
+parser.add_argument("-batch_size", "--batch_size", dest="batch_size", default=64, type=int, help="Size of the batches during the training. By default: 64.")
 
 args = parser.parse_args()
 
 # Parameters
 DATA_DIR = "./data/"
-MAX_SEQUENCE_LENGTH = 1000 # TODO how to fix?
+MAX_SEQUENCE_LENGTH = 1000
 MAX_NB_WORDS = 20000
 EMBEDDING_FILE = args.emb_file
 EMBEDDING_DIM = args.emb_dim

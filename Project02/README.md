@@ -19,25 +19,31 @@ The `preprocessing` folder contains all the files used to generate the embedding
 
 The `experimentation` folder contains all files, which are not used to obtain our best result, but were useful during our seek to obtain a good CNN.
 
+## Embeddings
+The embeddings reside in the `src/embeddings/` directory.
+This project used two embeddings:
+- `sentiment.txt` : it is the sentiment word embeddings file.
+- `glove.twitter.27B.200d.txt` : GlOve by https://nlp.stanford.edu/projects/glove/
+
 ## Input Data Requirements
-Make sure you have the two files train and test at the right place : './src/data/train.txt' and './src/data/test.txt'.
-The embeddings have to be located: './src/embeddings/embeddings.txt'.
-The h5 model file have to be located: './src/runs/model.h5'.
+Make sure you have the two files train and test at the right place : `./src/data/`.
+The embeddings have to be located: `./src/embeddings/`.
+The h5 model file have to be located: `./src/runs/`.
 To obtain our best result you need to have:
-- './src/data/preprocess_train_pos_full.txt'
-- './src/data/preprocess_train_neg_full.txt'
-- './src/embeddings/glove.twitter.27B.200d.txt'
-- './src/runs/complexModel.h5'
+- `./src/data/preprocess_train_pos_full.txt`
+- `./src/data/preprocess_train_neg_full.txt`
+- `./src/embeddings/glove.twitter.27B.200d.txt`
+- `./src/runs/complexModel.h5`
 
 ## Output Data Form
-The `main.py` outputs a CSV, inside './src/data/' directory, containing 2 columns.
+The `main.py` outputs a CSV, inside `./src/data/` directory, containing 2 columns.
 - `Id` : the id of the data.
 - `Prediction` : `1` if the tweet is evaluated as positive, `-1` as negative.
 
 The `train.py` saves the trained model inside a h5 file at './src/runs/'.
 
 ## How to run
-If you want to create the CSV file with the prediction made on './src/data/test.csv' using a saved model:
+If you want to create the CSV file with the prediction made on `./src/data/test.csv` using a saved model:
 `python3 main.py`
 
 Optional parameters:

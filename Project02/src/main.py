@@ -17,10 +17,10 @@ os.environ['KERAS_BACKEND'] = "tensorflow" # theano'
 # Script parameters
 parser = argparse.ArgumentParser()
 
-parser.add_argument("-m_file", "--model_file", dest="model_file", type=str, default="paper2Model.h5", help="Name of the h5 file containing the model")
-parser.add_argument("-pos_file", "--pos_train_file", dest="pos_file", default="preprocess_train_pos_full.txt", type=str, help="Name of the positive training file located in the data/ directory")
-parser.add_argument("-neg_file", "--neg_train_file", dest="neg_file", type=str, default="preprocess_train_neg_full.txt", help="Name of the negative training file located in the data/ directory")
-parser.add_argument("-test_file", "--test_file", dest="test_file", type=str, default="test_data.txt", help="Name of the file that you want to make predictions")
+parser.add_argument("-m_file", "--model_file", dest="model_file", type=str, default="paper2Model_epoch18.h5", help="Name of the h5 file containing the model. By default: paper2Model_epoch18.h5.")
+parser.add_argument("-pos_file", "--pos_train_file", dest="pos_file", default="preprocess_train_pos_full.txt", type=str, help="Name of the positive training file located in the data/ directory. By default: preprocess_train_pos_full.txt.")
+parser.add_argument("-neg_file", "--neg_train_file", dest="neg_file", type=str, default="preprocess_train_neg_full.txt", help="Name of the negative training file located in the data/ directory. By default: preprocess_train_neg_full.txt.")
+parser.add_argument("-test_file", "--test_file", dest="test_file", type=str, default="test_data.txt", help="Name of the file that you want to make predictions located in the data/ directory. By default: test_data.txt.")
 
 args = parser.parse_args()
 
@@ -53,7 +53,7 @@ sequences = tokenizer.texts_to_sequences(x_test)
 
 word_index = tokenizer.word_index
 
-print("Load model")
+print("Loading model from ", args.model_file, "file...")
 loaded_model = load_model(os.path.join("./runs/", args.model_file))
 
 print("Calculation of the predictions")
