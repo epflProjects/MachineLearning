@@ -2,9 +2,9 @@
 
 This software performs sentiment analysis of tweets and then classify them into 2 groups: positive or negative.
 
-## TL;TR
+## TL;DR
 In order to obtain the predictions of our best model on `test_data.txt`, you need previously to be sure to have on your computer wget. If it is not the case: `brew install wget`.
-Then you can run `./run.sh` inside the `src/` directory. The `predictions.csv` is created inside the `/src/data/` directory.
+Then you can run `./run.sh` inside the `src/` directory. First it downloads all the mandatory files (embeddings, train and test data), then it runs `python3 run.py`. The `predictions.csv` is created inside the `/src/data/` directory.
 
 ## Requirements
 Everything was tested on macOS.
