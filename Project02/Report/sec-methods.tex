@@ -17,8 +17,7 @@ The first classifier that is applied is standard logistic regression. This class
 The support vector machine (SVM) is a more advanced linear classification model, traditionally used in supervised learning tasks. This makes it a potentially good fit for the task at hand. Given a set of training examples belonging to two different classes, the SVM model determines a boundary between examples of the two classes, then seeks to maximise the intervening margin. In addition to linear decision boundaries, the SVM can be supplied with different kernel functions that modify the shape of the boundary (see Figure \ref{plot:SVM}). In all instances, the notion of drawing a boundary and maximising the margin remains.
 
 \subsection{Neural networks}
-
-Neural nets were also used on tweets features. This neural net has one layers of size (200,100) . This was to take account that a neural network of  two layers is sufficient to represent any vectorial function.  If this technique was giving the best results of all the one that were used on on tweets representation, it didn't lead to the sufficiently good results for the competition. 
+Neural networks are non-linear classifiers that are trained using back propagation through successive configurable layers. Here, we applied neural networks with different layer widths of size 100 and 200. The intention was to account for the fact that a network of two layers is sufficient to represent any vectorial function.
 
 \subsection{Convolutional neural networks}
 The convolutional neural network (CNN) extends upon the ``standard'' neural network that seeks to further exploit locality data in addition. Here, a method inspired by Yoon Kim's seminal paper was employed \cite{cnnYoon}. The notion is that exploiting positional information in the Tweet should yield more information than simply using vectorial sums of word-embeddings.
