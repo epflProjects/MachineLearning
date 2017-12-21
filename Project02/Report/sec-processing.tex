@@ -23,6 +23,7 @@ In some tweets the last letter of some words is repeated. This is a similar prob
 \subsubsection{Last preprocessing step}
 In order to have a definitive clean dataset to works with, a last preprocessing step is applied. A blank space is added before all the quotation mark as \texttt{'ll, 're, 'm, ...} and before all punctuation signs. And all the data is set to lower case. This insure that all this expressions will be evaluated as the same during the learning process.
 
+
 \subsection{Word embeddings}
 After the Tweets are modified in their original text format, it is necessary to transform them to a numerical format. Several methods exist for achieving this, \emph{e.g.} bag of words or $n$-gram representations. Recently, so-called ``word embedding'' formats \cite{} have been employed to great success in next classification tasks. In short, word embeddings map words to high-dimensional vectors that seek to characterise the words' usage in various semantic contexts. \cite{} Examples of their use in recent literature are manifold \cite{} and thus we investigated several variations of this representation.
 
