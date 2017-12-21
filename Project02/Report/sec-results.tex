@@ -1,16 +1,5 @@
 \section{Results}
-The results of the differents methods are presented in [TAB. \ref{tab:results}]. As it was described, the three methods based on the tweet-embeddings give worse results that the one based on convolutional neural nets.
-As the two convolutional neural nets were giving the best results, they were trained for longer times using the full dataset provided. After a few hours of training, some results appeared [FIG. \ref{plot:CNNaccuracy}]. The figure display the training accuracy of the two models. The first one was not using the dropout method as opposed as the second one. 96\% of the data are kept for training the neural net and 4\% is used to validate the predictions. Each time all the train data are learned by the neural net, the test sample is evaluated. These results corresponds to the cross on the figure. The convolutional neural net using dropout was faster to train, as expected. And it was giving more significant results. So after a while the training of the other network was stop, and only the one with dropout was kept. 
-
-\label{sec:results}
-\begin{figure}[h!]
-\centering
-	\includegraphics[scale=0.6]{CNNaccuracy} 
-\caption{Training of the two convolutional neural nets. The first one does not use ``dropout'' as opposed as the second one.}
-\label{plot:CNNaccuracy}
-\end{figure}
-\FloatBarrier
-
+Classification performances measured in local hold-out testing are presented for each of the methods are presented in Table \ref{tab:results}. Precision, recall and accuracy were computed on a hold-out split where 2.4 million examples were used for training, and the remaining 100 thousand samples were evaluated for testing.
 
 \begin{table}[h]
   \centering
@@ -27,5 +16,19 @@ As the two convolutional neural nets were giving the best results, they were tra
   \caption{Classification performances using local hold-out testing, for various input data formats.All the data are given in \%}
   \label{tab:results}
 \end{table}
+
+Initial exploration of classification performances indicated that the neural network models would provide better results than the simpler linear classifiers. For this reason, we chose to train these models for a greater number of epochs. The classification performance of two convolutional neural networks over successive training epochs can be seen in Figure \ref{plot:CNNaccuracy}. During the training process, the hold-out data was classified at the end of each epoch, and its performance was reported, allowing us to track improvements in classification performance over time.
+
+As expected, the convolutional network with a dropout layer was faster to train than without, allowing the model to be trained for further epochs. Extending the training time increased classification performance marginally, but naturally, perfomance plateaus at a certain point, after which additional training time has no benefit.
+
+\label{sec:results}
+\begin{figure}[h!]
+\centering
+	\includegraphics[scale=0.6]{CNNaccuracy} 
+        \caption{Hold-out classification accuracy over successive training epochs for two convolutional neural networks: CNN1 is a standard CNN, whereas CNN2 contains a dropout layer. Spikes in accuracy are caused by abberant values reported at the beginning of new epochs (indicated by crosses).}
+\label{plot:CNNaccuracy}
+\end{figure}
+\FloatBarrier
+
 
 
