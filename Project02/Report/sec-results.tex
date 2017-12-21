@@ -1,6 +1,5 @@
 \section{Results}
-\textcolor{blue}{Speaking about the three methods on with tweet-embeddings}
-
+The results of the differents methods are presented in [TAB. \ref{tab:results}]. As it was described, the three methods based on the tweet-embeddings give worse results that the one based on convolutional neural nets.
 As the two convolutional neural nets were giving the best results, they were trained for longer times using the full dataset provided. After a few hours of training, some results appeared [FIG. \ref{plot:CNNaccuracy}]. The figure display the training accuracy of the two models. The first one was not using the dropout method as opposed as the second one. 96\% of the data are kept for training the neural net and 4\% is used to validate the predictions. Each time all the train data are learned by the neural net, the test sample is evaluated. These results corresponds to the cross on the figure. The convolutional neural net using dropout was faster to train, as expected. And it was giving more significant results. So after a while the training of the other network was stop, and only the one with dropout was kept. 
 
 \label{sec:results}
